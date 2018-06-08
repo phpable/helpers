@@ -1,7 +1,7 @@
 <?php
-namespace Able\Helper;
+namespace Able\Helpers;
 
-use \Able\Helper\Abstractions\AHelper;
+use \Able\Helpers\Abstractions\AHelper;
 
 class Env extends AHelper {
 

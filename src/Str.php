@@ -1,9 +1,9 @@
 <?php
-namespace Able\Helper;
+namespace Able\Helpers;
 
 use \Able\Reglib\Reglib;
 
-use \Able\Helper\Abstractions\AHelper;
+use \Able\Helpers\Abstractions\AHelper;
 
 class Str extends AHelper {
 

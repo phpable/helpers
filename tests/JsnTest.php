@@ -2,7 +2,7 @@
 namespace Able\Helpers\Tests;
 
 use \PHPUnit\Framework\TestCase;
-use \Able\Helper\Jsn;
+use \Able\Helpers\Jsn;
 
 class JsnTest extends TestCase {
 

@@ -1,8 +1,8 @@
 <?php
-namespace Able\Helper;
+namespace Able\Helpers;
 
-use \Able\Helper\Abstractions\AHelper;
-use \Able\Helper\Arr;
+use \Able\Helpers\Abstractions\AHelper;
+use \Able\Helpers\Arr;
 
 class Jsn extends AHelper {
 

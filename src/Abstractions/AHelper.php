@@ -1,5 +1,5 @@
 <?php
-namespace Able\Helper\Abstractions;
+namespace Able\Helpers\Abstractions;
 
 abstract class AHelper {
 

@@ -1,8 +1,8 @@
 <?php
-namespace Able\Helper;
+namespace Able\Helpers;
 
-use \Able\Helper\Arr;
-use \Able\Helper\Abstractions\AHelper;
+use \Able\Helpers\Arr;
+use \Able\Helpers\Abstractions\AHelper;
 
 class Fs extends AHelper {
 

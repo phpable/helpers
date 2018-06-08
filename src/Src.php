@@ -1,11 +1,11 @@
 <?php
-namespace Able\Helper;
+namespace Able\Helpers;
 
 use \Able\Reglib\Reglib;
 use \Able\Reglib\Regexp;
 
-use \Able\Helper\Arr;
-use \Able\Helper\Abstractions\AHelper;
+use \Able\Helpers\Arr;
+use \Able\Helpers\Abstractions\AHelper;
 
 class Src extends AHelper{
 

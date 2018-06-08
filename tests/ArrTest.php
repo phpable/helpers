@@ -2,7 +2,7 @@
 namespace Able\Helpers\Tests;
 
 use \PHPUnit\Framework\TestCase;
-use \Able\Helper\Arr;
+use \Able\Helpers\Arr;
 
 class ArrTest extends TestCase {
 
