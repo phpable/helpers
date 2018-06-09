@@ -35,7 +35,7 @@ class Fs extends AHelper {
 	 * @return string
 	 */
 	public static final function try($file){
-		return Arr::val(array_filter(Arr::simplify(func_get_args()),
+		return Arr::value(array_filter(Arr::simplify(func_get_args()),
 			function($value){ return file_exists($value) && !is_dir($value); }));
 	}
 
