@@ -10,35 +10,35 @@ class ArrTest extends TestCase {
 		$arr = ['a', 'b', 'c', [1, 2, 3, ['x' => 'lt_x', 'y' => 'lt_y', 'z' => 'lt_z'],
 			4, null, 5, ['x' => '', 'y' => 0, 'z' => null]], 'd', 'e'];
 
-		$this->assertEquals(Arr::simplify($arr), ['a', 'b', 'c', 1, 2, 3, 'lt_x', 'lt_y', 'lt_z',
+		$this->assertSame(Arr::simplify($arr), ['a', 'b', 'c', 1, 2, 3, 'lt_x', 'lt_y', 'lt_z',
 			4, null, 5, '', 0, null, 'd', 'e']);
 	}
 
 	public final function testAppend(){
 		$arr = ['a' => 'n1', 'b' => 'n2', 'c' => 'n3', 'd' => 'n4', 'e' => 'n5', 'f' => 'n6'];
 
-		$this->assertEquals(Arr::append($arr, ['c' => 'n7', 'g' => 'n8', 'h' => 'n9']), ['a' => 'n1', 'b' => 'n2',
+		$this->assertSame(Arr::append($arr, ['c' => 'n7', 'g' => 'n8', 'h' => 'n9']), ['a' => 'n1', 'b' => 'n2',
 			'd' => 'n4', 'e' => 'n5', 'f' => 'n6', 'c' => 'n7', 'g' => 'n8', 'h' => 'n9']);
 	}
 
 	public final function testPrepend(){
 		$arr = ['c' => 'n4', 'd' => 'n5', 'e' => 'n6', 'f' => 'n7', 'g' => 'n8', 'h' => 'n9'];
 
-		$this->assertEquals(Arr::append($arr, ['a' => 'n1', 'b' => 'n2', 'g' => 'n3']), ['a' => 'n1', 'b' => 'n2',
+		$this->assertSame(Arr::prepend($arr, ['a' => 'n1', 'b' => 'n2', 'g' => 'n3']), ['a' => 'n1', 'b' => 'n2',
 			'g' => 'n3', 'c' => 'n4', 'd' => 'n5', 'e' => 'n6', 'f' => 'n7', 'h' => 'n9']);
 	}
 
 	public final function testPush(){
 		$arr = ['a', 'b', 'c', 'd'];
 
-		$this->assertEquals(Arr::push($arr, ['e', ['key1' => 'f', 'key2' => 'g',
+		$this->assertSame(Arr::push($arr, ['e', ['key1' => 'f', 'key2' => 'g',
 			'key3' => ['h', 'i']]]), ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']);
 	}
 
 	public final function testUnshift(){
 		$arr = ['f', 'g', 'h', 'i'];
 
-		$this->assertEquals(Arr::unshift($arr, ['a', ['key1' => 'b', 'key2' => 'c',
+		$this->assertSame(Arr::unshift($arr, ['a', ['key1' => 'b', 'key2' => 'c',
 			'key3' => ['d', 'e']]]), ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']);
 	}
 
@@ -46,7 +46,7 @@ class ArrTest extends TestCase {
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
 
-		$this->assertEquals(Arr::only($arr, ['a', 'e', 'i']), ['a' => 'lt_a',
+		$this->assertSame(Arr::only($arr, ['a', 'e', 'i']), ['a' => 'lt_a',
 			'e' => 'lt_e', 'i' => 'lt_i']);
 	}
 
@@ -54,7 +54,7 @@ class ArrTest extends TestCase {
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
 
-		$this->assertEquals(Arr::except($arr, ['b', 'c', 'd', 'f', 'g', 'h']), ['a' => 'lt_a',
+		$this->assertSame(Arr::except($arr, ['b', 'c', 'd', 'f', 'g', 'h']), ['a' => 'lt_a',
 			'e' => 'lt_e', 'i' => 'lt_i']);
 	}
 
@@ -77,13 +77,13 @@ class ArrTest extends TestCase {
 	public final function testEven(){
 		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
 
-		$this->assertEquals(Arr::even($arr), ['b', 'd', 'f', 'h']);
+		$this->assertSame(Arr::even($arr), ['b', 'd', 'f', 'h']);
 	}
 
 	public final function testOdd(){
 		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
 
-		$this->assertEquals(Arr::odd($arr), ['a', 'c', 'e', 'g', 'i']);
+		$this->assertSame(Arr::odd($arr), ['a', 'c', 'e', 'g', 'i']);
 	}
 
 	public final function testShuffle(){
@@ -105,31 +105,31 @@ class ArrTest extends TestCase {
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
 
-		$this->assertEquals(Arr::left($arr, 'c'), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c']);
+		$this->assertSame(Arr::left($arr, 'c'), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c']);
 
-		$this->assertEquals(Arr::left($arr, 'h'), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c',
+		$this->assertSame(Arr::left($arr, 'h'), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c',
 			'd' => 'lt_d', 'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h']);
 
-		$this->assertEquals(Arr::left($arr, 'w'), $arr);
+		$this->assertSame(Arr::left($arr, 'w'), $arr);
 	}
 
 	public final function testRight(){
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
 
-		$this->assertEquals(Arr::right($arr, 'c'), ['c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
+		$this->assertSame(Arr::right($arr, 'c'), ['c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 					'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
 
-		$this->assertEquals(Arr::right($arr, 'h'), ['h' => 'lt_h', 'i' => 'lt_i']);
+		$this->assertSame(Arr::right($arr, 'h'), ['h' => 'lt_h', 'i' => 'lt_i']);
 
-		$this->assertEquals(Arr::right($arr, 'w'), $arr);
+		$this->assertSame(Arr::right($arr, 'w'), $arr);
 	}
 
 	public final function testCombine(){
 		$arr1 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
 		$arr2 = ['lt_a', 'lt_b', 'lt_c', 'lt_d', 'lt_e', 'lt_f', 'lt_g'];
 
-		$this->assertEquals(Arr::combine($arr1, $arr2, '@'), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c',
+		$this->assertSame(Arr::combine($arr1, $arr2, '@'), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c',
 			'd' => 'lt_d', 'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => '@', 'i' => '@']);
 	}
 
@@ -137,7 +137,7 @@ class ArrTest extends TestCase {
 		$arr = ['a', 'lt_a', 'b', 'lt_b', 'c', 'lt_c', 'd', 'lt_d', 'e', 'lt_e',
 			'f', 'lt_f', 'g', 'lt_g', 'h', 'lt_h', 'i', 'lt_i'];
 
-		$this->assertEquals(Arr::compile($arr), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
+		$this->assertSame(Arr::compile($arr), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
 	}
 
@@ -145,11 +145,11 @@ class ArrTest extends TestCase {
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
 
-		$this->assertEquals(Arr::each($arr, function($key, $value){
+		$this->assertSame(Arr::each($arr, function($key, $value){
 			return ':' . $value . ':'; }, 'b', 'c', 'd', 'z'), ['a' => 'lt_a', 'b' => ':lt_b:', 'c' => ':lt_c:',
 				'd' => ':lt_d:', 'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
 
-		$this->assertEquals(Arr::each($arr, function($key, $value){
+		$this->assertSame(Arr::each($arr, function($key, $value){
 			return ':' . $value . ':'; }), ['a' => ':lt_a:', 'b' => ':lt_b:', 'c' => ':lt_c:', 'd' => ':lt_d:',
 				'e' => ':lt_e:', 'f' => ':lt_f:', 'g' => ':lt_g:', 'h' => ':lt_h:', 'i' => ':lt_i:']);
 	}
@@ -157,7 +157,7 @@ class ArrTest extends TestCase {
 	public final function testMake() {
 		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
 
-		$this->assertEquals(Arr::make($arr, function($value){
+		$this->assertSame(Arr::make($arr, function($value){
 			return 'lt_' . $value; }), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d',
 				'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
 	}
@@ -166,7 +166,7 @@ class ArrTest extends TestCase {
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
 
-		$this->assertEquals(Arr::pack($arr, '='), ['a=lt_a', 'b=lt_b', 'c=lt_c', 'd=lt_d', 'e=lt_e',
+		$this->assertSame(Arr::pack($arr, '='), ['a=lt_a', 'b=lt_b', 'c=lt_c', 'd=lt_d', 'e=lt_e',
 			'f=lt_f', 'g=lt_g', 'h=lt_h', 'i=lt_i']);
 	}
 
@@ -174,7 +174,7 @@ class ArrTest extends TestCase {
 		$arr = ['lt_a', 'b=lt_b', 'c=lt_c', 'd=lt_d', 'e=lt_e',
 			'f=lt_f', 'g=lt_g', '=lt_h', '=lt_i'];
 
-		$this->assertEquals(Arr::unpack($arr, '='), ['lt_a' => '', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
+		$this->assertSame(Arr::unpack($arr, '='), ['lt_a' => '', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 					'f' => 'lt_f', 'g' => 'lt_g', '' => 'lt_i']);
 	}
 
@@ -225,25 +225,25 @@ class ArrTest extends TestCase {
 		$arr = ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b']], 'b' => 12];
 
 		$arr = Arr::improve($arr, 'a', 'g', 'n1', '2b');
-		$this->assertEquals($arr, ['a' => ['e' => 100,
+		$this->assertSame($arr, ['a' => ['e' => 100,
 			'g' => ['n1' => ['1a', '2b'], 'n2' => '1b']], 'b' => 12]);
 
 		$arr = Arr::improve($arr, 'a', 'g', 'n2', '2b');
-		$this->assertEquals($arr, ['a' => ['e' => 100,
+		$this->assertSame($arr, ['a' => ['e' => 100,
 			'g' => ['n1' => ['1a', '2b'], 'n2' => ['1b', '2b']]], 'b' => 12]);
 
 		$arr = Arr::improve($arr, 'a', 'g', 'test');
-		$this->assertEquals($arr, ['a' => ['e' => 100,
+		$this->assertSame($arr, ['a' => ['e' => 100,
 			'g' => ['n1' => ['1a', '2b'], 'n2' => ['1b', '2b'], 0 => 'test']], 'b' => 12]);
 	}
 
 	public final function testClear(){
 		$arr = ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b']], 'b' => 12];
 
-		$this->assertEquals(Arr::clear($arr, 'a', 'g', 'n1'), ['a' => ['e' => 100,
+		$this->assertSame(Arr::clear($arr, 'a', 'g', 'n1'), ['a' => ['e' => 100,
 			'g' => ['n2' => '1b']], 'b' => 12]);
 
-		$this->assertEquals(Arr::clear($arr, 'a', 'g'), ['a' => ['e' => 100],
+		$this->assertSame(Arr::clear($arr, 'a', 'g'), ['a' => ['e' => 100],
 			'b' => 12]);
 	}
 
@@ -258,9 +258,9 @@ class ArrTest extends TestCase {
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
 
-		$this->assertEquals(Arr::like($arr, 'c', 'b', 'i'), ['c' => 'lt_c', 'b' => 'lt_b', 'i' => 'lt_i']);
-		$this->assertEquals(Arr::like($arr, 'h', 'e', 'g'), ['h' => 'lt_h', 'e' => 'lt_e', 'g' => 'lt_g']);
-		$this->assertEquals(Arr::like($arr, 'a', 'h', 'z'), ['a' => 'lt_a', 'h' => 'lt_h']);
+		$this->assertSame(Arr::like($arr, 'c', 'b', 'i'), ['c' => 'lt_c', 'b' => 'lt_b', 'i' => 'lt_i']);
+		$this->assertSame(Arr::like($arr, 'h', 'e', 'g'), ['h' => 'lt_h', 'e' => 'lt_e', 'g' => 'lt_g']);
+		$this->assertSame(Arr::like($arr, 'a', 'h', 'z'), ['a' => 'lt_a', 'h' => 'lt_h']);
 	}
 
 }

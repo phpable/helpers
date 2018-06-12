@@ -66,8 +66,8 @@ class Arr extends AHelper{
 	 * @return array
 	 */
 	public static final function prepend(array $Source, array $Prepend): array {
-		return array_merge($Prepend, self::only($Source, array_filter(array_keys($Source, function($value) use ($Prepend){
-			return is_int($value) || !array_key_exists($value, $Append); }))));
+		return array_merge($Prepend, self::only($Source, array_filter(array_keys($Source), function($value) use ($Prepend){
+			return is_int($value) || !array_key_exists($value, $Prepend); })));
 	}
 
 	/**
