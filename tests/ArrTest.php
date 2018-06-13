@@ -42,6 +42,17 @@ class ArrTest extends TestCase {
 			'key3' => ['d', 'e']]]), ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']);
 	}
 
+	public final function testInsert() {
+		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
+			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
+
+		$this->assertSame(Arr::insert($arr, 2, ['b2' => 'lt_b2']), ['a' => 'lt_a', 'b' => 'lt_b', 'b2' => 'lt_b2',
+			'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
+
+		$this->assertSame(Arr::insert($arr, 99, ['b2' => 'lt_b2']), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c',
+			'd' => 'lt_d', 'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i', 'b2' => 'lt_b2']);
+	}
+
 	public final function testOnly(){
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];

@@ -111,6 +111,19 @@ class Arr extends AHelper{
 	}
 
 	/**
+	 * Inserts an element into the specified position of an array.
+	 *
+	 * @param array $Source
+	 * @param int $position
+	 * @param $value
+	 * @return array
+	 */
+	public static final function insert(array $Source, int $position, $value): array {
+		return $position > 0 ? self::append(array_slice($Source, 0, $position), self::prepend(array_slice($Source,
+			$position), self::cast($value))) : self::prepend($Source, self::cast($value));
+	}
+
+	/**
 	 * Returns a subset from the given array using the given list of ignored keys.
 	 *
 	 * @param array $Source
