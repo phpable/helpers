@@ -107,21 +107,5 @@ class Src extends AHelper{
 
 		return new $target(...array_slice(func_get_args(), 1));
 	}
-
-	/**
-	 * @param string $source
-	 * @return bool
-	 */
-	public static final function check(string $source): bool {
-		return call_user_func(function(string $source){
-			try{
-				return is_null(eval((new Regexp('/^<\?php\s*|\s*\\?>$/'))
-					->erase(trim($source))));
-
-			}catch (\Throwable $Exception){
-				return false;
-			}
-		}, $source);
-	}
 }
 
