@@ -76,6 +76,19 @@ class Str extends AHelper {
 	}
 
 	/**
+	 * @param string $left
+	 * @param string $source
+	 * @param string $right
+	 * @param string $separator
+	 * @return string
+	 */
+	public final static function embrace(string $left, string $source,
+		string $right, string $separator = null): string {
+			return !empty($source) ? implode($separator, array_slice(func_get_args(), 0,
+				func_num_args() - (func_num_args() - 3))) : $source;
+	}
+
+	/**
 	 * @param string $source
 	 * @param string $allow, ...
 	 * @return string
@@ -92,7 +105,37 @@ class Str extends AHelper {
 
 	/**
 	 * @param string $source
-	 * @return string mixed
+	 * @param int $limit
+	 * @return string
+	 */
+	public final static function rtrim(string $source, int $limit = null): string {
+		return preg_replace('/\s' . (!is_null($limit) && $limit >= 0
+			? (self::embrace('{1,', $limit, '}')) : '*'). '$/s', null, $source);
+	}
+
+	/**
+	 * @param string $source
+	 * @param int $limit
+	 * @return string
+	 */
+	public final static function ltrim(string $source, int $limit = null): string {
+		return preg_replace('/^\s' . (!is_null($limit) && $limit >= 0
+			? (self::embrace('{1,', $limit, '}')) : '*'). '/s', null, $source);
+	}
+
+	/**
+	 * @param string $source
+	 * @param int|null $leftLimit
+	 * @param int|null $rightLimit
+	 * @return string
+	 */
+	public final static function trim(string $source, int $leftLimit = null, int $rightLimit = null){
+		return self::rtrim(self::ltrim($source, $leftLimit), $rightLimit);
+	}
+
+	/**
+	 * @param string $source
+	 * @return string mixed=
 	 */
 	public final static function sanitize($source){
 		return trim(preg_replace('/\s+/', ' ', $source));
@@ -114,19 +157,6 @@ class Str extends AHelper {
 		return preg_replace('/<\/(?:p' . (func_num_args() > 1 ? ('|' . implode('|', array_map(function($value){
 			return preg_quote(Str::cast(trim(trim($value), '<>')), '/');
 		}, array_slice(func_get_args(), 1)))) : null) . ')>/', "\$0\n", $source);
-	}
-
-	/**
-	 * @param string $left
-	 * @param string $source
-	 * @param string $right
-	 * @param string $separator
-	 * @return string
-	 */
-	public final static function embrace(string $left, string $source,
-		string $right, string $separator = null): string {
-			return !empty($source) ? implode($separator, array_slice(func_get_args(), 0,
-				func_num_args() -1)) : $source;
 	}
 
 }
