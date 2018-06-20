@@ -39,7 +39,7 @@ class Str extends AHelper {
 	 * @return string
 	 */
 	public final static function append(string $source, $append): string {
-		return self::join('', ...Arr::simplify(array_slice(func_get_args(), 1)));
+		return self::join('', ...Arr::simplify(func_get_args()));
 	}
 
 	/**
@@ -48,7 +48,7 @@ class Str extends AHelper {
 	 * @return string
 	 */
 	public final static function prepend(string $source, $prepend): string {
-		return self::join('', ...array_reverse(Arr::simplify(array_slice(func_get_args(), 1))));
+		return self::join('', ...array_reverse(Arr::simplify(func_get_args())));
 	}
 
 	/**
