@@ -38,7 +38,7 @@ class Str extends AHelper {
 	 * @param int $limit
 	 * @return string
 	 */
-	public final static function tr($source, $limit){
+	public final static function tr(string $source, int $limit): string {
 		return $limit > 0 && mb_strlen($source) > $limit
 			? preg_replace('/[\s,.!?:;-]+[^\s,.!?:;-]{0,' . max([10, floor($limit / 100 * 20)]) . '}$/u', null,
 				mb_substr($source, 0, $limit), 1) : $source;
@@ -50,17 +50,8 @@ class Str extends AHelper {
 	 * @param string $finalizer
 	 * @return string
 	 */
-	public final static function trf($source, $limit, $finalizer = '...'){
+	public final static function trf(string $source, int $limit, string $finalizer = '...'): string {
 		return self::tr($source, $limit - mb_strlen($finalizer)) . $finalizer;
-	}
-
-	/**
-	 * @param string $source
-	 * @param int $limit
-	 * @return string
-	 */
-	public final static function lim($source, $limit){
-		return mb_substr($source, 0, $limit);
 	}
 
 	/**
@@ -69,17 +60,17 @@ class Str extends AHelper {
 	 * @param string $separator
 	 * @return string
 	 */
-	public final static function clip($source, $limit, $separator = null){
+	public final static function clip(string $source, int $limit, string $separator = null): string {
 		$prc = floor(mb_strlen($source) / 100 * 20);
 		return $limit > 0 && mb_strlen($source) > $limit ? (self::tr($source, $limit - $prc) . $separator
-				. trim(mb_substr($source, mb_strlen($source) - $prc))) : $source;
+			. trim(mb_substr($source, mb_strlen($source) - $prc))) : $source;
 	}
 
 	/**
 	 * @param string $source
 	 * @return string
 	 */
-	public final static function strip($source){
+	public final static function strip(string $source): string {
 		return preg_replace('/<(?:\/|!doctype\s*)?[a-z0-9_-]+\s*(?:[^>\s]+(?:\s*=\s*(?:' . Reglib::QUOTED
 			. '|[^>\s]+))?\s*)*\/?>/i', ' ', preg_replace('/<!--.*?-->/s', null, $source));
 	}
@@ -89,7 +80,7 @@ class Str extends AHelper {
 	 * @param string $allow, ...
 	 * @return string
 	 */
-	public final static function stripl($source, $allow = null){
+	public final static function stripl(string $source, string $allow = null): string {
 		$allow = array_filter(array_slice(func_get_args(), 1), function($value){
 			return preg_match('/^[A-Za-z0-9_-]+$/', $value); });
 
@@ -103,7 +94,7 @@ class Str extends AHelper {
 	 * @param string $source
 	 * @return string mixed
 	 */
-	public final static function gtrim($source){
+	public final static function sanitize($source){
 		return trim(preg_replace('/\s+/', ' ', $source));
 	}
 
@@ -111,18 +102,31 @@ class Str extends AHelper {
 	 * @param string $source
 	 * @return string
 	 */
-	public final static function br2nl($source){
-		return preg_replace('/<br *\/?>/', "\n", $source);
+	public final static function br2nl(string $source): string {
+		return preg_replace('/<br\s*\\/?>/', "\n", $source);
 	}
 
 	/**
 	 * @param string $source
 	 * @return mixed
 	 */
-	public final static function p2nl($source){
+	public final static function p2nl(string $source): string {
 		return preg_replace('/<\/(?:p' . (func_num_args() > 1 ? ('|' . implode('|', array_map(function($value){
 			return preg_quote(Str::cast(trim(trim($value), '<>')), '/');
 		}, array_slice(func_get_args(), 1)))) : null) . ')>/', "\$0\n", $source);
+	}
+
+	/**
+	 * @param string $left
+	 * @param string $source
+	 * @param string $right
+	 * @param string $separator
+	 * @return string
+	 */
+	public final static function embrace(string $left, string $source,
+		string $right, string $separator = null): string {
+			return !empty($source) ? implode($separator, array_slice(func_get_args(), 0,
+				func_num_args() -1)) : $source;
 	}
 
 }
