@@ -35,6 +35,24 @@ class Str extends AHelper {
 
 	/**
 	 * @param string $source
+	 * @param mixed $append
+	 * @return string
+	 */
+	public final static function append(string $source, $append): string {
+		return self::join('', ...Arr::simplify(array_slice(func_get_args(), 1)));
+	}
+
+	/**
+	 * @param string $source
+	 * @param mixed $prepend
+	 * @return string
+	 */
+	public final static function prepend(string $source, $prepend): string {
+		return self::join('', ...array_reverse(Arr::simplify(array_slice(func_get_args(), 1))));
+	}
+
+	/**
+	 * @param string $source
 	 * @param int $limit
 	 * @return string
 	 */
