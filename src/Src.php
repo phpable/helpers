@@ -77,6 +77,16 @@ class Src extends AHelper{
 	}
 
 	/**
+	 * @param string $source
+	 * @param string $fragments
+	 * @return string
+	 */
+	public static final function esc(string $source, string $fragments): string {
+		return preg_replace('/(?<=\A|[^\\\\])(' . implode('|', array_map(function($value){
+			return preg_quote($value, '/'); }, str_split($fragments, 1))). ')/', '\\\$1', $source);
+	}
+
+	/**
 	 * @param mixed $Target
 	 * @param array $Params
 	 * @param null $default
