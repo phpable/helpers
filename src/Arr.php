@@ -493,6 +493,16 @@ class Arr extends AHelper{
 	}
 
 	/**
+	 * @param array $Source
+	 * @param int $length
+	 * @param null $default
+	 * @return array
+	 */
+	public static final function take(array $Source, int $length, $default = null): array {
+		return array_pad(array_slice($Source, 0, $length), $length, $default);
+	}
+
+	/**
 	 * Sorts an array keys in the order given by arguments.
 	 *
 	 * @attention Missing keys will be removed.
