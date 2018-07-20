@@ -65,7 +65,7 @@ class Src extends AHelper{
 	 * @return string
 	 */
 	public static final function lns($string){
-		return preg_replace('/\\\\' . Reglib::VAR . '$/', null, $string);
+		return preg_replace('/\\\\[^\\\\]+$/', null, rtrim($string, '\\'));
 	}
 
 	/**
@@ -73,7 +73,7 @@ class Src extends AHelper{
 	 * @return string
 	 */
 	public static final function rns($string){
-		return preg_replace('/^.*\\\\/', null, $string);
+		return preg_replace('/^.*\\\\/', null, rtrim($string, '\\'));
 	}
 
 	/**
