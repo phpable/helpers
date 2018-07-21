@@ -1,11 +1,15 @@
 <?php
 namespace Able\Helpers;
 
-use \Able\Reglib\Reglib;
-
 use \Able\Helpers\Abstractions\AHelper;
 
 class Str extends AHelper {
+
+	/**
+	 * This constant is a duplicate of the \Able\Reglib\Reglib::QUOTED constant.
+	 * Just left it here to avoid cycling dependencies.
+	 */
+	private const RE_QUOTED = '(?:\'(?:\\\\\'|[^\'])*\'|"(?:\\\\"|[^"])*")';
 
 	/**
 	 * Converts any value into a string.
@@ -89,7 +93,7 @@ class Str extends AHelper {
 	 * @return string
 	 */
 	public final static function strip(string $source): string {
-		return preg_replace('/<(?:\/|!doctype\s*)?[a-z0-9_-]+\s*(?:[^>\s]+(?:\s*=\s*(?:' . Reglib::QUOTED
+		return preg_replace('/<(?:\/|!doctype\s*)?[a-z0-9_-]+\s*(?:[^>\s]+(?:\s*=\s*(?:' . self::RE_QUOTED
 			. '|[^>\s]+))?\s*)*\/?>/i', ' ', preg_replace('/<!--.*?-->/s', null, $source));
 	}
 
@@ -115,7 +119,7 @@ class Str extends AHelper {
 		$allow = array_filter(array_slice(func_get_args(), 1), function($value){
 			return preg_match('/^[A-Za-z0-9_-]+$/', $value); });
 
-		return preg_replace_callback('/<((?:\/|!doctype\s*)?[a-z0-9_-]+)\s*(?:[^>\s]+(?:\s*=\s*(?:' . Reglib::QUOTED
+		return preg_replace_callback('/<((?:\/|!doctype\s*)?[a-z0-9_-]+)\s*(?:[^>\s]+(?:\s*=\s*(?:' . self::RE_QUOTED
 			. '|[^>\s]+))?\s*)*\/?>/i', function($value) use ($allow){
 				return preg_match('/\s+/', trim($value[1])) > 0 || !in_array(trim($value[1], ' /'), $allow) ? '' : $value[0];
 			}, preg_replace('/<!--.*?-->/s', null, $source));
