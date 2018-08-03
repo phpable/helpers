@@ -157,10 +157,18 @@ class Str extends AHelper {
 
 	/**
 	 * @param string $source
-	 * @return string mixed=
+	 * @return string
 	 */
-	public final static function sanitize($source){
+	public final static function sanitize(string $source): string {
 		return trim(preg_replace('/\s+/', ' ', $source));
+	}
+
+	/**
+	 * @param string $source
+	 * @return string
+	 */
+	public final static function break(string $source): string {
+		return preg_replace('/\s+$/', '', $source, -1, $count) . "\n";
 	}
 
 	/**
