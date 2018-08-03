@@ -1,3 +1,14 @@
 # Autodetect text files
-* text=auto !eol
+* text=auto
+
+*.php eol=lf
+*.js eol=lf
+*.json eol=lf
+*.css eol=lf
+*.sass eol=lf
+*.scss eol=lf
+*.less eol=lf
+
+*.min.js -diff
+*.min.css -diff
 
