@@ -20,7 +20,21 @@ class Arr extends AHelper{
 	}
 
 	/**
-	 * Convert the given arguments into a single-level numbered array.
+	 * Convert given arguments into a generator.
+	 *
+	 * @attention Existing keys are not preserved.
+	 *
+	 * @param mixed, ...
+	 * @return \Generator
+	 */
+	public static final function iterate(): \Generator {
+		foreach (self::simplify(func_get_args()) as $item){
+			yield $item;
+		}
+	}
+
+	/**
+	 * Convert given arguments into a single-level numbered array.
 	 *
 	 * @attention This method throws an exception if the given value
 	 * cannot be represented as an array.
