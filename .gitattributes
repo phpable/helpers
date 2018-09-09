@@ -4,19 +4,26 @@
 *.php eol=lf
 *.js eol=lf
 *.json eol=lf
+*.html eol=lf
 *.css eol=lf
 *.sass eol=lf
 *.scss eol=lf
 *.less eol=lf
+*.svg eol=lf
 *.txt eol=lf
 *.md eol=lf
 *.xml eol=lf
 *.yml eol=lf
+*.sabre eol=lf
+*.sh eol=lf
+*.sql eol=lf
 
 LICENSE eol=lf
 CHANGELOG eol=lf
+artisan eol=lf
 
 .gitattributes eol=lf
+.gitmodules eol=lf
 .gitignore eol=lf
 
 *.min.js -diff

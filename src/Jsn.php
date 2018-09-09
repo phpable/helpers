@@ -25,7 +25,7 @@ class Jsn extends AHelper {
 	}
 
 	/**
-	 * Encodes an associative array into its JSON representation.
+	 * Encodes an associative array into its JSON string representation.
 	 *
 	 * @attention This method throws an exception
 	 * if given value cannot be represented as a JSON string.
@@ -43,7 +43,7 @@ class Jsn extends AHelper {
 	}
 
 	/**
-	 * Adds the given data into the end of the given JSON representation.
+	 * Adds the given data into the end of the given JSON string representation.
 	 *
 	 * @param string $source
 	 * @param array $Append
@@ -55,7 +55,7 @@ class Jsn extends AHelper {
 	}
 
 	/**
-	 * Adds the given data into the beginning of the given JSON representation.
+	 * Adds the given data into the beginning of the given JSON string representation.
 	 *
 	 * @param string $source
 	 * @param array $Prepend
@@ -67,7 +67,7 @@ class Jsn extends AHelper {
 	}
 
 	/**
-	 * Removes an element from the given JSON representation.
+	 * Removes an element from the given JSON string representation.
 	 *
 	 * @see Arr::clear()
 	 *
@@ -82,7 +82,7 @@ class Jsn extends AHelper {
 	}
 
 	/**
-	 * Adds an element into the given JSON representation.
+	 * Adds an element into the given JSON string representation.
 	 *
 	 * @see Arr::improve()
 	 *
@@ -97,4 +97,15 @@ class Jsn extends AHelper {
 			...array_slice(func_get_args(), 1)));
 	}
 
+	/**
+	 * Merge an array with the given JSON string representation.
+	 *
+	 * @param string $source
+	 * @param array $Values
+	 * @return string
+	 * @throws \Exception
+	 */
+	public final static function merge(string $source, array $Values){
+		return self::encode(array_merge(self::decode($source), $Values));
+	}
 }
