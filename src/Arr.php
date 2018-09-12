@@ -392,20 +392,22 @@ class Arr extends AHelper{
 	 * Returns the first element of an array or null if the array is empty.
 	 *
 	 * @param array $Source
+	 * @param mixed $default
 	 * @return mixed
 	 */
-	public static final function first(array $Source) {
-		return self::value($Source, 0);
+	public static final function first(array $Source, $default = null) {
+		return self::value($Source, 0, $default);
 	}
 
 	/**
 	 * Returns the last element of an array or null if the array is empty.
 	 *
 	 * @param array $Source
+	 * @param mixed $default
 	 * @return mixed
 	 */
-	public static final function last(array $Source){
-		return self::value($Source, count($Source) - 1);
+	public static final function last(array $Source, $default = null){
+		return self::value($Source, count($Source) - 1, $default);
 	}
 
 	/**
