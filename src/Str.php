@@ -98,19 +98,6 @@ class Str extends AHelper {
 	}
 
 	/**
-	 * @param string $left
-	 * @param string $source
-	 * @param string $right
-	 * @param string $separator
-	 * @return string
-	 */
-	public final static function embrace(string $left, string $source,
-		string $right, string $separator = null): string {
-			return !empty($source) ? implode($separator, array_slice(func_get_args(), 0,
-				func_num_args() - (func_num_args() - 3))) : $source;
-	}
-
-	/**
 	 * @param string $source
 	 * @param string $allow, ...
 	 * @return string
@@ -132,7 +119,7 @@ class Str extends AHelper {
 	 */
 	public final static function rtrim(string $source, int $limit = null): string {
 		return preg_replace('/\s' . (!is_null($limit) && $limit >= 0
-			? (self::embrace('{1,', $limit, '}')) : '*'). '$/s', null, $source);
+			? '{0,' . $limit . '}' : '*'). '$/s', null, $source, 1);
 	}
 
 	/**
@@ -142,17 +129,27 @@ class Str extends AHelper {
 	 */
 	public final static function ltrim(string $source, int $limit = null): string {
 		return preg_replace('/^\s' . (!is_null($limit) && $limit >= 0
-			? (self::embrace('{1,', $limit, '}')) : '*'). '/s', null, $source);
+			? '{0,' . $limit . '}' : '*'). '/s', '', $source, 1);
 	}
 
 	/**
 	 * @param string $source
-	 * @param int|null $leftLimit
-	 * @param int|null $rightLimit
+	 * @param int $leftLimit
+	 * @param int $rightLimit
 	 * @return string
 	 */
 	public final static function trim(string $source, int $leftLimit = null, int $rightLimit = null){
 		return self::rtrim(self::ltrim($source, $leftLimit), $rightLimit);
+	}
+
+	/**
+	 * @param string $source
+	 * @param int $limit
+	 * @return string
+	 */
+	public final static function unbreak(string $source, int $limit = null): string{
+		return preg_replace($e = '/\n' . (!is_null($limit) && $limit >= 0
+			? '{0,' . $limit .'}' : '*'). '$/', '', $source, 1);
 	}
 
 	/**
