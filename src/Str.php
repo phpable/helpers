@@ -21,8 +21,23 @@ class Str extends AHelper {
 	 * @return string
 	 */
 	public static final function cast($value): string {
-		return is_object($value) && method_exists($value, 'toString')
-			? $value->toString() : (string)$value;
+		if (is_string($value)){
+			return $value;
+		}
+
+		if (is_object($value) && method_exists($value, 'toString')){
+			return $value->toString();
+		}
+
+		if (is_object($value) && method_exists($value, '__toString')){
+			return $value->__toString();
+		}
+
+		if ($value instanceof \Generator){
+			return self::join(PHP_EOL, iterator_to_array($value));
+		}
+
+		return (string)$value;
 	}
 
 	/**

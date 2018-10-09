@@ -15,8 +15,19 @@ class Arr extends AHelper{
 	 * @return array
 	 */
 	public static final function cast($value): array {
-		return is_object($value) && method_exists($value, 'toArray')
-			? $value->toArray() : (!is_array($value) ? [$value] : $value);
+		if (is_array($value)){
+			return $value;
+		}
+
+		if (is_object($value) && method_exists($value, 'toArray')){
+			return $value->toArray();
+		}
+
+		if ($value instanceof \Generator){
+			return iterator_to_array($value);
+		}
+
+		return [$value];
 	}
 
 	/**
