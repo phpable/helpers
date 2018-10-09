@@ -148,7 +148,7 @@ class Str extends AHelper {
 	 * @return string
 	 */
 	public final static function unbreak(string $source, int $limit = null): string{
-		return preg_replace($e = '/\n' . (!is_null($limit) && $limit >= 0
+		return preg_replace($e = '/(?:\r\n|\n|\r)' . (!is_null($limit) && $limit >= 0
 			? '{0,' . $limit .'}' : '*'). '$/', '', $source, 1);
 	}
 
