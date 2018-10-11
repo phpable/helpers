@@ -34,7 +34,7 @@ class Str extends AHelper {
 		}
 
 		if ($value instanceof \Generator){
-			return self::join(PHP_EOL, iterator_to_array($value));
+			return self::join('', iterator_to_array($value));
 		}
 
 		return (string)$value;
