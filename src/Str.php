@@ -41,14 +41,26 @@ class Str extends AHelper {
 	}
 
 	/**
-	 * Joins all given arguments into one single string using given separator.
+	 * Converts the iterator into a string.
+	 *
+	 * @param \Generator $Input
+	 * @return string
+	 */
+	public static final function collect(\Generator $Input){
+		return self::join(PHP_EOL, array_map(function(){
+			return self::unbreak(self::cast(func_get_arg(0)), 1);
+		}, iterator_to_array($Input)));
+	}
+
+	/**
+	 * Joins the given arguments into a single string using the given separator.
 	 *
 	 * @param string $separator
 	 * @param mixed $source, ...
 	 * @return string
 	 */
 	public final static function join($separator, $source){
-		return implode($separator, array_map(function($value){ return Str::cast($value); },
+		return implode($separator, array_map(function($value){ return self::cast($value); },
 			array_filter(Arr::simplify(array_slice(func_get_args(), 1)))));
 	}
 
@@ -197,7 +209,7 @@ class Str extends AHelper {
 	 */
 	public final static function p2nl(string $source): string {
 		return preg_replace('/<\/(?:p' . (func_num_args() > 1 ? ('|' . implode('|', array_map(function($value){
-			return preg_quote(Str::cast(trim(trim($value), '<>')), '/');
+			return preg_quote(self::cast(trim(trim($value), '<>')), '/');
 		}, array_slice(func_get_args(), 1)))) : null) . ')>/', "\$0\n", $source);
 	}
 
