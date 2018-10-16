@@ -34,7 +34,7 @@ class Str extends AHelper {
 		}
 
 		if ($value instanceof \Generator){
-			return self::join('', iterator_to_array($value));
+			return self::join('', iterator_to_array($value, false));
 		}
 
 		return (string)$value;
@@ -49,7 +49,7 @@ class Str extends AHelper {
 	public static final function collect(\Generator $Input){
 		return self::join(PHP_EOL, array_map(function(){
 			return self::unbreak(self::cast(func_get_arg(0)), 1);
-		}, iterator_to_array($Input)));
+		}, iterator_to_array($Input, false)));
 	}
 
 	/**
