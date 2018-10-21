@@ -98,7 +98,7 @@ class Str extends AHelper {
 	 */
 	public final static function tr(string $source, int $limit): string {
 		return $limit > 0 && mb_strlen($source) > $limit
-			? preg_replace('/[\s,.!?:;-]+[^\s,.!?:;-]{0,' . max([10, floor($limit / 100 * 20)]) . '}$/u', null,
+			? preg_replace('/[\s,.!?:;-]+[^\s,.!?:;-]{0,' . max([10, floor($limit / 100 * 20)]) . '}$/u', '',
 				mb_substr($source, 0, $limit), 1) : $source;
 	}
 
