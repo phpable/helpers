@@ -56,4 +56,17 @@ class Fs extends AHelper {
 			. md5(basename($path)) . '.' . Fs::ext($path);
 	}
 
+	/**
+	 * @param string $path
+	 * @param string $root
+	 * @return null|string|string[]
+	 */
+	public static final function normalize(string $path, string $root){
+		$path = preg_replace('/^\.\//', $root . '/', $path);
+		while(!isset($count) || $count > 0) {
+			$path = preg_replace('/[^\/]+\/\.\.\//', '', $path, -1, $count);
+		}
+
+		return $path;
+	}
 }
