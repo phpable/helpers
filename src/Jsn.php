@@ -108,4 +108,15 @@ class Jsn extends AHelper {
 	public final static function merge(string $source, array $Values){
 		return self::encode(array_merge(self::decode($source), $Values));
 	}
+
+	/**
+	 * @param string $source
+	 * @param $key
+	 * @param $default
+	 * @return mixed
+	 * @throws \Exception
+	 */
+	public final static function get(string $source, $key, $default = null){
+		return Arr::get(self::decode($source), $key, $default);
+	}
 }
