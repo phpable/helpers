@@ -110,6 +110,8 @@ class Jsn extends AHelper {
 	}
 
 	/**
+	 * Returns a single element from a JSON array by its key.
+	 * 
 	 * @param string $source
 	 * @param $key
 	 * @param $default
@@ -119,4 +121,5 @@ class Jsn extends AHelper {
 	public final static function get(string $source, $key, $default = null){
 		return Arr::get(self::decode($source), $key, $default);
 	}
+
 }
