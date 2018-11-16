@@ -191,7 +191,7 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Adds the values to the end of the given array.
+	 * Adds given values to the end of an array.
 	 *
 	 * Function behavior is similar to 'array_push'
 	 * but takes a custom list of mixed-type arguments.
