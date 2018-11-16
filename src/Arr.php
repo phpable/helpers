@@ -113,10 +113,10 @@ class Arr extends AHelper {
 	 * and the callable handler to get values.
 	 *
 	 * @param array $Keys
-	 * @param callable $Handler
+	 * @param callable|null $Handler
 	 * @return array
 	 */
-	public static final function make(array $Keys, callable $Handler = null): array {
+	public static final function make(array $Keys, ?callable $Handler = null): array {
 		return Arr::combine($Keys,
 
 		is_callable($Handler) ? Arr::each($Keys, function () use ($Handler){
@@ -588,7 +588,7 @@ class Arr extends AHelper {
 	 * Sorts the array by keys using the handler.
 	 *
 	 * @param array $Source
-	 * @param callable $Handler
+	 * @param callable|null $Handler
 	 * @return array
 	 */
 	public static final function ksort(array $Source, ?callable $Handler = null): array {
