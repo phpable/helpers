@@ -441,6 +441,15 @@ class Arr extends AHelper {
 	}
 
 	/**
+	 * @param array $Source
+	 * @param int $length
+	 * @return array
+	 */
+	public static final function cut(array $Source, int $length): array {
+		return array_slice($Source, 0, $length > 0 && count($Source) > $length ? count($Source) - $length : 0);
+	}
+
+	/**
 	 * Returns a random value from the array.
 	 *
 	 * @param array $Source
