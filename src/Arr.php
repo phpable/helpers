@@ -205,7 +205,20 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Adds given values to the beginning of the given array.
+	 * Removes and returns the ending value from an array.
+	 *
+	 * Function behavior is similar to 'array_push'
+	 * but takes a custom list of mixed-type arguments.
+	 *
+	 * @param array $Source
+	 * @return mixed
+	 */
+	public static final function pop(array &$Source) {
+		return array_pop($Source);
+	}
+
+	/**
+	 * Adds given values to the beginning of an array.
 	 *
 	 * Function behavior is similar to 'array_unshift'
 	 * but takes a custom list of mixed-type arguments.
@@ -216,6 +229,19 @@ class Arr extends AHelper {
 	 */
 	public static final function unshift(array $Source, ...$args): array {
 		return self::prepend($Source, self::cast(array_reverse($args)));
+	}
+
+	/**
+	 * Removes and returns leading values of an array.
+	 *
+	 * Function behavior is similar to 'array_unshift'
+	 * but takes a custom list of mixed-type arguments.
+	 *
+	 * @param array $Source
+	 * @return mixed
+	 */
+	public static final function shift(array &$Source) {
+		return array_shift($Source);
 	}
 
 	/**
