@@ -196,6 +196,15 @@ class ArrTest extends TestCase {
 				'key1' => 1000, 'key2' => 'test string!']]);
 	}
 
+	public final function testPop(){
+		$arr = ['a' => 'a!', 'b' => 'b!', 'c' => 'c!'];
+
+		$this->assertEquals(Arr::pop($arr), 'c!');
+		$this->assertEquals(Arr::pop($arr), 'b!');
+
+		$this->assertSame($arr, ['a' => 'a!']);
+	}
+
 	public final function testUnshift(){
 		$arr = ['a' => 'a!', 'b' => 'b!', 'c' => 'c!'];
 
@@ -204,6 +213,15 @@ class ArrTest extends TestCase {
 			1 => 10,
 			2 => 'd!',
 			'a' => 'a!', 'b' => 'b!', 'c' => 'c!']);
+	}
+
+	public final function testShift(){
+		$arr = ['a' => 'a!', 'b' => 'b!', 'c' => 'c!'];
+
+		$this->assertEquals(Arr::shift($arr), 'a!');
+		$this->assertEquals(Arr::shift($arr), 'b!');
+
+		$this->assertSame($arr, ['c' => 'c!']);
 	}
 
 	public final function testInsert() {
@@ -353,6 +371,23 @@ class ArrTest extends TestCase {
 
 		$this->assertSame(Arr::take($arr, 5, 'undefined'), ['a' => 'lt_a', 'b' => 'lt_b',
 			'c' => 'lt_c', 'undefined', 'undefined']);
+	}
+
+	public final function testCut(){
+		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
+			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
+
+		$this->assertSame(Arr::cut($arr, 3), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c',
+			'd' => 'lt_d', 'e' => 'lt_e', 'f' => 'lt_f']);
+
+		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c'];
+
+		$this->assertSame(Arr::cut($arr, 1), ['a' => 'lt_a', 'b' => 'lt_b']);
+		$this->assertSame(Arr::cut($arr, 2), ['a' => 'lt_a']);
+		$this->assertSame(Arr::cut($arr, 3), []);
+		$this->assertSame(Arr::cut($arr, 4), []);
+		$this->assertSame(Arr::cut($arr, -4), []);
+		$this->assertSame(Arr::cut($arr, 99), []);
 	}
 
 	public final function testRand(){
