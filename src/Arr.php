@@ -2,6 +2,7 @@
 namespace Able\Helpers;
 
 use \Able\Helpers\Abstractions\AHelper;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class Arr extends AHelper{
 
@@ -494,32 +495,6 @@ class Arr extends AHelper{
 	}
 
 	/**
-	 * Sorts an array.
-	 *
-	 * @see sort()
-	 *
-	 * @param array $Source
-	 * @param int $flags
-	 * @return array
-	 */
-	public static final function sort(array $Source, int $flags = 0): array {
-		return sort($Source, $flags) ? $Source : [];
-	}
-
-	/**
-	 * Sorts an array by keys
-	 *
-	 * @see ksort()
-	 *
-	 * @param array $Source
-	 * @param int $flags
-	 * @return array
-	 */
-	public static final function ksort(array $Source, int $flags = 0): array {
-		return ksort($Source, $flags) ? $Source : [];
-	}
-
-	/**
 	 * @param array $Source
 	 * @param int $length
 	 * @param null $default
@@ -542,5 +517,16 @@ class Arr extends AHelper{
 		return count($keys = self::simplify(array_slice(func_get_args(), 1))) && uksort($Source, function($l, $r) use ($keys){
 			return Arr::contains($keys, $r, $l) ? array_search($l, $keys) - array_search($r, $keys) : 0; })
 				? self::only($Source, $keys) : $Source;
+	}
+
+	/**
+	 * Sorts an array by a custom function.
+	 *
+	 * @param array $Source
+	 * @param callable $Handler
+	 * @return array
+	 */
+	public static final function sort(array $Source, callable $Handler): array {
+		return usort($Source, $Handler) ? $Source : [];
 	}
 }
