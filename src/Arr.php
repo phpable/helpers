@@ -445,7 +445,7 @@ class Arr extends AHelper {
 	 * @param int $length
 	 * @return array
 	 */
-	public static final function cut(array $Source, int $length): array {
+	public static final function cut(array $Source, int $length = 1): array {
 		return array_slice($Source, 0, $length > 0 && count($Source) > $length ? count($Source) - $length : 0);
 	}
 
