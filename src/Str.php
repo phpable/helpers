@@ -202,8 +202,8 @@ class Str extends AHelper {
 	 * @param int $limit
 	 * @return string
 	 */
-	public final static function unbreak(string $source, int $limit = null): string{
-		return preg_replace($e = '/(?:\r\n|\n|\r)' . (!is_null($limit) && $limit >= 0
+	public final static function unbreak(string $source, int $limit = -1): string{
+		return preg_replace('/(?:\r\n|\n|\r)' . ($limit >= 0
 			? '{0,' . $limit .'}' : '*'). '$/', '', $source, 1);
 	}
 
