@@ -50,9 +50,9 @@ class Str extends AHelper {
 	 * @param mixed $source, ...
 	 * @return string
 	 */
-	public final static function join($separator, $source){
-		return implode($separator, array_map(function($value){ return self::cast($value); },
-			array_filter(Arr::simplify(array_slice(func_get_args(), 1)))));
+	public final static function join(string $separator, ...$source){
+		return implode($separator, array_map(function($value){
+			return self::cast($value); }, Arr::simplify($source)));
 	}
 
 	/**
