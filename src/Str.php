@@ -242,4 +242,11 @@ class Str extends AHelper {
 		}, array_slice(func_get_args(), 1)))) : null) . ')>/', "\$0\n", $source);
 	}
 
+	/**
+	 * @param string ...$sources
+	 * @return string
+	 */
+	public final static function md5(...$sources): string {
+		return md5(self::join('', ...$sources));
+	}
 }
