@@ -115,7 +115,7 @@ class Str extends AHelper {
 	/**
 	 * @param string $source
 	 * @param int $limit
-	 * @param string $separator
+	 * @param string|null $separator
 	 * @return string
 	 */
 	public final static function clip(string $source, int $limit, string $separator = null): string {
