@@ -57,7 +57,7 @@ class Arr extends AHelper{
 	 * @return array
 	 */
 	public static final function simplify(): array {
-		return count($Args = func_get_args()) > 0 && array_walk_recursive($Args,
+		return !empty($Args = array_filter(func_get_args())) && array_walk_recursive($Args,
 			function($value) use (&$Simple){ $Simple[] = $value; }) ? self::cast($Simple) : [];
 	}
 
