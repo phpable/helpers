@@ -455,7 +455,7 @@ class Arr extends AHelper{
 	}
 
 	/**
-	 * Adds the last given argument as a value into an array by the path
+	 * Adds the last given argument into an array following the specified path
 	 * defined by the sequence from the second argument to the penultimate one.
 	 *
 	 * @param array $Source

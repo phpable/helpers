@@ -3,6 +3,7 @@ namespace Able\Helpers;
 
 use \Able\Helpers\Arr;
 use \Able\Helpers\Abstractions\AHelper;
+use phpDocumentor\Reflection\Types\String_;
 
 class Src extends AHelper{
 
@@ -13,7 +14,7 @@ class Src extends AHelper{
 	 * @param string $separator, ...
 	 * @return string
 	 */
-	public static final function tcm($string, $separator = '_') {
+	public static final function tcm(string $string, string $separator = '_'): string {
 		return implode(null, array_map('ucfirst', preg_split('/' . implode('|', array_map(function($separator){
 			return preg_quote($separator, '/');
 		}, array_pad(array_slice(func_get_args(), 1), 1, '_')))  . '/', trim(strtolower($string)), -1, PREG_SPLIT_NO_EMPTY)));
@@ -26,7 +27,7 @@ class Src extends AHelper{
 	 * @param string $separator
 	 * @return string
 	 */
-	public static final function fcm($string, $separator = '_') {
+	public static final function fcm(string $string, string $separator = '_'): string {
 		return ltrim(preg_replace_callback('/\\\?[A-Z][A-Za-z0-9]+?/', function($Macthes) use ($separator){
 			return $separator . ltrim(strtolower($Macthes[0]), '\\');
 		}, $string), $separator);
@@ -39,7 +40,7 @@ class Src extends AHelper{
 	 * @param string $separator, ...
 	 * @return string
 	 */
-	public static final function tons($string, $separator = '.') {
+	public static final function tons(string $string, string $separator = '.'): string {
 		return implode('\\', array_map('ucfirst', preg_split('/' . implode('|', array_map(function($separator){
 			return preg_quote($separator, '/');
 		}, array_pad(array_slice(func_get_args(), 1), 1, '.')))  . '/', trim(strtolower($string)), -1, PREG_SPLIT_NO_EMPTY)));
@@ -52,24 +53,29 @@ class Src extends AHelper{
 	 * @param string $separator
 	 * @return string
 	 */
-	public static final function frns($string, $separator = '.') {
+	public static final function frns(string $string, string $separator = '.'): string {
 		return implode($separator, preg_split('/\\\/', trim(strtolower($string)), -
 			1, PREG_SPLIT_NO_EMPTY));
 	}
 
 	/**
 	 * @param string $string
+	 * @param int count
 	 * @return string
 	 */
-	public static final function lns($string){
-		return preg_replace('/\\\\[^\\\\]+$/', null, rtrim($string, '\\'));
+	public static final function lns(string $string, int $count = 1): string {
+		while ($count-- > 0) {
+			$string = preg_replace('/(\\\\|^)[^\\\\]+$/', null, rtrim($string, '\\'));
+		}
+
+		return $string;
 	}
 
 	/**
 	 * @param string $string
 	 * @return string
 	 */
-	public static final function rns($string){
+	public static final function rns(string $string): string {
 		return preg_replace('/^.*\\\\/', null, rtrim($string, '\\'));
 	}
 
@@ -90,7 +96,7 @@ class Src extends AHelper{
 	 * @return mixed|null
 	 * @throws \Exception
 	 */
-	public static final function call($Target, $Params = [], $default = null){
+	public static final function call($Target, array $Params = [], $default = null){
 		if (is_callable($Target)) {
 			return call_user_func_array($Target, Arr::cast($Params));
 		}
