@@ -199,6 +199,14 @@ class Str extends AHelper {
 	 * @param string $source
 	 * @return string
 	 */
+	public final static function rmnl(string $source): string{
+		return preg_replace('/\s*[\n\r]+\s*/', ' ', $source);
+	}
+
+	/**
+	 * @param string $source
+	 * @return string
+	 */
 	public final static function br2nl(string $source): string {
 		return preg_replace('/<br\s*\\/?>/', "\n", $source);
 	}
