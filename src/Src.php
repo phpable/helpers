@@ -81,6 +81,14 @@ class Src extends AHelper{
 	}
 
 	/**
+	 * @param string $class
+	 * @return string
+	 */
+	public static final function unpref(string $class): string {
+		return preg_replace('/^[A-Z](?=[A-Z])/', '', self::rns($class));
+	}
+
+	/**
 	 * @param string $source
 	 * @param string $fragments
 	 * @return string
