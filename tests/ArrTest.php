@@ -252,6 +252,7 @@ class ArrTest extends TestCase {
 		$arr1 = ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b']], 'b' => 12];
 
 		$arr2 = Arr::improve($arr1, 'a', 'g', 'n1', '2b');
+
 		$this->assertSame($arr2, ['a' => ['e' => 100,
 			'g' => ['n1' => ['1a', '2b'], 'n2' => '1b']], 'b' => 12]);
 
@@ -268,8 +269,9 @@ class ArrTest extends TestCase {
 			'g' => ['n1' => '1a', 'n2' => '1b', 0 => 'test']], 'b' => 12]);
 
 		$arr2 = Arr::improve($arr1, 'a', 'r', 'test1');
+
 		$this->assertSame($arr2, ['a' => ['e' => 100,
-			'g' => ['n1' => '1a', 'n2' => '1b'], 'r' => 'test1'], 'b' => 12]);
+			'g' => ['n1' => '1a', 'n2' => '1b'], 'r' => ['test1']], 'b' => 12]);
 
 		$arr2 = Arr::improve($arr2, 'a', 'r', 'test2');
 		$this->assertSame($arr2, ['a' => ['e' => 100,
