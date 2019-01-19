@@ -3,7 +3,8 @@ namespace Able\Helpers;
 
 use \Able\Helpers\Arr;
 use \Able\Helpers\Abstractions\AHelper;
-use phpDocumentor\Reflection\Types\String_;
+
+use \Exception;
 
 class Src extends AHelper{
 
@@ -54,7 +55,7 @@ class Src extends AHelper{
 	 * @return string
 	 */
 	public static final function frns(string $string, string $separator = '.'): string {
-		return implode($separator, preg_split('/\\\/', trim(strtolower($string)), -
+		return implode($separator, preg_split('/\\\\/', trim(strtolower($string)), -
 			1, PREG_SPLIT_NO_EMPTY));
 	}
 
@@ -94,7 +95,7 @@ class Src extends AHelper{
 	 * @param array $Params
 	 * @param null $default
 	 * @return mixed|null
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static final function call($Target, array $Params = [], $default = null){
 		if (is_callable($Target)) {
@@ -111,14 +112,22 @@ class Src extends AHelper{
 	/**
 	 * @param string $target
 	 * @return object
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static final function make(string $target){
 		if (!class_exists($target)){
-			throw new \Exception('Undefined target class!');
+			throw new Exception('Undefined target class!');
 		}
 
 		return new $target(...array_slice(func_get_args(), 1));
+	}
+
+	/**
+	 * @param object $target
+	 * @return array
+	 */
+	public static final function parents(object $target): array  {
+		return array_reverse(Arr::collect(get_class($target), array_values(class_parents($target))));
 	}
 }
 
