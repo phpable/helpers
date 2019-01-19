@@ -137,5 +137,14 @@ class Src extends AHelper{
 	public static final function parents(object $target): array  {
 		return array_reverse(Arr::collect(get_class($target), array_values(class_parents($target))));
 	}
+
+	/**
+	 * @param object $target
+	 * @return array
+	 */
+	public static final function traits(object $target): array {
+		return Arr::simplify(array_map(function($_) {
+			return class_uses($_); }, self::parents($target)));
+	}
 }
 
