@@ -278,16 +278,14 @@ class Arr extends AHelper {
 	 * @return array
 	 */
 	public static final function improve(array $Source, ...$args): array {
-		return count($keys = array_filter(array_slice($args, 0, -1),
-
-			function ($_) {
-				return is_integer($_) || is_string($_); })) > 0
+		return count($keys = array_map(function ($_) {
+			return Str::cast($_); }, array_slice($args, 0, -1))) > 0
 
 			? (array_merge($Source, [
-				$keys[0] => (count($keys) > 1 || array_key_exists($keys[0], $Source)
+				$keys[0] =>
 
-					? self::improve(self::cast(self::get($Source, $keys[0])),
-						...array_slice($args, 1)) : Arr::last($args))]))
+					self::improve((array)(self::get($Source, $keys[0])),
+						...array_slice($args, 1))]))
 
 		: self::push($Source, $args[0]);
 	}
@@ -298,11 +296,11 @@ class Arr extends AHelper {
 	 * @attention Numerical keys not preserved.
 	 *
 	 * @param array $Source
-	 * @param array $Attached
+	 * @param array $Supplier
 	 * @return array
 	 */
-	public static final function merge(array $Source, array $Attached): array {
-		return array_walk($Attached,
+	public static final function merge(array $Source, array $Supplier): array {
+		return array_walk($Supplier,
 			function($value, $key) use (&$Source) {
 
 				if (is_array($value)) {
@@ -311,9 +309,11 @@ class Arr extends AHelper {
 				} elseif (is_numeric($key)) {
 					array_push($Source, $value);
 
-				} else {
+				} elseif (array_key_exists($key, $Source)) {
 					$Source = self::improve($Source, $key, $value);
 
+				} else {
+					$Source[$key] = $value;
 				}
 
 			}) ? $Source
