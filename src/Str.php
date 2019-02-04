@@ -84,6 +84,15 @@ class Str extends AHelper {
 
 	/**
 	 * @param string $source
+	 * @param $fragment
+	 * @return string
+	 */
+	public final static function mright(string $source, $fragment): string {
+		return preg_replace('/^(' . preg_quote($fragment, '/'). ')?/', $fragment, $source);
+	}
+
+	/**
+	 * @param string $source
 	 * @param int $limit
 	 * @return string
 	 */
