@@ -88,7 +88,16 @@ class Str extends AHelper {
 	 * @return string
 	 */
 	public final static function mright(string $source, $fragment): string {
-		return preg_replace('/^(' . preg_quote($fragment, '/'). ')?/', $fragment, $source);
+		return preg_replace('/(?:' . preg_quote($fragment, '/'). ')?$/', $fragment, $source, 1);
+	}
+
+	/**
+	 * @param string $source
+	 * @param $fragment
+	 * @return string
+	 */
+	public final static function mleft(string $source, $fragment): string {
+		return preg_replace('/^(?:' . preg_quote($fragment, '/'). ')?/', $fragment, $source, 1);
 	}
 
 	/**
