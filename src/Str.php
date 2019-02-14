@@ -189,6 +189,26 @@ class Str extends AHelper {
 
 	/**
 	 * @param string $source
+	 * @param string $character
+	 * @param int $count
+	 * @return string
+	 */
+	public final static function rpad(string $source, string $character, int $count): string {
+		return  str_pad($source, $count, $character, STR_PAD_RIGHT);
+	}
+
+	/**
+	 * @param string $source
+	 * @param string $character
+	 * @param int $count
+	 * @return string
+	 */
+	public final static function lpad(string $source, string $character, int $count): string {
+		return  str_pad($source, $count, $character, STR_PAD_LEFT);
+	}
+
+	/**
+	 * @param string $source
 	 * @return string
 	 */
 	public final static function break(string $source): string {

@@ -1,6 +1,6 @@
 {
 	"name": "able/helpers",
-	"version": "1.0",
+	"version": "1.0.1",
 	"type": "library",
 	"keywords": ["phpable", "helpers"],
 	"description": "phpABLE helpers library",
