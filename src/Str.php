@@ -6,8 +6,8 @@ use \Able\Helpers\Abstractions\AHelper;
 class Str extends AHelper {
 
 	/**
-	 * This constant is a duplicate of the \Able\Reglib\Reglib::QUOTED constant.
-	 * Just left it here to avoid cycling dependencies.
+	 * To avoid cycling dependencies this constant duplicates
+	 * the \Able\Reglib\Reglib::QUOTED constant.
 	 */
 	private const RE_QUOTED = '(?:\'(?:\\\\\'|[^\'])*\'|"(?:\\\\"|[^"])*")';
 
