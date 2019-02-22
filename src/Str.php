@@ -6,12 +6,6 @@ use \Able\Helpers\Abstractions\AHelper;
 class Str extends AHelper {
 
 	/**
-	 * To avoid cycling dependencies this constant duplicates
-	 * the \Able\Reglib\Reglib::QUOTED constant.
-	 */
-	private const RE_QUOTED = '(?:\'(?:\\\\\'|[^\'])*\'|"(?:\\\\"|[^"])*")';
-
-	/**
 	 * Converts any value into a string.
 	 *
 	 * @attention This method throws an exception if the given value
@@ -135,25 +129,16 @@ class Str extends AHelper {
 
 	/**
 	 * @param string $source
+	 * @param string ...$allow
 	 * @return string
 	 */
-	public final static function strip(string $source): string {
-		return preg_replace('/<(?:\/|!doctype\s*)?[a-z0-9_-]+\s*(?:[^>\s]+(?:\s*=\s*(?:' . self::RE_QUOTED
-			. '|[^>\s]+))?\s*)*\/?>/i', ' ', preg_replace('/<!--.*?-->/s', null, $source));
-	}
-
-	/**
-	 * @param string $source
-	 * @param string $allow, ...
-	 * @return string
-	 */
-	public final static function stripl(string $source, string $allow = null): string {
-		$allow = array_filter(array_slice(func_get_args(), 1), function($value){
+	public final static function strip(string $source, string ...$allow): string {
+		$allow = array_filter($allow, function($value){
 			return preg_match('/^[A-Za-z0-9_-]+$/', $value); });
 
-		return preg_replace_callback('/<((?:\/|!doctype\s*)?[a-z0-9_-]+)\s*(?:[^>\s]+(?:\s*=\s*(?:' . self::RE_QUOTED
-			. '|[^>\s]+))?\s*)*\/?>/i', function($value) use ($allow){
-				return preg_match('/\s+/', trim($value[1])) > 0 || !in_array(trim($value[1], ' /'), $allow) ? '' : $value[0];
+		return preg_replace_callback('/<((?:\/|!doctype\s*)?[a-z0-9_-]+)\s*(?:[^>\s]+(?:\s*=\s*(?:'
+			. '(?:\'(?:\\\\\'|[^\'])*\'|"(?:\\\\"|[^"])*")|[^>\s]+))?\s*)*\/?>/i', function($value) use ($allow){
+				return count($allow) < 1 || !in_array(trim($value[1], ' /'), $allow) ? '' : $value[0];
 			}, preg_replace('/<!--.*?-->/s', null, $source));
 	}
 
