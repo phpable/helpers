@@ -286,6 +286,14 @@ class ArrTest extends TestCase {
 			'g' => ['n1' => '1a', 'n2' => ['1b', '2b']], 'f' => 22], 'b' => [12, 44]]);
 	}
 
+	public final function testInite() {
+		$arr1 = ['a' => ['a1' => 100, 'a2' => 200, 'a3' => 300], 'b' => 12];
+		$arr2 = ['a' => ['a3' => 'test1', 'a4' => 'test2'], 'b' => 44];
+
+		$this->assertSame(Arr::Unite($arr1, $arr2),  ['a' => ['a1' => 100,
+			'a2' => 200, 'a3' => 'test1', 'a4' => 'test2'], 'b' => 44]);
+	}
+
 	public final function testErase(){
 		$arr = ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b']], 'b' => 12];
 
