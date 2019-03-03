@@ -322,6 +322,28 @@ class Arr extends AHelper {
 	}
 
 	/**
+	 * Unite two given arrays recursively.
+	 *
+	 * @param array $Source
+	 * @param array $Supplier
+	 * @return array
+	 */
+	public static final function unite(array $Source, array $Supplier): array {
+		return array_walk($Supplier,
+			function($value, $key) use (&$Source) {
+
+				if (is_array($value)) {
+					$Source[$key] = self::unite(self::cast(self::get($Source, $key)), $value);
+				} else {
+					$Source[$key] = $value;
+				}
+
+			}) ? $Source
+
+		: [];
+	}
+
+	/**
 	 * Removes an element from the array given as a first argument following the path
 	 * defined by the sequence starting the second argument to last one.
 	 *
