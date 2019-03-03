@@ -3,7 +3,8 @@ namespace Able\Helpers;
 
 use \Able\Helpers\Abstractions\AHelper;
 use \Able\Helpers\Arr;
-use Exception;
+
+use \Exception;
 
 class Jsn extends AHelper {
 
@@ -117,7 +118,7 @@ class Jsn extends AHelper {
 	 * @throws Exception
 	 */
 	public final static function merge(string $source, array $Data) {
-		return self::encode(Arr::merge(self::decode($source), $Data));
+		return self::encode(Arr::unite(self::decode($source), $Data));
 	}
 
 	/**
