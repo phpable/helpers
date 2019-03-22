@@ -212,7 +212,7 @@ class Str extends AHelper {
 	 * @return string
 	 */
 	public final static function rebreak(string $source): string {
-		return trim(preg_replace('/[\n\r]+/', PHP_EOL, $source));
+		return preg_replace('/[\n\r]+/', PHP_EOL, $source);
 	}
 
 	/**
