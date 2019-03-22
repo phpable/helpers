@@ -211,6 +211,14 @@ class Str extends AHelper {
 	 * @param string $source
 	 * @return string
 	 */
+	public final static function rebreak(string $source): string {
+		return trim(preg_replace('/[\n\r]+/', PHP_EOL, $source));
+	}
+
+	/**
+	 * @param string $source
+	 * @return string
+	 */
 	public final static function sanitize(string $source): string {
 		return trim(preg_replace('/\s+/', ' ', $source));
 	}
