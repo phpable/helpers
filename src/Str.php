@@ -112,7 +112,7 @@ class Str extends AHelper {
 	 * @return string
 	 */
 	public final static function trf(string $source, int $limit, string $finalizer = '...'): string {
-		return self::tr($source, $limit - mb_strlen($finalizer)) . $finalizer;
+		return mb_strlen($source) > $limit ? self::tr($source, $limit - mb_strlen($finalizer)) . $finalizer : $source;
 	}
 
 	/**
