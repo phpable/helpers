@@ -26,7 +26,8 @@ class Arr extends AHelper {
 	/**
 	 * Converts the given value into an array.
 	 *
-	 * @attention Existing keys are not preserved!
+	 * @attention Any non-arrayable argument will be converted
+	 * to a one-element array without throwing an error.
 	 *
 	 * @param mixed $value
 	 * @return array
@@ -52,7 +53,7 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Converts given arguments into a single-level array.
+	 * Converts the given arguments into a single-level flat array.
 	 *
 	 * @attention Existing keys are not preserved!
 	 *
