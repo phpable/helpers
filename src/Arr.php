@@ -5,11 +5,28 @@ use \Able\Helpers\Abstractions\AHelper;
 
 use \Iterator;
 use \Generator;
+use \ArrayAccess;
 
 class Arr extends AHelper {
 
 	/**
+	 * Determines whether the given value is presentable as an array.
+	 *
+	 * @param mixed $value
+	 * @return bool
+	 */
+	public static final function castable($value): bool {
+		return is_array($value)
+			|| $value instanceof Iterator
+			|| $value instanceof ArrayAccess
+
+			|| (is_object($value) && method_exists($value, 'toArray'));
+	}
+
+	/**
 	 * Converts the given value into an array.
+	 *
+	 * @attention Existing keys are not preserved!
 	 *
 	 * @param mixed $value
 	 * @return array
@@ -23,39 +40,15 @@ class Arr extends AHelper {
 			return $value->toArray();
 		}
 
+		if ($value instanceof ArrayAccess) {
+			return (array)$value;
+		}
+
 		if ($value instanceof Iterator) {
 			return iterator_to_array($value);
 		}
 
 		return [$value];
-	}
-
-	/**
-	 * Determines whether the given value can be presented as an array.
-	 *
-	 * @param mixed $value
-	 * @return bool
-	 */
-	public static final function castable($value): bool {
-		return is_array($value)
-
-			|| $value instanceof Iterator
-
-			|| (is_object($value) && method_exists($value, 'toArray'));
-	}
-
-	/**
-	 * Converts given arguments into an iterator.
-	 *
-	 * @attention Existing keys are not preserved!
-	 *
-	 * @param mixed ...$arguments
-	 * @return Generator
-	 */
-	public static final function iterate(...$arguments): Generator {
-		foreach (self::simplify($arguments) as $item){
-			yield $item;
-		}
 	}
 
 	/**
@@ -67,10 +60,25 @@ class Arr extends AHelper {
 	 * @return array
 	 */
 	public static final function simplify(...$arguments): array {
-		return !empty($Args = array_filter($arguments)) && array_walk_recursive($Args,
+		return !empty($Args = array_filter($arguments))
+			&& array_walk_recursive($Args,
+
 			function($value) use (&$Simple){ $Simple[] = $value; }) ? self::cast($Simple) : [];
 	}
 
+	/**
+	 * Converts given arguments into a generator.
+	 *
+	 * @attention Existing keys are not preserved!
+	 *
+	 * @param mixed ...$arguments
+	 * @return Generator
+	 */
+	public static final function iterate(...$arguments): Generator {
+		foreach (self::simplify($arguments) as $item){
+			yield $item;
+		}
+	}
 
 	/**
 	 * Appends the given array to the end of another one.
