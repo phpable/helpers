@@ -6,8 +6,15 @@ class Arrayable {
 	/**
 	 * @var array
 	 */
-	private $array = ['a', 'b',
-		'c', 'd', 'e', 'f'];
+	private $Array = [];
+
+	/**
+	 * Arrayable constructor.
+	 * @param array $array
+	 */
+	public final function __construct(array $array = []) {
+		$this->Array = $array;
+	}
 
 	/**
 	 * @return array

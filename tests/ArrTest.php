@@ -1,13 +1,14 @@
 <?php
 namespace Able\Helpers\Tests;
 
-use Able\Helpers\Tests\Examples\Arrayable;
+use \Able\Helpers\Arr;
+use \Able\Helpers\Tests\Examples\Arrayable;
 use \Able\Helpers\Tests\Examples\TestClassA;
 use \Able\Helpers\Tests\Examples\StandardIterator;
 
 use \PHPUnit\Framework\TestCase;
-use \Able\Helpers\Arr;
 
+use \ArrayObject;
 use \Generator;
 
 class ArrTest extends TestCase {
@@ -16,14 +17,27 @@ class ArrTest extends TestCase {
 		$arr = ['a', 'b', 'c', 'd'];
 		$this->assertTrue(Arr::castable($arr));
 
-		$arr = "test string";
-		$this->assertFalse(Arr::castable($arr));
-
-		$Obj = new Arrayable();
+		$Obj = new Arrayable($arr);
 		$this->assertTrue(Arr::castable($Obj));
 
-		$Iterator = new StandardIterator();
-		$this->assertTrue(Arr::castable($Iterator));
+		$obj = new ArrayObject($arr);
+		$this->assertTrue(Arr::castable($obj));
+		$this->assertTrue(Arr::castable($obj->getIterator()));
+
+		$str = "test string";
+		$this->assertFalse(Arr::castable($str));
+	}
+
+	public final function testCast() {
+		$arr = ['a' => 'a1', 'b' => 'b2', 'c' => 'c2', 'd' => 'd3'];
+		$this->assertSame(Arr::cast($arr), $arr);
+
+		$Obj = new Arrayable($arr);
+		$this->assertTrue(Arr::castable($Obj));
+
+		$obj = new ArrayObject($arr);
+		$this->assertSame(Arr::cast($obj), $arr);
+		$this->assertSame(Arr::cast($obj->getIterator()), $arr);
 	}
 
 	public final function testSimplify() {
