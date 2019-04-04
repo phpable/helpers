@@ -61,7 +61,19 @@ class ArrTest extends TestCase {
 			4, null, 5, ['x' => '', 'y' => 0, 'z' => null]], 'd', 'e'];
 
 		$this->assertSame(Arr::simplify($arr), ['a', 'b', 'c', 1, 2, 3, 'lt_x', 'lt_y', 'lt_z',
-			4, null, 5, '', 0, null, 'd', 'e']);
+			4, 5, '', 0, 'd', 'e']);
+
+		$arr = [null, null, null];
+		$this->assertSame(Arr::simplify($arr), []);
+
+		$v = null;
+		$this->assertSame(Arr::simplify($v), []);
+
+		$v = 0;
+		$this->assertSame(Arr::simplify($v), [0]);
+
+		$this->assertSame(Arr::simplify(['a', 'b', 'c'],
+			null, 0, ['k' => [1, 2, 3]]), ['a', 'b', 'c', 0, 1, 2, 3]);
 	}
 
 	public final function testAppend(){

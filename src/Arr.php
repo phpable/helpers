@@ -70,8 +70,8 @@ class Arr extends AHelper {
 	public static final function simplify(...$args): array {
 		return !empty($args)
 
-			&& array_walk_recursive($args,
-				function($v) use (&$_) { $_[] = $v; })
+			&& array_walk_recursive($args, function($v) use (&$_) {
+				if (!is_null($v)) { $_[] = $v; } })
 
 		? self::cast($_) : [];
 	}
