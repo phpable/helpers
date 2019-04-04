@@ -26,8 +26,11 @@ class Arr extends AHelper {
 	/**
 	 * Converts the given value into an array.
 	 *
-	 * @attention Any non-arrayable argument will be converted
+	 * @attention A non-arrayable argument will be converted
 	 * to a one-element array without throwing an error.
+	 *
+	 * @attention A null value will be converted
+	 * to an empty array.
 	 *
 	 * @param mixed $value
 	 * @return array
@@ -49,6 +52,10 @@ class Arr extends AHelper {
 			return iterator_to_array($value);
 		}
 
+		if (is_null($value)) {
+			return [];
+		}
+
 		return [$value];
 	}
 
@@ -57,14 +64,14 @@ class Arr extends AHelper {
 	 *
 	 * @attention Existing keys are not preserved!
 	 *
-	 * @param mixed ...$arguments
+	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function simplify(...$arguments): array {
-		return !empty($arguments)
+	public static final function simplify(...$args): array {
+		return !empty($args)
 
-			&& array_walk_recursive($arguments,
-				function($value) use (&$_) { $_[] = $value; })
+			&& array_walk_recursive($args,
+				function($v) use (&$_) { $_[] = $v; })
 
 		? self::cast($_) : [];
 	}

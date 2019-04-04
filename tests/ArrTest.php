@@ -24,8 +24,14 @@ class ArrTest extends TestCase {
 		$this->assertTrue(Arr::castable($obj));
 		$this->assertTrue(Arr::castable($obj->getIterator()));
 
-		$str = "test string";
-		$this->assertFalse(Arr::castable($str));
+		$v = "test string";
+		$this->assertFalse(Arr::castable($v));
+
+		$v = null;
+		$this->assertFalse(Arr::castable($v));
+
+		$v = 0;
+		$this->assertFalse(Arr::castable($v));
 	}
 
 	public final function testCast() {
@@ -38,6 +44,16 @@ class ArrTest extends TestCase {
 		$obj = new ArrayObject($arr);
 		$this->assertSame(Arr::cast($obj), $arr);
 		$this->assertSame(Arr::cast($obj->getIterator()), $arr);
+
+
+		$v = "test string";
+		$this->assertSame(Arr::cast($v), [$v]);
+
+		$v = null;
+		$this->assertSame(Arr::cast($v), []);
+
+		$v = 0;
+		$this->assertSame(Arr::cast($v), [0]);
 	}
 
 	public final function testSimplify() {
