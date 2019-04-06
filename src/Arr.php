@@ -127,17 +127,19 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Adds the given values to the end of an array.
-	 * Function behavior is similar to 'array_push' but allows an arbitrary list of arguments.
+	 * Adds the given values to the end of the given array.
+	 *
+	 * Function behavior is similar to 'array_push'
+	 * but takes a custom list of mixed-type arguments.
 	 *
 	 * @attention Keys not preserved.
 	 *
 	 * @param array $Source
-	 * @param mixed $value
+	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function push(array $Source, $value): array {
-		return self::append($Source, self::simplify(array_slice(func_get_args(), 1)));
+	public static final function push(array $Source, ...$args): array {
+		return self::append($Source, self::simplify($args));
 	}
 
 	/**

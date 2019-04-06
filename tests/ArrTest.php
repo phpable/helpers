@@ -139,10 +139,14 @@ class ArrTest extends TestCase {
 	}
 
 	public final function testPush(){
-		$arr = ['a', 'b', 'c', 'd'];
+		$arr1 = ['a' => 'a!', 'b' => 'b!'];
+		$arr2 = ['c' => 'c!', 3 => 'd', 100 => 'the string!', 'b' => 1000];
 
-		$this->assertSame(Arr::push($arr, ['e', ['key1' => 'f', 'key2' => 'g',
-			'key3' => ['h', 'i']]]), ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']);
+		$this->assertSame(Arr::push($arr1, $arr2, ['c' => 'e!', ['key1' => 'f', 'key2' => 'g',
+			'key3' => ['h', 'i']]]), ['a' => 'a!', 'b' => 'b!',
+
+			0 => 'c!', 1 => 'd',
+			2 => 'the string!', 3 => 1000, 4 => 'e!', 5 => 'f', 6 => 'g', 7 => 'h', 8 => 'i']);
 	}
 
 	public final function testUnshift(){
