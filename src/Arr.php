@@ -60,6 +60,19 @@ class Arr extends AHelper {
 	}
 
 	/**
+	 * Merges the mixed-types list of arguments into an array.
+	 *
+	 * @attention Numerical keys not preserved.
+	 *
+	 * @param mixed ...$args
+	 * @return array
+	 */
+	public static final function collect(...$args): array {
+		return array_merge(...array_map(function ($_) {
+			return self::cast($_); }, $args));
+	}
+
+	/**
 	 * Converts the given arguments into a single-level flat array.
 	 *
 	 * @attention Existing keys are not preserved!
