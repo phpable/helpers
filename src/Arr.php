@@ -168,6 +168,26 @@ class Arr extends AHelper {
 	}
 
 	/**
+	 * Inserts an element into the specified position of the given array.
+	 *
+	 * @param array $Source
+	 * @param int $position
+	 * @param mixed ...$args
+	 * @return array
+	 */
+	public static final function insert(array $Source, int $position, ...$args): array {
+		return $position > 0
+
+			? array_merge(
+				array_slice($Source, 0, $position),
+				self::collect(...$args),
+				array_slice($Source, $position)
+			)
+
+		: self::prepend($Source, self::cast($value));
+	}
+
+	/**
 	 * Returns a subset from the given array using the given list of needed keys.
 	 *
 	 * @param array $Source
@@ -177,19 +197,6 @@ class Arr extends AHelper {
 	public static final function only(array $Source, $keys): array {
 		return array_intersect_key($Source,
 			array_fill_keys(self::simplify(array_slice(func_get_args(), 1)), -1));
-	}
-
-	/**
-	 * Inserts an element into the specified position of an array.
-	 *
-	 * @param array $Source
-	 * @param int $position
-	 * @param $value
-	 * @return array
-	 */
-	public static final function insert(array $Source, int $position, $value): array {
-		return $position > 0 ? self::append(array_slice($Source, 0, $position), self::prepend(array_slice($Source,
-			$position), self::cast($value))) : self::prepend($Source, self::cast($value));
 	}
 
 	/**

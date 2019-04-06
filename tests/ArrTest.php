@@ -56,6 +56,26 @@ class ArrTest extends TestCase {
 		$this->assertSame(Arr::cast($v), [0]);
 	}
 
+
+	public final function testCollect() {
+		$arr1 = ['a' => 'a!', 'b' => 'b!', 'c' => 'c!'];
+
+		$arr2 = [22 => '%', 'key22' => 19,
+			'test1' => ['test1#k1' => 'test1#el1', 'test1#k2' => 'test1#el2'],
+			['test2#k1' => 'test2#el1', 'test2#k2' => 'test2#el2']
+		];
+
+		$this->assertSame(Arr::collect($arr1, 1000, 'test string!', $arr2), [
+			'a' => 'a!', 'b' => 'b!', 'c' => 'c!',
+			0 => 1000,
+			1 => 'test string!',
+			2 => '%',
+			'key22' => 19,
+			'test1' => ['test1#k1' => 'test1#el1', 'test1#k2' => 'test1#el2'],
+			3 => ['test2#k1' => 'test2#el1', 'test2#k2' => 'test2#el2'],
+		]);
+	}
+
 	public final function testSimplify() {
 		$arr = ['a', 'b', 'c', [1, 2, 3, ['x' => 'lt_x', 'y' => 'lt_y', 'z' => 'lt_z'],
 			4, null, 5, ['x' => '', 'y' => 0, 'z' => null]], 'd', 'e'];
@@ -160,11 +180,20 @@ class ArrTest extends TestCase {
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
 
-		$this->assertSame(Arr::insert($arr, 2, ['b2' => 'lt_b2']), ['a' => 'lt_a', 'b' => 'lt_b', 'b2' => 'lt_b2',
+		$this->assertSame(Arr::insert($arr, 2, ['b2' => 'lt_b2']), [
+			'a' => 'lt_a', 'b' => 'lt_b',
+			'b2' => 'lt_b2',
 			'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
 
-		$this->assertSame(Arr::insert($arr, 99, ['b2' => 'lt_b2']), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c',
-			'd' => 'lt_d', 'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i', 'b2' => 'lt_b2']);
+		$this->assertSame(Arr::insert($arr, 4, 'lt_i0', 'lt_i1'), [
+			'a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d',
+			0 => 'lt_i0', 1 => 'lt_i1',
+			'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
+
+
+		$this->assertSame(Arr::insert($arr, 99, ['b2' => 'lt_b2'], ['c3' => 'lt_c3']), [
+			'a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i',
+			'b2' => 'lt_b2', 'c3' => 'lt_c3']);
 	}
 
 	public final function testOnly(){
