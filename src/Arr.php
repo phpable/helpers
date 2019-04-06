@@ -77,7 +77,7 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Converts given arguments into a generator.
+	 * Converts the given arguments into a generator.
 	 *
 	 * @attention Existing keys are not preserved!
 	 *

@@ -76,6 +76,17 @@ class ArrTest extends TestCase {
 			null, 0, ['k' => [1, 2, 3]]), ['a', 'b', 'c', 0, 1, 2, 3]);
 	}
 
+
+	public final function testIterate(){
+		$arr1 = ['a', 'b', 'c', 'd'];
+		$arr2 = ['a' => 'n1', 'b' => 'n2', 'c' => 'n3'];
+		$arr3 = ['a' => 'n4', 'b' => 'n5', 'c' => 'n6'];
+
+		$this->assertSame(iterator_to_array(Arr::iterate($arr1, $arr2, $arr3)), [
+			'a', 'b', 'c', 'd', 'n1', 'n2', 'n3', 'n4', 'n5', 'n6']);
+	}
+
+
 	public final function testAppend(){
 		$arr = ['a' => 'n1', 'b' => 'n2', 'c' => 'n3', 'd' => 'n4', 'e' => 'n5', 'f' => 'n6'];
 
