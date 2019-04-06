@@ -112,10 +112,30 @@ class ArrTest extends TestCase {
 	}
 
 	public final function testPrepend(){
-		$arr = ['c' => 'n4', 'd' => 'n5', 'e' => 'n6', 'f' => 'n7', 'g' => 'n8', 'h' => 'n9'];
+		$arr1 = ['a' => 'n1', 'b' => 'n2', 'c' =>
+			'n3', 'd' => 'n4', 'e' => 'n5', 'f' => 'n6'];
 
-		$this->assertSame(Arr::prepend($arr, ['a' => 'n1', 'b' => 'n2', 'g' => 'n3']), ['a' => 'n1', 'b' => 'n2',
-			'g' => 'n3', 'c' => 'n4', 'd' => 'n5', 'e' => 'n6', 'f' => 'n7', 'h' => 'n9']);
+		$arr2 = ['c' => 'n7', 'g' => 'n8', 'h' => 'n9'];
+
+		$arr3 = [null, 'o', 'e'];
+		$arr4 = [1, 2, 3];
+
+		$tmp1 = Arr::prepend($arr1, $arr2);
+		$this->assertSame($tmp1, ['c' => 'n7', 'g' => 'n8', 'h' => 'n9',
+			'a' => 'n1', 'b' => 'n2', 'd' => 'n4', 'e' => 'n5', 'f' => 'n6']);
+
+		$tmp2 = Arr::prepend($tmp1, $arr3);
+		$this->assertSame($tmp2, [
+			0 => null, 1 => 'o', 2 => 'e',
+			'c' => 'n7', 'g' => 'n8', 'h' => 'n9',
+			'a' => 'n1', 'b' => 'n2', 'd' => 'n4', 'e' => 'n5', 'f' => 'n6']);
+
+		$tmp3 = Arr::prepend($tmp2, $arr4);
+		$this->assertSame($tmp3, [
+			0 => 1, 1 => 2, 2 => 3,
+			3 => null, 4 => 'o', 5 => 'e',
+			'c' => 'n7', 'g' => 'n8', 'h' => 'n9',
+			'a' => 'n1', 'b' => 'n2', 'd' => 'n4', 'e' => 'n5', 'f' => 'n6']);
 	}
 
 	public final function testPush(){

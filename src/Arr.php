@@ -91,7 +91,7 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Appends the given as a first argument array
+	 * Appends the array given as a first argument
 	 * to the end of another array given as a second argument.
 	 *
 	 * @attention Numerical keys not preserved.
@@ -109,19 +109,20 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Appends the given array to the beginning of another one.
+	 * Prepends the array given as a first argument
+	 * to the beginning of another array given as a second argument.
 	 *
 	 * @attention Numerical keys not preserved.
 	 *
-	 * @attention Duplicate keys will be removed from a source array
-	 * and preserved in prepended one.
+	 * @attention Duplicate keys, if any, will keep the values
+	 * from the first array.
 	 *
 	 * @param array $Source
 	 * @param array $Prepend
 	 * @return array
 	 */
 	public static final function prepend(array $Source, array $Prepend): array {
-		return array_merge($Prepend, self::only($Source, array_filter(array_keys($Source), function($value) use ($Prepend){
+		return array_merge($Prepend, self::only($Source, array_filter(array_keys($Source), function($value) use ($Prepend) {
 			return is_int($value) || !array_key_exists($value, $Prepend); })));
 	}
 
