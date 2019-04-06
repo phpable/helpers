@@ -127,33 +127,31 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Adds the given values to the end of the given array.
+	 * Adds the values to the end of the given array.
 	 *
 	 * Function behavior is similar to 'array_push'
 	 * but takes a custom list of mixed-type arguments.
-	 *
-	 * @attention Keys not preserved.
 	 *
 	 * @param array $Source
 	 * @param mixed ...$args
 	 * @return array
 	 */
 	public static final function push(array $Source, ...$args): array {
-		return self::append($Source, self::simplify($args));
+		return self::append($Source, self::cast($args));
 	}
 
 	/**
-	 * Adds the given values to the beginning of an array.
-	 * Function behavior is similar to 'array_unshift' but allows an arbitrary list of arguments.
+	 * Adds given values to the beginning of the given array.
 	 *
-	 * @attention Keys not preserved.
+	 * Function behavior is similar to 'array_unshift'
+	 * but takes a custom list of mixed-type arguments.
 	 *
 	 * @param array $Source
-	 * @param mixed $value
+	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function unshift(array $Source, $value): array {
-		return self::append(self::simplify(array_slice(func_get_args(), 1)), $Source);
+	public static final function unshift(array $Source, ...$args): array {
+		return self::prepend($Source, self::cast(array_reverse($args)));
 	}
 
 	/**
