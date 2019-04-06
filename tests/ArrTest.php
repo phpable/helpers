@@ -88,10 +88,27 @@ class ArrTest extends TestCase {
 
 
 	public final function testAppend(){
-		$arr = ['a' => 'n1', 'b' => 'n2', 'c' => 'n3', 'd' => 'n4', 'e' => 'n5', 'f' => 'n6'];
+		$arr1 = ['a' => 'n1', 'b' => 'n2', 'c' =>
+			'n3', 'd' => 'n4', 'e' => 'n5', 'f' => 'n6'];
 
-		$this->assertSame(Arr::append($arr, ['c' => 'n7', 'g' => 'n8', 'h' => 'n9']), ['a' => 'n1', 'b' => 'n2',
-			'd' => 'n4', 'e' => 'n5', 'f' => 'n6', 'c' => 'n7', 'g' => 'n8', 'h' => 'n9']);
+		$arr2 = ['c' => 'n7', 'g' => 'n8', 'h' => 'n9'];
+
+		$arr3 = [null, 'o', 'e'];
+		$arr4 = [1, 2, 3];
+
+		$tmp1 = Arr::append($arr1, $arr2);
+		$this->assertSame($tmp1, ['a' => 'n1', 'b' => 'n2', 'd' => 'n4', 'e' => 'n5',
+			'f' => 'n6', 'c' => 'n7', 'g' => 'n8', 'h' => 'n9']);
+
+		$tmp2 = Arr::append($tmp1, $arr3);
+		$this->assertSame($tmp2, ['a' => 'n1', 'b' => 'n2', 'd' => 'n4', 'e' => 'n5',
+			'f' => 'n6', 'c' => 'n7', 'g' => 'n8', 'h' => 'n9', 0 => null, 1 => 'o', 2 => 'e']);
+
+
+		$tmp3 = Arr::append($tmp2, $arr4);
+		$this->assertSame($tmp3, ['a' => 'n1', 'b' => 'n2', 'd' => 'n4', 'e' => 'n5',
+			'f' => 'n6', 'c' => 'n7', 'g' => 'n8', 'h' => 'n9', 0 => null, 1 => 'o', 2 =>
+			'e', 3 => 1, 4 => 2, 5 => 3]);
 	}
 
 	public final function testPrepend(){

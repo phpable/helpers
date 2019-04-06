@@ -91,12 +91,13 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Appends the given array to the end of another one.
+	 * Appends the given as a first argument array
+	 * to the end of another array given as a second argument.
 	 *
 	 * @attention Numerical keys not preserved.
 	 *
-	 * @attention Duplicate keys will be removed from a source array
-	 * and preserved in appended one.
+	 * @attention Duplicate keys, if any, will keep the values
+	 * from the first array.
 	 *
 	 * @param array $Source
 	 * @param array $Append
