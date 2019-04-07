@@ -95,6 +95,20 @@ class Arr extends AHelper {
 	}
 
 	/**
+	 * Creates an array using the even elements of given array for keys
+	 * and its odd elements for values.
+	 *
+	 * @param mixed ...$args
+	 * @return array
+	 */
+	public static final function compile(...$args): array {
+		$args = self::simplify($args);
+
+		return self::combine(
+			self::odd($args), self::even($args));
+	}
+
+	/**
 	 * Converts the given arguments into a single-level flat array.
 	 *
 	 * @attention Existing keys are not preserved!
@@ -341,18 +355,6 @@ class Arr extends AHelper {
 	public static final function right(array $Source, $from): array {
 		return array_slice($Source, self::find(array_keys($Source),
 			$from, 0));
-	}
-
-	/**
-	 * Creates an array using the even elements of given array for keys
-	 * and its odd elements for values.
-	 *
-	 * @param mixed $Raw
-	 * @return array
-	 */
-	public static final function compile($Raw): array {
-		return self::combine(self::odd($Raw = self::simplify(func_get_args())),
-			self::even($Raw));
 	}
 
 	/**

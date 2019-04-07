@@ -90,6 +90,12 @@ class ArrTest extends TestCase {
 
 		$this->assertSame(Arr::compile($arr), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
+
+		$arr = ['a'];
+		$this->assertSame(Arr::compile($arr), ['a' => null]);
+
+		$arr = [];
+		$this->assertSame(Arr::compile($arr), []);
 	}
 
 	public final function testSimplify() {
