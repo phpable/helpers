@@ -73,6 +73,28 @@ class Arr extends AHelper {
 	}
 
 	/**
+	 * Creates a new array using the
+	 * first array for keys and the second one for values.
+	 *
+	 * @attention If the second array is shorter than the first one,
+	 * it will be expanded and filled by the default value.
+	 *
+	 * @attention If the second array is longer than the first one,
+	 * the extra elements will be ignored.
+	 *
+	 * @param array $Keys
+	 * @param array $Values
+	 * @param mixed $default
+	 * @return array
+	 */
+	public static final function combine(array $Keys , array $Values = [], $default = null): array {
+		return array_combine($Keys,
+
+			array_pad(array_slice($Values, 0,
+				count($Keys)), count($Keys), $default));
+	}
+
+	/**
 	 * Converts the given arguments into a single-level flat array.
 	 *
 	 * @attention Existing keys are not preserved!
@@ -319,23 +341,6 @@ class Arr extends AHelper {
 	public static final function right(array $Source, $from): array {
 		return array_slice($Source, self::find(array_keys($Source),
 			$from, 0));
-	}
-
-	/**
-	 * Creates an array by using the first given array for keys
-	 * and the second one for its values.
-	 *
-	 * If the values array is shorter than the keys array,
-	 * it expands using the given default value.
-	 *
-	 * @param array $Keys
-	 * @param array $Values
-	 * @param mixed $default
-	 * @return array
-	 */
-	public static final function combine(array $Keys , array $Values = [], $default = null): array {
-		return array_combine($Keys, array_pad(array_slice($Values, 0,
-			count($Keys)), count($Keys), $default));
 	}
 
 	/**

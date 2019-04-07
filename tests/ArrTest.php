@@ -76,6 +76,22 @@ class ArrTest extends TestCase {
 		]);
 	}
 
+	public final function testCombine(){
+		$arr1 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
+		$arr2 = ['lt_a', 'lt_b', 'lt_c', 'lt_d', 'lt_e', 'lt_f', 'lt_g'];
+
+		$this->assertSame(Arr::combine($arr1, $arr2, '@'), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c',
+			'd' => 'lt_d', 'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => '@', 'i' => '@']);
+	}
+
+	public final function testCompile(){
+		$arr = ['a', 'lt_a', 'b', 'lt_b', 'c', 'lt_c', 'd', 'lt_d', 'e', 'lt_e',
+			'f', 'lt_f', 'g', 'lt_g', 'h', 'lt_h', 'i', 'lt_i'];
+
+		$this->assertSame(Arr::compile($arr), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
+			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
+	}
+
 	public final function testSimplify() {
 		$arr = ['a', 'b', 'c', [1, 2, 3, ['x' => 'lt_x', 'y' => 'lt_y', 'z' => 'lt_z'],
 			4, null, 5, ['x' => '', 'y' => 0, 'z' => null]], 'd', 'e'];
@@ -281,22 +297,6 @@ class ArrTest extends TestCase {
 		$this->assertSame(Arr::right($arr, 'h'), ['h' => 'lt_h', 'i' => 'lt_i']);
 
 		$this->assertSame(Arr::right($arr, 'w'), $arr);
-	}
-
-	public final function testCombine(){
-		$arr1 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
-		$arr2 = ['lt_a', 'lt_b', 'lt_c', 'lt_d', 'lt_e', 'lt_f', 'lt_g'];
-
-		$this->assertSame(Arr::combine($arr1, $arr2, '@'), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c',
-			'd' => 'lt_d', 'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => '@', 'i' => '@']);
-	}
-
-	public final function testCompile(){
-		$arr = ['a', 'lt_a', 'b', 'lt_b', 'c', 'lt_c', 'd', 'lt_d', 'e', 'lt_e',
-			'f', 'lt_f', 'g', 'lt_g', 'h', 'lt_h', 'i', 'lt_i'];
-
-		$this->assertSame(Arr::compile($arr), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
-			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
 	}
 
 	public final function testEach(){
