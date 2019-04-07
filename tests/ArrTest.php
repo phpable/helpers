@@ -190,6 +190,10 @@ class ArrTest extends TestCase {
 			0 => 'lt_i0', 1 => 'lt_i1',
 			'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
 
+		$this->assertSame(Arr::insert($arr, -4, 'lt_i0', 'lt_i1'), [
+			0 => 'lt_i0', 1 => 'lt_i1',
+			'a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d',
+			'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
 
 		$this->assertSame(Arr::insert($arr, 99, ['b2' => 'lt_b2'], ['c3' => 'lt_c3']), [
 			'a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i',

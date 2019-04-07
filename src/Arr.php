@@ -184,7 +184,7 @@ class Arr extends AHelper {
 				array_slice($Source, $position)
 			)
 
-		: self::prepend($Source, self::cast($value));
+		: self::prepend($Source, self::collect(...$args));
 	}
 
 	/**
