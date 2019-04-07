@@ -95,8 +95,8 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Creates an array using the even elements of given array for keys
-	 * and its odd elements for values.
+	 * Creates an array using the even elements for keys
+	 * and odd elements for values.
 	 *
 	 * @param mixed ...$args
 	 * @return array
