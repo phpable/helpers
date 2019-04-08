@@ -98,6 +98,14 @@ class ArrTest extends TestCase {
 		$this->assertSame(Arr::compile($arr), []);
 	}
 
+	public final function testMake() {
+		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
+
+		$this->assertSame(Arr::make($arr, function($value){
+			return 'lt_' . $value; }), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d',
+				'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
+	}
+
 	public final function testSimplify() {
 		$arr = ['a', 'b', 'c', [1, 2, 3, ['x' => 'lt_x', 'y' => 'lt_y', 'z' => 'lt_z'],
 			4, null, 5, ['x' => '', 'y' => 0, 'z' => null]], 'd', 'e'];
@@ -316,14 +324,6 @@ class ArrTest extends TestCase {
 		$this->assertSame(Arr::each($arr, function($key, $value){
 			return ':' . $value . ':'; }), ['a' => ':lt_a:', 'b' => ':lt_b:', 'c' => ':lt_c:', 'd' => ':lt_d:',
 				'e' => ':lt_e:', 'f' => ':lt_f:', 'g' => ':lt_g:', 'h' => ':lt_h:', 'i' => ':lt_i:']);
-	}
-
-	public final function testMake() {
-		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
-
-		$this->assertSame(Arr::make($arr, function($value){
-			return 'lt_' . $value; }), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d',
-				'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
 	}
 
 	public final function testPack() {

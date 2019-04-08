@@ -109,6 +109,21 @@ class Arr extends AHelper {
 	}
 
 	/**
+	 * Creates a new array using the first argument for keys
+	 * and the callable handler to get values.
+	 *
+	 * @param array $Keys
+	 * @param callable $Handler
+	 * @return array
+	 */
+	public static final function make(array $Keys, callable $Handler = null): array {
+		return Arr::combine($Keys,
+
+		is_callable($Handler) ? Arr::each($Keys, function () use ($Handler){
+			return call_user_func($Handler, func_get_arg(1)); }) : []);
+	}
+
+	/**
 	 * Converts the given arguments into a single-level flat array.
 	 *
 	 * @attention Existing keys are not preserved!
@@ -370,19 +385,6 @@ class Arr extends AHelper {
 		return array_walk($Source, function(&$value, $key, $keys) use ($Callback) {
 			$value = count($keys) < 1 || in_array($key, $keys) ? $Callback($key, $value) : $value; },
 				array_filter(Arr::simplify(array_slice(func_get_args(), 2)))) ? $Source : [];
-	}
-
-	/**
-	 * Creates an array using the given array for keys
-	 * and the given function to get values.
-	 *
-	 * @param array $Keys
-	 * @param callable $Callback
-	 * @return array
-	 */
-	public static final function make(array $Keys, callable $Callback = null): array {
-		return Arr::combine($Keys, is_callable($Callback) ? Arr::each($Keys, function () use ($Callback){
-			return call_user_func($Callback, func_get_arg(1)); }) : []);
 	}
 
 	/**
