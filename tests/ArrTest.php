@@ -258,6 +258,18 @@ class ArrTest extends TestCase {
 			'g' => ['n1' => '1a', 'n2' => '1b'], 'r' => ['test1', 'test2']], 'b' => 12]);
 	}
 
+	public final function testErase(){
+		$arr = ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b']], 'b' => 12];
+
+		$this->assertSame(Arr::erase($arr, 'a', 'g', 'n1'), ['a' => ['e' => 100,
+			'g' => ['n2' => '1b']], 'b' => 12]);
+
+		$this->assertSame(Arr::erase($arr, 'a', 'g'), ['a' => ['e' => 100],
+			'b' => 12]);
+
+		$this->assertSame(Arr::erase($arr, 'a', 'f'),
+			$arr);
+	}
 
 	public final function testOnly(){
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
@@ -412,16 +424,6 @@ class ArrTest extends TestCase {
 		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
 
 		$this->assertEquals(Arr::last($arr), 'i');
-	}
-
-	public final function testClear(){
-		$arr = ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b']], 'b' => 12];
-
-		$this->assertSame(Arr::clear($arr, 'a', 'g', 'n1'), ['a' => ['e' => 100,
-			'g' => ['n2' => '1b']], 'b' => 12]);
-
-		$this->assertSame(Arr::clear($arr, 'a', 'g'), ['a' => ['e' => 100],
-			'b' => 12]);
 	}
 
 	public final function testSelect() {

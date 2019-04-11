@@ -77,7 +77,7 @@ class Jsn extends AHelper {
 	 * @throws \Exception
 	 */
 	public final static function clear(string $source, $keys): string {
-		return self::encode(Arr::clear(self::decode($source),
+		return self::encode(Arr::erase(self::decode($source),
 			...array_slice(func_get_args(), 1)));
 	}
 
@@ -111,7 +111,7 @@ class Jsn extends AHelper {
 
 	/**
 	 * Returns a single element from a JSON array by its key.
-	 * 
+	 *
 	 * @param string $source
 	 * @param $key
 	 * @param $default

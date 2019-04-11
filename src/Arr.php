@@ -536,7 +536,7 @@ class Arr extends AHelper {
 				$keys[0] => (count($keys) > 1 || array_key_exists($keys[0], $Source)
 
 					? self::improve(self::cast(self::get($Source, $keys[0])),
-				...array_slice($args, 1)) : Arr::last($args))]))
+						...array_slice($args, 1)) : Arr::last($args))]))
 
 		: self::push($Source, $args[0]);
 	}
@@ -546,13 +546,25 @@ class Arr extends AHelper {
 	 * by the sequence from the second argument to last one.
 	 *
 	 * @param array $Source
-	 * @param mixed $keys, ...
+	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function clear(array $Source, $keys): array {
-		return count($keys = self::simplify(array_slice(func_get_args(), 1))) > 0 ? (count($keys) > 1
-			? array_merge($Source, [$keys[0] => self::clear(self::cast(self::get($Source, $keys[0], [])),
-				array_slice($keys, 1))]) : self::except($Source, $keys[0])): $Source;
+	public static final function erase(array $Source, ...$args): array {
+		return count($keys = array_filter($args,
+
+			function ($_) {
+				return is_integer($_) || is_string($_); })) > 0
+
+					&& array_key_exists($keys[0], $Source)
+
+			? (count($keys) > 1
+
+				? array_merge($Source, [$keys[0] => self::erase(self::cast(self::get($Source, $keys[0])),
+					...array_slice($args, 1))])
+
+			: self::except($Source, $keys[0]))
+
+		: $Source;
 	}
 
 	/**
