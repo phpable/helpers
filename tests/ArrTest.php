@@ -353,6 +353,11 @@ class ArrTest extends TestCase {
 
 		$this->assertSame(Arr::only($arr, ['a', 'e', 'i']), ['a' => 'lt_a',
 			'e' => 'lt_e', 'i' => 'lt_i']);
+
+		$this->assertSame(Arr::only($arr, ['a', 'y', 'i']), ['a' => 'lt_a',
+			'i' => 'lt_i']);
+
+		$this->assertSame(Arr::only($arr, ['z', 'y']), []);
 	}
 
 	public final function testExcept(){

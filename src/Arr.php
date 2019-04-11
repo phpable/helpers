@@ -386,15 +386,15 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Returns a subset from the given array using the given list of needed keys.
+	 * Returns a subset contains the given keys only.
 	 *
 	 * @param array $Source
-	 * @param mixed $keys, ...
+	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function only(array $Source, $keys): array {
+	public static final function only(array $Source, ...$args): array {
 		return array_intersect_key($Source,
-			array_fill_keys(self::simplify(array_slice(func_get_args(), 1)), -1));
+			array_fill_keys(self::simplify($args), -1));
 	}
 
 	/**
