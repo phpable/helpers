@@ -302,6 +302,17 @@ class ArrTest extends TestCase {
 		$this->assertEquals(Arr::value($arr, -1, 'default'), 'default');
 	}
 
+	public final function testKey() {
+		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
+			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
+
+		$this->assertEquals(Arr::key($arr, 2), 'c');
+		$this->assertEquals(Arr::key($arr, 6), 'g');
+
+		$this->assertEquals(Arr::key($arr, -1), null);
+		$this->assertEquals(Arr::key($arr, 99, 'default'), 'default');
+	}
+
 	public final function testOnly(){
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];

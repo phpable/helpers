@@ -328,6 +328,21 @@ class Arr extends AHelper {
 	}
 
 	/**
+	 * Returns a single key of the given array by its position
+	 * or the default value if the position is out of range.
+	 *
+	 * @attention The default value will be returned instead of null.
+	 *
+	 * @param array $Source
+	 * @param int $position
+	 * @param mixed $default
+	 * @return mixed
+	 */
+	public static final function key(array $Source, int $position = 0, $default = null) {
+		return self::get(array_keys($Source), $position, $default);
+	}
+
+	/**
 	 * Returns a subset from the given array using the given list of needed keys.
 	 *
 	 * @param array $Source
@@ -533,24 +548,6 @@ class Arr extends AHelper {
 	 */
 	public static final function last(array $Source, $default = null){
 		return self::value($Source, count($Source) - 1, $default);
-	}
-
-	/**
-	 * Tries to retrieve a single key from an array by its position
-	 * or returns the default value if the position is out of range.
-	 *
-	 * @attention If the needed key exists but equals to null,
-	 * the default value will be returned!
-	 *
-	 * @attention The numbering starts from zero.
-	 *
-	 * @param array $Source
-	 * @param int $index
-	 * @param mixed $default
-	 * @return mixed
-	 */
-	public static final function key(array $Source, int $index = 0, $default = null){
-		return self::get(array_keys($Source), $index, $default);
 	}
 
 	/**
