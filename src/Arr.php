@@ -295,7 +295,43 @@ class Arr extends AHelper {
 
 		: $Source;
 	}
-	
+
+	/**
+	 * Returns a single value from an array by its key
+	 * or the default value if the given key does not exist.
+	 *
+	 * @attention if value is null,
+	 * the default value will be returned instead!
+	 *
+	 * @param array $Source
+	 * @param mixed $key
+	 * @param mixed $default
+	 * @return mixed
+	 */
+	public static final function get(array $Source, $key, $default = null) {
+		return array_key_exists($key, $Source)
+			&& !is_null($Source[$key]) ? $Source[$key] : $default;
+	}
+
+	/**
+	 * Tries to retrieve a single value from an array by its position
+	 * or returns the default value if the position is out of range.
+	 *
+	 * @attention If the needed value exists but equals to null,
+	 * the default value will be returned!
+	 *
+	 * @attention The numbering starts from zero.
+	 *
+	 * @param array $Source
+	 * @param int $index
+	 * @param mixed $default
+	 * @return mixed
+	 */
+	public static final function value(array $Source, int $index = 0, $default = null){
+		return self::get(array_values($Source), $index, $default);
+	}
+
+
 	/**
 	 * Returns a subset from the given array using the given list of needed keys.
 	 *
@@ -480,41 +516,6 @@ class Arr extends AHelper {
 		return array_walk($Source, function(&$value, $key) use ($separator) { $value = array_map('trim',
 			array_pad(preg_split('/(?:' . preg_quote($separator, '/') . ')/', Str::cast($value), 2), 2, null)); })
 				? self::compile(self::simplify($Source)) : [];
-	}
-
-	/**
-	 * Tries to retrieve a single value from an array by its key
-	 * or returns the default value if the key does not exist.
-	 *
-	 * @attention If the needed value exists but equals to null,
-	 * the default value will be returned!
-	 *
-	 * @param array $Source
-	 * @param mixed $key
-	 * @param mixed $default
-	 * @return mixed
-	 */
-	public static final function get(array $Source, $key, $default = null) {
-		return array_key_exists($key, $Source)
-			&& !is_null($Source[$key]) ? $Source[$key] : $default;
-	}
-
-	/**
-	 * Tries to retrieve a single value from an array by its position
-	 * or returns the default value if the position is out of range.
-	 *
-	 * @attention If the needed value exists but equals to null,
-	 * the default value will be returned!
-	 *
-	 * @attention The numbering starts from zero.
-	 *
-	 * @param array $Source
-	 * @param int $index
-	 * @param mixed $default
-	 * @return mixed
-	 */
-	public static final function value(array $Source, int $index = 0, $default = null){
-		return self::get(array_values($Source), $index, $default);
 	}
 
 	/**

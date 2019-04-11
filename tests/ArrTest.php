@@ -271,6 +271,26 @@ class ArrTest extends TestCase {
 			$arr);
 	}
 
+	public final function testGet() {
+		$arr1 = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
+			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
+
+		$arr2 = [0 => 'lt_a', 1 => 'lt_b', 2 => 'lt_c', 3 => 'lt_d', 4 => 'lt_e',
+			5 => 'lt_f', 6 => 'lt_g', 7 => 'lt_h', 8 => 'lt_i'];
+
+		$this->assertEquals(Arr::get($arr1, 'a'), 'lt_a');
+		$this->assertEquals(Arr::get($arr2, 0), 'lt_a');
+
+		$this->assertEquals(Arr::get($arr1, 'g'), 'lt_g');
+		$this->assertEquals(Arr::get($arr2, 6), 'lt_g');
+
+		$this->assertEquals(Arr::get($arr1, 'z'), null);
+		$this->assertEquals(Arr::get($arr1, 'z', 'lt_z'), 'lt_z');
+
+		$this->assertEquals(Arr::get($arr2, -1), null);
+		$this->assertEquals(Arr::get($arr2, -1, 'undefined'), 'undefined');
+	}
+
 	public final function testOnly(){
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
@@ -381,26 +401,6 @@ class ArrTest extends TestCase {
 
 		$this->assertSame(Arr::unpack($arr, '='), ['lt_a' => '', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 					'f' => 'lt_f', 'g' => 'lt_g', '' => 'lt_i']);
-	}
-
-	public final function testGet() {
-		$arr1 = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
-			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
-
-		$arr2 = [0 => 'lt_a', 1 => 'lt_b', 2 => 'lt_c', 3 => 'lt_d', 4 => 'lt_e',
-			5 => 'lt_f', 6 => 'lt_g', 7 => 'lt_h', 8 => 'lt_i'];
-
-		$this->assertEquals(Arr::get($arr1, 'a'), 'lt_a');
-		$this->assertEquals(Arr::get($arr2, 0), 'lt_a');
-
-		$this->assertEquals(Arr::get($arr1, 'g'), 'lt_g');
-		$this->assertEquals(Arr::get($arr2, 6), 'lt_g');
-
-		$this->assertEquals(Arr::get($arr1, 'z'), null);
-		$this->assertEquals(Arr::get($arr1, 'z', 'lt_z'), 'lt_z');
-
-		$this->assertEquals(Arr::get($arr2, -1), null);
-		$this->assertEquals(Arr::get($arr2, -1, 'undefined'), 'undefined');
 	}
 
 	public final function testValue() {
