@@ -300,8 +300,7 @@ class Arr extends AHelper {
 	 * Returns a single value from an array by its key
 	 * or the default value if the given key does not exist.
 	 *
-	 * @attention if value is null,
-	 * the default value will be returned instead!
+	 * @attention The default value will be returned instead of null.
 	 *
 	 * @param array $Source
 	 * @param mixed $key
@@ -314,23 +313,19 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Tries to retrieve a single value from an array by its position
-	 * or returns the default value if the position is out of range.
+	 * Returns a single value from the given array by its position
+	 * or the default value if the position is out of range.
 	 *
-	 * @attention If the needed value exists but equals to null,
-	 * the default value will be returned!
-	 *
-	 * @attention The numbering starts from zero.
+	 * @attention The default value will be returned instead of null.
 	 *
 	 * @param array $Source
-	 * @param int $index
+	 * @param int $position
 	 * @param mixed $default
 	 * @return mixed
 	 */
-	public static final function value(array $Source, int $index = 0, $default = null){
-		return self::get(array_values($Source), $index, $default);
+	public static final function value(array $Source, int $position = 0, $default = null) {
+		return self::get(array_values($Source), $position, $default);
 	}
-
 
 	/**
 	 * Returns a subset from the given array using the given list of needed keys.

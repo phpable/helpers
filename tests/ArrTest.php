@@ -291,6 +291,17 @@ class ArrTest extends TestCase {
 		$this->assertEquals(Arr::get($arr2, -1, 'undefined'), 'undefined');
 	}
 
+	public final function testValue() {
+		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
+			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
+
+		$this->assertEquals(Arr::value($arr, 2), 'lt_c');
+		$this->assertEquals(Arr::value($arr, 6), 'lt_g');
+
+		$this->assertEquals(Arr::value($arr, -1), null);
+		$this->assertEquals(Arr::value($arr, -1, 'default'), 'default');
+	}
+
 	public final function testOnly(){
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
@@ -401,17 +412,6 @@ class ArrTest extends TestCase {
 
 		$this->assertSame(Arr::unpack($arr, '='), ['lt_a' => '', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 					'f' => 'lt_f', 'g' => 'lt_g', '' => 'lt_i']);
-	}
-
-	public final function testValue() {
-		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
-			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
-
-		$this->assertEquals(Arr::value($arr, 2), 'lt_c');
-		$this->assertEquals(Arr::value($arr, 6), 'lt_g');
-
-		$this->assertEquals(Arr::value($arr, -1), null);
-		$this->assertEquals(Arr::value($arr, -1, 'default'), 'default');
 	}
 
 	public final function testFirst() {
