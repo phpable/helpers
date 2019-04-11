@@ -334,6 +334,18 @@ class ArrTest extends TestCase {
 		$this->assertSame(Arr::follow($arr, 'a', 'z'), null);
 	}
 
+	public final function testTake(){
+		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
+			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
+
+		$this->assertSame(Arr::take($arr, 5), ['a' => 'lt_a', 'b' => 'lt_b',
+			'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e']);
+
+		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c'];
+
+		$this->assertSame(Arr::take($arr, 5, 'undefined'), ['a' => 'lt_a', 'b' => 'lt_b',
+			'c' => 'lt_c', 'undefined', 'undefined']);
+	}
 
 	public final function testOnly(){
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',

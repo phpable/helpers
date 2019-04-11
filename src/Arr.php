@@ -375,6 +375,15 @@ class Arr extends AHelper {
 		: Arr::get($Source, Arr::value($keys, 0, -1));
 	}
 
+	/**
+	 * @param array $Source
+	 * @param int $length
+	 * @param null $default
+	 * @return array
+	 */
+	public static final function take(array $Source, int $length, $default = null): array {
+		return array_pad(array_slice($Source, 0, $length), $length, $default);
+	}
 
 	/**
 	 * Returns a subset from the given array using the given list of needed keys.
@@ -580,16 +589,6 @@ class Arr extends AHelper {
 	 */
 	public static final function select(array $Source, $values): array {
 		return array_intersect($Source, self::simplify(array_slice(func_get_args(), 1)));
-	}
-
-	/**
-	 * @param array $Source
-	 * @param int $length
-	 * @param null $default
-	 * @return array
-	 */
-	public static final function take(array $Source, int $length, $default = null): array {
-		return array_pad(array_slice($Source, 0, $length), $length, $default);
 	}
 
 	/**
