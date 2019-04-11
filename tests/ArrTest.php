@@ -230,6 +230,35 @@ class ArrTest extends TestCase {
 			'b2' => 'lt_b2', 'c3' => 'lt_c3']);
 	}
 
+	public final function testImprove() {
+		$arr1 = ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b']], 'b' => 12];
+
+		$arr2 = Arr::improve($arr1, 'a', 'g', 'n1', '2b');
+		$this->assertSame($arr2, ['a' => ['e' => 100,
+			'g' => ['n1' => ['1a', '2b'], 'n2' => '1b']], 'b' => 12]);
+
+		$arr2 = Arr::improve($arr1, 'a', 'g', 'n1', ['2b', '3c']);
+		$this->assertSame($arr2, ['a' => ['e' => 100,
+			'g' => ['n1' => ['1a', ['2b', '3c']], 'n2' => '1b']], 'b' => 12]);
+
+		$arr2 = Arr::improve($arr1, 'a', 'g', 'n2', '2b');
+		$this->assertSame($arr2, ['a' => ['e' => 100,
+			'g' => ['n1' => '1a', 'n2' => ['1b', '2b']]], 'b' => 12]);
+
+		$arr2 = Arr::improve($arr1, 'a', 'g', 'test');
+		$this->assertSame($arr2, ['a' => ['e' => 100,
+			'g' => ['n1' => '1a', 'n2' => '1b', 0 => 'test']], 'b' => 12]);
+
+		$arr2 = Arr::improve($arr1, 'a', 'r', 'test1');
+		$this->assertSame($arr2, ['a' => ['e' => 100,
+			'g' => ['n1' => '1a', 'n2' => '1b'], 'r' => 'test1'], 'b' => 12]);
+
+		$arr2 = Arr::improve($arr2, 'a', 'r', 'test2');
+		$this->assertSame($arr2, ['a' => ['e' => 100,
+			'g' => ['n1' => '1a', 'n2' => '1b'], 'r' => ['test1', 'test2']], 'b' => 12]);
+	}
+
+
 	public final function testOnly(){
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
@@ -383,22 +412,6 @@ class ArrTest extends TestCase {
 		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
 
 		$this->assertEquals(Arr::last($arr), 'i');
-	}
-
-	public final function testImprove() {
-		$arr = ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b']], 'b' => 12];
-
-		$arr = Arr::improve($arr, 'a', 'g', 'n1', '2b');
-		$this->assertSame($arr, ['a' => ['e' => 100,
-			'g' => ['n1' => ['1a', '2b'], 'n2' => '1b']], 'b' => 12]);
-
-		$arr = Arr::improve($arr, 'a', 'g', 'n2', '2b');
-		$this->assertSame($arr, ['a' => ['e' => 100,
-			'g' => ['n1' => ['1a', '2b'], 'n2' => ['1b', '2b']]], 'b' => 12]);
-
-		$arr = Arr::improve($arr, 'a', 'g', 'test');
-		$this->assertSame($arr, ['a' => ['e' => 100,
-			'g' => ['n1' => ['1a', '2b'], 'n2' => ['1b', '2b'], 0 => 'test']], 'b' => 12]);
 	}
 
 	public final function testClear(){

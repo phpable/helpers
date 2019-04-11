@@ -514,18 +514,31 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Adds the last given argument into an array following the specified path
-	 * defined by the sequence from the second argument to the penultimate one.
+	 * Adds the last argument into an array given as a first argument,
+	 * following the path specified by the sequence between
+	 * the first argument and the last one.
+	 *
+	 * @attention The only integer numbers
+	 * and strings allowed as keys - something other will be ignored.
+	 * I can cause unexpected behavior.
 	 *
 	 * @param array $Source
-	 * @param mixed $keys, ...
-	 * @param mixed $value
+	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function improve(array $Source, $keys, $value): array {
-		return count($keys = array_filter(self::simplify(array_slice(func_get_args(), 1, func_num_args() - 2)))) > 0
-			? (array_merge($Source, [$keys[0] => self::improve(self::cast(self::get($Source, $keys[0], [])), array_slice($keys, 1),
-				Arr::last(func_get_args()))])): self::push($Source, $value);
+	public static final function improve(array $Source, ...$args): array {
+		return count($keys = array_filter(array_slice($args, 0, -1),
+
+			function ($_) {
+				return is_integer($_) || is_string($_); })) > 0
+
+			? (array_merge($Source, [
+				$keys[0] => (count($keys) > 1 || array_key_exists($keys[0], $Source)
+
+					? self::improve(self::cast(self::get($Source, $keys[0])),
+				...array_slice($args, 1)) : Arr::last($args))]))
+
+		: self::push($Source, $args[0]);
 	}
 
 	/**
