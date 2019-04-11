@@ -239,6 +239,64 @@ class Arr extends AHelper {
 	}
 
 	/**
+	 * Adds the last argument into an array given as a first argument,
+	 * following the path specified by the sequence between
+	 * the first argument and the last one.
+	 *
+	 * @attention The only integer numbers
+	 * and strings allowed as keys - something other will be ignored.
+	 * I can cause unexpected behavior.
+	 *
+	 * @param array $Source
+	 * @param mixed ...$args
+	 * @return array
+	 */
+	public static final function improve(array $Source, ...$args): array {
+		return count($keys = array_filter(array_slice($args, 0, -1),
+
+			function ($_) {
+				return is_integer($_) || is_string($_); })) > 0
+
+			? (array_merge($Source, [
+				$keys[0] => (count($keys) > 1 || array_key_exists($keys[0], $Source)
+
+					? self::improve(self::cast(self::get($Source, $keys[0])),
+						...array_slice($args, 1)) : Arr::last($args))]))
+
+		: self::push($Source, $args[0]);
+	}
+
+	/**
+	 * Removes an element from the array given as a first argument following the path
+	 * defined by the sequence starting the second argument to last one.
+	 *
+	 * @attention The only integer numbers
+	 * and strings allowed as keys - something other will be ignored.
+	 * I can cause unexpected behavior.
+	 *
+	 * @param array $Source
+	 * @param mixed ...$args
+	 * @return array
+	 */
+	public static final function erase(array $Source, ...$args): array {
+		return count($keys = array_filter($args,
+
+			function ($_) {
+				return is_integer($_) || is_string($_); })) > 0
+
+					&& array_key_exists($keys[0], $Source)
+
+			? (count($keys) > 1
+
+				? array_merge($Source, [$keys[0] => self::erase(self::cast(self::get($Source, $keys[0])),
+					...array_slice($args, 1))])
+
+			: self::except($Source, $keys[0]))
+
+		: $Source;
+	}
+	
+	/**
 	 * Returns a subset from the given array using the given list of needed keys.
 	 *
 	 * @param array $Source
@@ -511,60 +569,6 @@ class Arr extends AHelper {
 		return count($keys = array_filter(self::simplify(array_slice(func_get_args(), 1)))) > 0 ? (isset($Source[$keys[0]])
 			? (count($keys) > 1 ? (is_array($Source[$keys[0]]) ? self::path($Source[$keys[0]], array_slice($keys, 1)) : null)
 				: $Source[$keys[0]]) : null) : $Source;
-	}
-
-	/**
-	 * Adds the last argument into an array given as a first argument,
-	 * following the path specified by the sequence between
-	 * the first argument and the last one.
-	 *
-	 * @attention The only integer numbers
-	 * and strings allowed as keys - something other will be ignored.
-	 * I can cause unexpected behavior.
-	 *
-	 * @param array $Source
-	 * @param mixed ...$args
-	 * @return array
-	 */
-	public static final function improve(array $Source, ...$args): array {
-		return count($keys = array_filter(array_slice($args, 0, -1),
-
-			function ($_) {
-				return is_integer($_) || is_string($_); })) > 0
-
-			? (array_merge($Source, [
-				$keys[0] => (count($keys) > 1 || array_key_exists($keys[0], $Source)
-
-					? self::improve(self::cast(self::get($Source, $keys[0])),
-						...array_slice($args, 1)) : Arr::last($args))]))
-
-		: self::push($Source, $args[0]);
-	}
-
-	/**
-	 * Removes an element from an array by the path defined
-	 * by the sequence from the second argument to last one.
-	 *
-	 * @param array $Source
-	 * @param mixed ...$args
-	 * @return array
-	 */
-	public static final function erase(array $Source, ...$args): array {
-		return count($keys = array_filter($args,
-
-			function ($_) {
-				return is_integer($_) || is_string($_); })) > 0
-
-					&& array_key_exists($keys[0], $Source)
-
-			? (count($keys) > 1
-
-				? array_merge($Source, [$keys[0] => self::erase(self::cast(self::get($Source, $keys[0])),
-					...array_slice($args, 1))])
-
-			: self::except($Source, $keys[0]))
-
-		: $Source;
 	}
 
 	/**
