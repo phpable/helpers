@@ -313,6 +313,17 @@ class ArrTest extends TestCase {
 		$this->assertEquals(Arr::key($arr, 99, 'default'), 'default');
 	}
 
+	public final function testFollow() {
+		$arr = ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b']], 'b' => 12];
+
+		$this->assertSame(Arr::follow($arr, 'a', 'g', 'n2'), '1b');
+		$this->assertSame(Arr::follow($arr, 'a', 'e'), 100);
+
+		$this->assertSame(Arr::follow($arr, 'a', 'g'), ['n1' => '1a', 'n2' => '1b']);
+		$this->assertSame(Arr::follow($arr, 'a', 'z'), null);
+	}
+
+
 	public final function testOnly(){
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];

@@ -343,6 +343,27 @@ class Arr extends AHelper {
 	}
 
 	/**
+	 * Tries to retrieve a single value or a subset
+	 * from an array by the given sequence of keys.
+	 *
+	 * @param array $Source
+	 * @param mixed ...$args
+	 * @return mixed
+	 */
+	public static final function follow(array $Source, ...$args) {
+		return count($keys = array_filter($args,
+
+			function ($_) {
+				return is_integer($_) || is_string($_); })) > 1
+
+					&& array_key_exists($keys[0], $Source)
+
+				? self::follow(self::cast($Source[$keys[0]]), ...array_slice($args, 1))
+		: Arr::get($Source, Arr::value($keys, 0, -1));
+	}
+
+
+	/**
 	 * Returns a subset from the given array using the given list of needed keys.
 	 *
 	 * @param array $Source
@@ -548,20 +569,6 @@ class Arr extends AHelper {
 	 */
 	public static final function last(array $Source, $default = null){
 		return self::value($Source, count($Source) - 1, $default);
-	}
-
-	/**
-	 * Tries to retrieve a single value or a subset
-	 * from an array by the given sequence of keys.
-	 *
-	 * @param array $Source
-	 * @param mixed $keys, ...
-	 * @return mixed
-	 */
-	public static final function path(array $Source, $keys){
-		return count($keys = array_filter(self::simplify(array_slice(func_get_args(), 1)))) > 0 ? (isset($Source[$keys[0]])
-			? (count($keys) > 1 ? (is_array($Source[$keys[0]]) ? self::path($Source[$keys[0]], array_slice($keys, 1)) : null)
-				: $Source[$keys[0]]) : null) : $Source;
 	}
 
 	/**
