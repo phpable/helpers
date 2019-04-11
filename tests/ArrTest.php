@@ -313,6 +313,17 @@ class ArrTest extends TestCase {
 		$this->assertEquals(Arr::key($arr, 99, 'default'), 'default');
 	}
 
+	public final function testFind() {
+		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
+			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
+
+		$this->assertEquals(Arr::find($arr, 'lt_c'), 'c');
+		$this->assertEquals(Arr::find($arr, 'lt_g'), 'g');
+
+		$this->assertEquals(Arr::find($arr, 'undefined'), null);
+		$this->assertEquals(Arr::find($arr, 'undefined', 'default'), 'default');
+	}
+
 	public final function testFollow() {
 		$arr = ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b']], 'b' => 12];
 

@@ -343,6 +343,19 @@ class Arr extends AHelper {
 	}
 
 	/**
+	 * Searches an array for a given value and returns
+	 * the first corresponding key or the default value if nothing found.
+	 *
+	 * @param array $Source
+	 * @param mixed $value
+	 * @param mixed $default
+	 * @return mixed
+	 */
+	public static final function find(array $Source, $value, $default = null) {
+		return ($key = array_search($value, $Source, true)) !== false ? $key : $default;
+	}
+
+	/**
 	 * Tries to retrieve a single value or a subset
 	 * from an array by the given sequence of keys.
 	 *
@@ -458,19 +471,6 @@ class Arr extends AHelper {
 	 */
 	public static final function rand(array $Source) {
 		return $Source[array_rand($Source = Arr::simplify(func_get_args()))];
-	}
-
-	/**
-	 * Searches an array for a given value and returns the first corresponding key
-	 * if successful or the given default value otherwise.
-	 *
-	 * @param array $Source
-	 * @param mixed $value
-	 * @param mixed $default
-	 * @return mixed
-	 */
-	public static final function find(array $Source, $value, $default = null){
-		return ($value = array_search($value, $Source, true)) !== false ? $value : $default;
 	}
 
 	/**
