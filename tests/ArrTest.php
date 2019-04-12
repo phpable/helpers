@@ -382,6 +382,18 @@ class ArrTest extends TestCase {
 		$this->assertSame(Arr::except($arr, ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']), []);
 	}
 
+	public final function testEven(){
+		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
+
+		$this->assertSame(Arr::even($arr), ['b', 'd', 'f', 'h']);
+	}
+
+	public final function testOdd(){
+		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
+
+		$this->assertSame(Arr::odd($arr), ['a', 'c', 'e', 'g', 'i']);
+	}
+
 	public final function testHas(){
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
@@ -396,18 +408,6 @@ class ArrTest extends TestCase {
 
 		$this->assertTrue(Arr::contains($arr, 'lt_a', ['lt_f', ['lt_d']], 'lt_c'));
 		$this->assertNotTrue(Arr::contains($arr, 'lt_a', ['lt_f', ['lt_z']], 'lt_cd'));
-	}
-
-	public final function testEven(){
-		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
-
-		$this->assertSame(Arr::even($arr), ['b', 'd', 'f', 'h']);
-	}
-
-	public final function testOdd(){
-		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
-
-		$this->assertSame(Arr::odd($arr), ['a', 'c', 'e', 'g', 'i']);
 	}
 
 	public final function testShuffle(){

@@ -404,9 +404,35 @@ class Arr extends AHelper {
 	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function except(array $Source, ...$args){
+	public static final function except(array $Source, ...$args): array {
 		return array_diff_key($Source,
 			array_fill_keys(self::simplify(...$args), -1));
+	}
+
+	/**
+	 * Returns only odd elements from the given array.
+	 *
+	 * @attention Keys not preserved.
+	 *
+	 * @param array $Source
+	 * @return array
+	 */
+	public static final function odd(array $Source):array {
+		return array_values(array_filter(array_values($Source), function($i){
+			return  ($i) % 2 == 0; }, ARRAY_FILTER_USE_KEY));
+	}
+
+	/**
+	 * Returns only even elements from the given array.
+	 *
+	 * @attention Keys not preserved.
+	 *
+	 * @param array $Source
+	 * @return array
+	 */
+	public static final function even(array $Source): array {
+		return array_values(array_filter(array_values($Source), function($i){
+			return  ($i) % 2 > 0; }, ARRAY_FILTER_USE_KEY));
 	}
 
 	/**
@@ -431,32 +457,6 @@ class Arr extends AHelper {
 	public static final function contains(array $Source, $value): bool {
 		return count(array_intersect($Source,
 			$value = self::simplify(array_slice(func_get_args(), 1)))) == count($value);
-	}
-
-	/**
-	 * Returns only elements with an odd key from the given array.
-	 *
-	 * @attention Keys not preserved.
-	 *
-	 * @param array $Source
-	 * @return array
-	 */
-	public static final function odd(array $Source){
-		return array_values(array_filter(array_values($Source), function($i){
-			return  ($i) % 2 == 0; }, ARRAY_FILTER_USE_KEY));
-	}
-
-	/**
-	 * Returns only elements with an even key from the given array.
-	 *
-	 * @attention Keys not preserved.
-	 *
-	 * @param array $Source
-	 * @return array
-	 */
-	public static final function even(array $Source){
-		return array_values(array_filter(array_values($Source), function($i){
-			return  ($i) % 2 > 0; }, ARRAY_FILTER_USE_KEY));
 	}
 
 	/**
