@@ -382,16 +382,29 @@ class ArrTest extends TestCase {
 		$this->assertSame(Arr::except($arr, ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']), []);
 	}
 
-	public final function testEven(){
-		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
-
-		$this->assertSame(Arr::even($arr), ['b', 'd', 'f', 'h']);
-	}
 
 	public final function testOdd(){
 		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
 
 		$this->assertSame(Arr::odd($arr), ['a', 'c', 'e', 'g', 'i']);
+
+		$arr = ['a'];
+		$this->assertSame(Arr::odd($arr), ['a']);
+
+		$arr = [];
+		$this->assertSame(Arr::odd($arr), []);
+	}
+
+	public final function testEven(){
+		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
+
+		$this->assertSame(Arr::even($arr), ['b', 'd', 'f', 'h']);
+
+		$arr = ['a'];
+		$this->assertSame(Arr::even($arr), []);
+
+		$arr = [];
+		$this->assertSame(Arr::even($arr), []);
 	}
 
 	public final function testHas(){
