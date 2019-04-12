@@ -407,6 +407,30 @@ class ArrTest extends TestCase {
 		$this->assertSame(Arr::even($arr), []);
 	}
 
+	public final function testLeft(){
+		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
+			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
+
+		$this->assertSame(Arr::left($arr, 'c'), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c']);
+
+		$this->assertSame(Arr::left($arr, 'h'), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c',
+			'd' => 'lt_d', 'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h']);
+
+		$this->assertSame(Arr::left($arr, 'w'), $arr);
+	}
+
+	public final function testRight(){
+		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
+			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
+
+		$this->assertSame(Arr::right($arr, 'c'), ['c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
+					'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
+
+		$this->assertSame(Arr::right($arr, 'h'), ['h' => 'lt_h', 'i' => 'lt_i']);
+
+		$this->assertSame(Arr::right($arr, 'w'), $arr);
+	}
+
 	public final function testHas(){
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
@@ -436,30 +460,6 @@ class ArrTest extends TestCase {
 		for ($i = 0; $i < 10; $i++) {
 			$this->assertTrue(in_array(Arr::rand($arr), $arr));
 		}
-	}
-
-	public final function testLeft(){
-		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
-			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
-
-		$this->assertSame(Arr::left($arr, 'c'), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c']);
-
-		$this->assertSame(Arr::left($arr, 'h'), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c',
-			'd' => 'lt_d', 'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h']);
-
-		$this->assertSame(Arr::left($arr, 'w'), $arr);
-	}
-
-	public final function testRight(){
-		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
-			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
-
-		$this->assertSame(Arr::right($arr, 'c'), ['c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
-					'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
-
-		$this->assertSame(Arr::right($arr, 'h'), ['h' => 'lt_h', 'i' => 'lt_i']);
-
-		$this->assertSame(Arr::right($arr, 'w'), $arr);
 	}
 
 	public final function testEach(){

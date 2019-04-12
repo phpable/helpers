@@ -417,8 +417,8 @@ class Arr extends AHelper {
 	 * @param array $Source
 	 * @return array
 	 */
-	public static final function odd(array $Source):array {
-		return array_values(array_filter(array_values($Source), function($i){
+	public static final function odd(array $Source): array {
+		return array_values(array_filter(array_values($Source), function($i) {
 			return  ($i) % 2 == 0; }, ARRAY_FILTER_USE_KEY));
 	}
 
@@ -431,8 +431,33 @@ class Arr extends AHelper {
 	 * @return array
 	 */
 	public static final function even(array $Source): array {
-		return array_values(array_filter(array_values($Source), function($i){
+		return array_values(array_filter(array_values($Source), function($i) {
 			return  ($i) % 2 > 0; }, ARRAY_FILTER_USE_KEY));
+	}
+
+
+	/**
+	 * Returns the left part of the array ending by the given value
+	 *
+	 * @param array $Source
+	 * @param mixed $to
+	 * @return array
+	 */
+	public static final function left(array $Source, $to): array {
+		return array_slice($Source, 0,
+			self::find(array_keys($Source), $to, count($Source) - 1) + 1);
+	}
+
+	/**
+	 * Returns the right part of the array starting from the given value
+	 *
+	 * @param array $Source
+	 * @param mixed $from
+	 * @return array
+	 */
+	public static final function right(array $Source, $from): array {
+		return array_slice($Source,
+			self::find(array_keys($Source), $from, 0));
 	}
 
 	/**
@@ -480,30 +505,6 @@ class Arr extends AHelper {
 	 */
 	public static final function rand(array $Source) {
 		return $Source[array_rand($Source = Arr::simplify(func_get_args()))];
-	}
-
-	/**
-	 * Returns the left part of an array ending by the given value.
-	 *
-	 * @param array $Source
-	 * @param mixed $to
-	 * @return array
-	 */
-	public static final function left(array $Source, $to): array {
-		return array_slice($Source, 0, self::find(array_keys($Source),
-			$to, count($Source) - 1) + 1);
-	}
-
-	/**
-	 * Returns the right part of an array starting by the given value.
-	 *
-	 * @param array $Source
-	 * @param mixed $from
-	 * @return array
-	 */
-	public static final function right(array $Source, $from): array {
-		return array_slice($Source, self::find(array_keys($Source),
-			$from, 0));
 	}
 
 	/**
