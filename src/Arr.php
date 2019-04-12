@@ -386,7 +386,7 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Returns a subset contains the given keys only.
+	 * Returns a subset containing the given keys only.
 	 *
 	 * @param array $Source
 	 * @param mixed ...$args
@@ -398,15 +398,15 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Returns a subset from the given array using the given list of ignored keys.
+	 * Returns a subset containing all array values except the given keys.
 	 *
 	 * @param array $Source
-	 * @param mixed $keys, ...
+	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function except(array $Source, $keys){
+	public static final function except(array $Source, ...$args){
 		return array_diff_key($Source,
-			array_fill_keys(self::simplify(array_slice(func_get_args(), 1)), -1));
+			array_fill_keys(self::simplify(...$args), -1));
 	}
 
 	/**

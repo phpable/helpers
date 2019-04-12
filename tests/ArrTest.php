@@ -366,6 +366,20 @@ class ArrTest extends TestCase {
 
 		$this->assertSame(Arr::except($arr, ['b', 'c', 'd', 'f', 'g', 'h']), ['a' => 'lt_a',
 			'e' => 'lt_e', 'i' => 'lt_i']);
+
+		$this->assertSame(Arr::except($arr, ['a', 'z']), ['b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
+			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
+
+		$this->assertSame(Arr::except($arr, ['z']), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d',
+			'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
+
+		$this->assertSame(Arr::except($arr, []), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d',
+			'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
+
+		$this->assertSame(Arr::except($arr), ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d',
+			'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i']);
+
+		$this->assertSame(Arr::except($arr, ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']), []);
 	}
 
 	public final function testHas(){
