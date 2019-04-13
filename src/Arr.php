@@ -410,6 +410,28 @@ class Arr extends AHelper {
 	}
 
 	/**
+	 * Returns the first element of the array.
+	 *
+	 * @param array $Source
+	 * @param mixed $default
+	 * @return mixed
+	 */
+	public static final function first(array $Source, $default = null) {
+		return self::value($Source, 0, $default);
+	}
+
+	/**
+	 * Returns the last element of the array.
+	 *
+	 * @param array $Source
+	 * @param mixed $default
+	 * @return mixed
+	 */
+	public static final function last(array $Source, $default = null) {
+		return self::value($Source, count($Source) - 1, $default);
+	}
+
+	/**
 	 * Returns only odd elements from the given array.
 	 *
 	 * @attention Keys not preserved.
@@ -434,7 +456,6 @@ class Arr extends AHelper {
 		return array_values(array_filter(array_values($Source), function($i) {
 			return  ($i) % 2 > 0; }, ARRAY_FILTER_USE_KEY));
 	}
-
 
 	/**
 	 * Returns the left part of the array ending by the given value
@@ -557,28 +578,6 @@ class Arr extends AHelper {
 		return array_walk($Source, function(&$value, $key) use ($separator) { $value = array_map('trim',
 			array_pad(preg_split('/(?:' . preg_quote($separator, '/') . ')/', Str::cast($value), 2), 2, null)); })
 				? self::compile(self::simplify($Source)) : [];
-	}
-
-	/**
-	 * Returns the first element of an array or null if the array is empty.
-	 *
-	 * @param array $Source
-	 * @param mixed $default
-	 * @return mixed
-	 */
-	public static final function first(array $Source, $default = null) {
-		return self::value($Source, 0, $default);
-	}
-
-	/**
-	 * Returns the last element of an array or null if the array is empty.
-	 *
-	 * @param array $Source
-	 * @param mixed $default
-	 * @return mixed
-	 */
-	public static final function last(array $Source, $default = null){
-		return self::value($Source, count($Source) - 1, $default);
 	}
 
 	/**

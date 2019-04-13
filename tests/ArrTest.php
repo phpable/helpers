@@ -382,6 +382,22 @@ class ArrTest extends TestCase {
 		$this->assertSame(Arr::except($arr, ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']), []);
 	}
 
+	public final function testFirst() {
+		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
+		$this->assertSame(Arr::first($arr), 'a');
+
+		array_shift($arr);
+		$this->assertSame(Arr::first($arr), 'b');
+
+	}
+
+	public final function testLast() {
+		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
+		$this->assertSame(Arr::last($arr), 'i');
+
+		array_pop($arr);
+		$this->assertSame(Arr::last($arr), 'h');
+	}
 
 	public final function testOdd(){
 		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
@@ -489,18 +505,6 @@ class ArrTest extends TestCase {
 
 		$this->assertSame(Arr::unpack($arr, '='), ['lt_a' => '', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 					'f' => 'lt_f', 'g' => 'lt_g', '' => 'lt_i']);
-	}
-
-	public final function testFirst() {
-		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
-
-		$this->assertEquals(Arr::first($arr), 'a');
-	}
-
-	public final function testLast() {
-		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
-
-		$this->assertEquals(Arr::last($arr), 'i');
 	}
 
 	public final function testSelect() {
