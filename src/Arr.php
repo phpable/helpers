@@ -493,27 +493,25 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Checks if the given keys exist in an array.
+	 * Checks if the given keys present in the array.
 	 *
 	 * @param array $Source
-	 * @param mixed $key, ...
+	 * @param mixed ...$args
 	 * @return bool
 	 */
-	public static final function has(array $Source, $key): bool {
-		return !count(array_diff(self::simplify(array_slice(func_get_args(), 1)),
-			array_keys($Source)));
+	public static final function has(array $Source, ...$args): bool {
+		return !count(array_diff(self::simplify(...$args), array_keys($Source)));
 	}
 
 	/**
-	 * Checks if an array contains the given values.
+	 * Checks if the array contains the given values.
 	 *
 	 * @param array $Source
-	 * @param mixed $value, ...
+	 * @param mixed ...$args
 	 * @return bool
 	 */
-	public static final function contains(array $Source, $value): bool {
-		return count(array_intersect($Source,
-			$value = self::simplify(array_slice(func_get_args(), 1)))) == count($value);
+	public static final function contains(array $Source, ...$args): bool {
+		return count(array_intersect($Source, $args = self::simplify($args))) == count($args);
 	}
 
 	/**
