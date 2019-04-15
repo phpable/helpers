@@ -482,6 +482,17 @@ class Arr extends AHelper {
 	}
 
 	/**
+	 * Filters an array, keeping only selected values if presented.
+	 *
+	 * @param array $Source
+	 * @param mixed ...$args
+	 * @return array
+	 */
+	public static final function select(array $Source, ...$args): array {
+		return array_intersect($Source, self::simplify($args));
+	}
+
+	/**
 	 * Checks if the given keys exist in an array.
 	 *
 	 * @param array $Source
@@ -578,17 +589,6 @@ class Arr extends AHelper {
 		return array_walk($Source, function(&$value, $key) use ($separator) { $value = array_map('trim',
 			array_pad(preg_split('/(?:' . preg_quote($separator, '/') . ')/', Str::cast($value), 2), 2, null)); })
 				? self::compile(self::simplify($Source)) : [];
-	}
-
-	/**
-	 * Filters an array, keeping only selected values if presented.
-	 *
-	 * @param array $Source
-	 * @param mixed ...$args
-	 * @return array
-	 */
-	public static final function select(array $Source, ...$args): array {
-		return array_intersect($Source, self::simplify($args));
 	}
 
 	/**
