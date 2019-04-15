@@ -525,8 +525,8 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Shuffles the given array.
-	 * Function behavior is similar to 'shuffle' but doesn't need sending an array by reference.
+	 * Shuffles the array.
+	 * This function behavior is similar to 'shuffle' but doesn't need send an array by reference.
 	 *
 	 * @attention Keys not preserved.
 	 *

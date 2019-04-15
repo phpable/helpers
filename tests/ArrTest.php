@@ -482,9 +482,7 @@ class ArrTest extends TestCase {
 
 	public final function testShuffle(){
 		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
-
-		$this->assertEquals(count(Arr::shuffle($arr)), count($arr));
-		$this->assertNotEquals(Arr::shuffle($arr), count($arr));
+		$this->assertSame(array_diff(Arr::shuffle($arr), $arr), []);
 	}
 
 	public final function testEach(){
