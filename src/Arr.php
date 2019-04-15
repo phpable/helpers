@@ -386,6 +386,16 @@ class Arr extends AHelper {
 	}
 
 	/**
+	 * Returns a random value from the array.
+	 *
+	 * @param array $Source
+	 * @return mixed
+	 */
+	public static final function rand(array $Source) {
+		return $Source[array_rand($Source)];
+	}
+
+	/**
 	 * Returns a subset containing the given keys only.
 	 *
 	 * @param array $Source
@@ -525,16 +535,6 @@ class Arr extends AHelper {
 	 */
 	public static final function shuffle(array $Source): array {
 		return shuffle($Source) ? $Source : [];
-	}
-
-	/**
-	 * Returns a random value from the given array.
-	 *
-	 * @param array $Source, ...
-	 * @return mixed
-	 */
-	public static final function rand(array $Source) {
-		return $Source[array_rand($Source = Arr::simplify(func_get_args()))];
 	}
 
 	/**

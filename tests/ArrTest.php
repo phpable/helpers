@@ -347,6 +347,14 @@ class ArrTest extends TestCase {
 			'c' => 'lt_c', 'undefined', 'undefined']);
 	}
 
+	public final function testRand(){
+		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
+
+		for ($i = 0; $i < 10; $i++) {
+			$this->assertTrue(in_array(Arr::rand($arr), $arr));
+		}
+	}
+
 	public final function testOnly(){
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
@@ -477,14 +485,6 @@ class ArrTest extends TestCase {
 
 		$this->assertEquals(count(Arr::shuffle($arr)), count($arr));
 		$this->assertNotEquals(Arr::shuffle($arr), count($arr));
-	}
-
-	public final function testRand(){
-		$arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
-
-		for ($i = 0; $i < 10; $i++) {
-			$this->assertTrue(in_array(Arr::rand($arr), $arr));
-		}
 	}
 
 	public final function testEach(){
