@@ -447,6 +447,15 @@ class ArrTest extends TestCase {
 		$this->assertSame(Arr::right($arr, 'w'), $arr);
 	}
 
+	public final function testSelect() {
+		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
+			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
+
+		$this->assertEquals(Arr::select($arr, 'lt_b', 'lt_i'), ['b' => 'lt_b', 'i' => 'lt_i']);
+		$this->assertEquals(Arr::select($arr, 'lt_y', 'lt_z'), []);
+		$this->assertEquals(Arr::select($arr), []);
+	}
+
 	public final function testHas(){
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
@@ -505,13 +514,6 @@ class ArrTest extends TestCase {
 
 		$this->assertSame(Arr::unpack($arr, '='), ['lt_a' => '', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 					'f' => 'lt_f', 'g' => 'lt_g', '' => 'lt_i']);
-	}
-
-	public final function testSelect() {
-		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
-			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
-
-		$this->assertEquals(Arr::select($arr, 'lt_b', 'lt_i'), ['b' => 'lt_b', 'i' => 'lt_i']);
 	}
 
 	public final function testLike() {

@@ -581,14 +581,14 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Filters an array, keeping only selected values.
+	 * Filters an array, keeping only selected values if presented.
 	 *
 	 * @param array $Source
-	 * @param $values
+	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function select(array $Source, $values): array {
-		return array_intersect($Source, self::simplify(array_slice(func_get_args(), 1)));
+	public static final function select(array $Source, ...$args): array {
+		return array_intersect($Source, self::simplify($args));
 	}
 
 	/**
