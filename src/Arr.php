@@ -538,6 +538,40 @@ class Arr extends AHelper {
 	}
 
 	/**
+	 * Sorts the array by values using the handler.
+	 *
+	 * @attention Keys not preserved.
+	 *
+	 * @param array $Source
+	 * @param callable|null $Handler
+	 * @return array
+	 */
+	public static final function sort(array $Source, ?callable $Handler = null): array {
+		return call_user_func(function() use (&$Source, $Handler) {
+
+			return !is_null($Handler)
+				? usort($Source, $Handler) : sort($Source, SORT_REGULAR);
+
+		}) ? $Source : [];
+	}
+
+	/**
+	 * Sorts the array by keys using the handler.
+	 *
+	 * @param array $Source
+	 * @param callable $Handler
+	 * @return array
+	 */
+	public static final function ksort(array $Source, ?callable $Handler = null): array {
+		return call_user_func(function() use (&$Source, $Handler) {
+
+			return !is_null($Handler)
+				? uksort($Source, $Handler) : ksort($Source, SORT_REGULAR);
+
+		}) ? $Source : [];
+	}
+
+	/**
 	 * Applies the given function to each element of an array
 	 * or to the specified subset, if the third argument is provided.
 	 *
@@ -602,16 +636,5 @@ class Arr extends AHelper {
 		return count($keys = self::simplify(array_slice(func_get_args(), 1))) && uksort($Source, function($l, $r) use ($keys){
 			return Arr::contains($keys, $r, $l) ? array_search($l, $keys) - array_search($r, $keys) : 0; })
 				? self::only($Source, $keys) : $Source;
-	}
-
-	/**
-	 * Sorts an array by a custom function.
-	 *
-	 * @param array $Source
-	 * @param callable $Handler
-	 * @return array
-	 */
-	public static final function sort(array $Source, callable $Handler): array {
-		return usort($Source, $Handler) ? $Source : [];
 	}
 }

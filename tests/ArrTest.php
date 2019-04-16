@@ -485,6 +485,30 @@ class ArrTest extends TestCase {
 		$this->assertSame(array_diff(Arr::shuffle($arr), $arr), []);
 	}
 
+	public final function testSort(){
+		$arr1 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
+		$arr2 = Arr::shuffle($arr1);
+
+		$this->assertSame(Arr::sort($arr2), $arr1);
+
+		$this->assertSame(Arr::sort($arr2, function ($a, $b){
+			return ord($a) - ord($b);
+		}), $arr1);
+	}
+
+	public final function testKsort(){
+		$arr1 = ['a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'd1',
+			'e' => 'e1', 'f' => 'f1', 'g' => 'g1', 'h' => 'h1', 'i' => 'i1'];
+
+		$arr2 = ['d' => 'd1', 'h' => 'h1', 'i' => 'i1', 'c' => 'c1',
+			'e' => 'e1', 'b' => 'b1',  'g' => 'g1', 'a' => 'a1', 'f' => 'f1'];
+
+		$this->assertSame(Arr::ksort($arr2), $arr1);
+		$this->assertSame(Arr::ksort($arr2, function ($a, $b){
+			return ord($a) - ord($b);
+		}), $arr1);
+	}
+
 	public final function testEach(){
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
