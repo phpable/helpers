@@ -582,8 +582,10 @@ class Arr extends AHelper {
 	public static final function like(array $Source, ...$args): array {
 		return count($keys = self::simplify($args)) > 0
 
-			? self::ksort(self::only($Source, ...$keys), function($a, $b) use ($keys) {
-				return array_search($a, $keys) - array_search($b, $keys); })
+			? self::ksort(self::only($Source, ...$keys),
+
+				function($a, $b) use ($keys) {
+					return array_search($a, $keys) - array_search($b, $keys); })
 
 		: [];
 	}
