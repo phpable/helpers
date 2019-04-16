@@ -624,8 +624,11 @@ class Arr extends AHelper {
 	 * @return array;
 	 */
 	public static final function pack(array $Source, string $separator): array {
-		return array_walk($Source, function(&$value, $key) use ($separator){
-			$value = $key . $separator . Str::cast($value); }) ? array_values($Source) : [];
+		return array_walk($Source,
+			function(&$value, $key) use ($separator){
+
+				$value = Str::join($separator, $key,  Str::cast($value)); })
+		? array_values($Source) : [];
 	}
 
 	/**
