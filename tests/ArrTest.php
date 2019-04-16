@@ -537,13 +537,20 @@ class ArrTest extends TestCase {
 
 		$this->assertSame(Arr::pack($arr, '='), ['a=lt_a', 'b=lt_b', 'c=lt_c', 'd=lt_d', 'e=lt_e',
 			'f=lt_f', 'g=lt_g', 'h=lt_h', 'i=lt_i']);
+
+		$arr = ['a' => 'lt_a',
+			'b=1' => 'lt_b', 'c' => 'lt_c'];
+
+		$this->assertSame(Arr::pack($arr, '='), ['a=lt_a',
+			'b=lt_b', 'c=lt_c']);
+
 	}
 
 	public final function testUnpack() {
 		$arr = ['lt_a', 'b=lt_b', 'c=lt_c', 'd=lt_d', 'e=lt_e',
 			'f=lt_f', 'g=lt_g', '=lt_h', '=lt_i'];
 
-		$this->assertSame(Arr::unpack($arr, '='), ['lt_a' => '', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
-					'f' => 'lt_f', 'g' => 'lt_g', '' => 'lt_i']);
+		$this->assertSame(Arr::unpack($arr, '='), ['lt_a' => '', 'b' => 'lt_b',
+			'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e', 'f' => 'lt_f', 'g' => 'lt_g', '' => 'lt_i']);
 	}
 }

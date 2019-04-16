@@ -624,29 +624,39 @@ class Arr extends AHelper {
 	 * @return array;
 	 */
 	public static final function pack(array $Source, string $delimiter): array {
-		return array_walk($Source,
-			function(&$value, $key) use ($delimiter){
+		$_ = '/' . preg_quote($delimiter, '/') . '.*$/';
 
-				$value = Str::join($delimiter, $key,  Str::cast($value)); })
+		return array_walk($Source,
+			function(&$value, $key) use ($delimiter, $_) {
+
+				$value = Str::join($delimiter,
+					preg_replace($_, '', $key),  Str::cast($value)); })
+
 		? array_values($Source) : [];
 	}
 
 	/**
-	 * Converts an array packed by the previous function into its original state.
+	 * Converts a packed array into the original state.
 	 * @see Arr::pack()
 	 *
 	 * @attention Keys not preserved.
 	 *
-	 * @attention This method throws an exception if any element
+	 * @attention Throws an exception if any element
 	 * of the given array cannot be represented as a string.
 	 *
 	 * @param array $Source
-	 * @param string $separator
+	 * @param string $delimiter
 	 * @return array
 	 */
-	public static final function unpack(array $Source, string $separator): array {
-		return array_walk($Source, function(&$value, $key) use ($separator) { $value = array_map('trim',
-			array_pad(preg_split('/(?:' . preg_quote($separator, '/') . ')/', Str::cast($value), 2), 2, null)); })
-				? self::compile(self::simplify($Source)) : [];
+	public static final function unpack(array $Source, string $delimiter): array {
+		$_ = '/(?:' . preg_quote($delimiter, '/') . ')/';
+
+		return array_walk($Source,
+			function(&$value, $key) use ($_) {
+
+			$value = array_map('trim',
+				array_pad(preg_split($_, Str::cast($value), 2), 2, null)); })
+
+		? self::compile($Source) : [];
 	}
 }
