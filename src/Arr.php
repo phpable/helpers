@@ -611,23 +611,23 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Returns an array contains string elements formed by a key-value pair
-	 * of the source array combined by the specified separator.
+	 * Creates a new array of using key-value pair
+	 * of the provided array separated by the specified delimiter.
 	 *
 	 * @attention Keys not preserved.
 	 *
-	 * @attention This method throws an exception if any element
+	 * @attention Throws an exception if any element
 	 * of the given array cannot be represented as a string.
 	 *
 	 * @param array $Source
-	 * @param string $separator
+	 * @param string $delimiter
 	 * @return array;
 	 */
-	public static final function pack(array $Source, string $separator): array {
+	public static final function pack(array $Source, string $delimiter): array {
 		return array_walk($Source,
-			function(&$value, $key) use ($separator){
+			function(&$value, $key) use ($delimiter){
 
-				$value = Str::join($separator, $key,  Str::cast($value)); })
+				$value = Str::join($delimiter, $key,  Str::cast($value)); })
 		? array_values($Source) : [];
 	}
 
