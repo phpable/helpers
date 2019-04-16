@@ -564,11 +564,28 @@ class Arr extends AHelper {
 	 */
 	public static final function ksort(array $Source, ?callable $Handler = null): array {
 		return call_user_func(function() use (&$Source, $Handler) {
-
 			return !is_null($Handler)
 				? uksort($Source, $Handler) : ksort($Source, SORT_REGULAR);
 
 		}) ? $Source : [];
+	}
+
+	/**
+	 * Sorts the array by keys following the order determined by arguments.
+	 *
+	 * @attention Extra keys will be removed.
+	 *
+	 * @param array $Source
+	 * @param mixed ...$args
+	 * @return array
+	 */
+	public static final function like(array $Source, ...$args): array {
+		return count($keys = self::simplify($args)) > 0
+
+			? self::ksort(self::only($Source, ...$keys), function($a, $b) use ($keys) {
+				return array_search($a, $keys) - array_search($b, $keys); })
+
+		: [];
 	}
 
 	/**
@@ -621,20 +638,5 @@ class Arr extends AHelper {
 		return array_walk($Source, function(&$value, $key) use ($separator) { $value = array_map('trim',
 			array_pad(preg_split('/(?:' . preg_quote($separator, '/') . ')/', Str::cast($value), 2), 2, null)); })
 				? self::compile(self::simplify($Source)) : [];
-	}
-
-	/**
-	 * Sorts an array keys in the order given by arguments.
-	 *
-	 * @attention Missing keys will be removed.
-	 *
-	 * @param array $Source
-	 * @param mixed $keys, ...
-	 * @return array
-	 */
-	public static final function like(array $Source, $keys){
-		return count($keys = self::simplify(array_slice(func_get_args(), 1))) && uksort($Source, function($l, $r) use ($keys){
-			return Arr::contains($keys, $r, $l) ? array_search($l, $keys) - array_search($r, $keys) : 0; })
-				? self::only($Source, $keys) : $Source;
 	}
 }

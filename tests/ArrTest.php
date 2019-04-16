@@ -509,6 +509,15 @@ class ArrTest extends TestCase {
 		}), $arr1);
 	}
 
+	public final function testLike() {
+		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
+			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
+
+		$this->assertSame(Arr::like($arr, 'c', 'b', 'i'), ['c' => 'lt_c', 'b' => 'lt_b', 'i' => 'lt_i']);
+		$this->assertSame(Arr::like($arr, 'h', 'e', 'g'), ['h' => 'lt_h', 'e' => 'lt_e', 'g' => 'lt_g']);
+		$this->assertSame(Arr::like($arr, 'a', 'h', 'z'), ['a' => 'lt_a', 'h' => 'lt_h']);
+	}
+
 	public final function testEach(){
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
@@ -537,14 +546,4 @@ class ArrTest extends TestCase {
 		$this->assertSame(Arr::unpack($arr, '='), ['lt_a' => '', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 					'f' => 'lt_f', 'g' => 'lt_g', '' => 'lt_i']);
 	}
-
-	public final function testLike() {
-		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
-			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
-
-		$this->assertSame(Arr::like($arr, 'c', 'b', 'i'), ['c' => 'lt_c', 'b' => 'lt_b', 'i' => 'lt_i']);
-		$this->assertSame(Arr::like($arr, 'h', 'e', 'g'), ['h' => 'lt_h', 'e' => 'lt_e', 'g' => 'lt_g']);
-		$this->assertSame(Arr::like($arr, 'a', 'h', 'z'), ['a' => 'lt_a', 'h' => 'lt_h']);
-	}
-
 }
