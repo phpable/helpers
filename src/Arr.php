@@ -591,18 +591,23 @@ class Arr extends AHelper {
 	}
 
 	/**
-	 * Applies the given function to each element of an array
-	 * or to the specified subset, if the third argument is provided.
+	 * Applies the handler to each element of the array
+	 * or the specified subset in case the third argument provided.
 	 *
 	 * @param array $Source
-	 * @param callable $Callback
-	 * @param mixed $keys, ...
+	 * @param callable $Handler
+	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function each(array $Source, callable $Callback, $keys = null): array {
-		return array_walk($Source, function(&$value, $key, $keys) use ($Callback) {
-			$value = count($keys) < 1 || in_array($key, $keys) ? $Callback($key, $value) : $value; },
-				array_filter(Arr::simplify(array_slice(func_get_args(), 2)))) ? $Source : [];
+	public static final function each(array $Source, callable $Handler, ...$args): array {
+		return array_walk($Source,
+			function(&$value, $key, $args) use ($Handler) {
+
+				$value = empty($args) || in_array($key, $args)
+					? $Handler($key, $value) : $value; },
+
+			array_filter($args, function($_){
+				return is_integer($_) || is_string($_); })) ? $Source : [];
 	}
 
 	/**
