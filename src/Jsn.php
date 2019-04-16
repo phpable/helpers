@@ -3,64 +3,73 @@ namespace Able\Helpers;
 
 use \Able\Helpers\Abstractions\AHelper;
 use \Able\Helpers\Arr;
+use Exception;
 
 class Jsn extends AHelper {
 
 	/**
-	 * Decodes a JSON string into an associative array.
+	 * Decodes a JSON-packed string into an associative array.
 	 *
-	 * @attention This method throws an exception
-	 * if given value is not a valid JSON string.
+	 * @attention Throws an exception if the given string
+	 * is not a valid JSON string.
 	 *
 	 * @param string $source
 	 * @return array
-	 * @throws \Exception
+	 *
+	 * @throws Exception
 	 */
 	public final static function decode(string $source): array {
-		if (is_null($source = json_decode($source, true)) && json_last_error() !== JSON_ERROR_NONE){
-			throw new \Exception('Invalid json format!');
+		if (is_null($source = json_decode($source, true))
+			|| json_last_error() !== JSON_ERROR_NONE){
+
+				throw new Exception('Invalid json format!');
 		}
 
 		return $source;
 	}
 
 	/**
-	 * Encodes an associative array into its JSON string representation.
+	 * Packs the given data into its JSON string.
 	 *
-	 * @attention This method throws an exception
+	 * @attention Throws an exception if the given data be represented as a JSON string.
 	 * if given value cannot be represented as a JSON string.
 	 *
 	 * @param array $source
 	 * @return string
-	 * @throws \Exception
+	 *
+	 * @throws Exception
 	 */
 	public final static function encode(array $source): string {
-		if (($source = json_encode($source)) == false && json_last_error() !== JSON_ERROR_NONE){
-			throw new \Exception('Invalid raw data!');
+		if (($source = json_encode($source)) == false
+			|| json_last_error() !== JSON_ERROR_NONE){
+
+			throw new Exception('Invalid raw data!');
 		}
 
 		return $source;
 	}
 
 	/**
-	 * Adds the given data into the end of the given JSON string representation.
+	 * Adds the given data into the end of the JSON string.
 	 *
 	 * @param string $source
 	 * @param array $Append
 	 * @return string
-	 * @throws \Exception
+	 *
+	 * @throws Exception
 	 */
 	public final static function append(string $source, array $Append): string {
 		return self::encode(Arr::append(self::decode($source), $Append));
 	}
 
 	/**
-	 * Adds the given data into the beginning of the given JSON string representation.
+	 * Adds the given data into the beginning of the JSON string.
 	 *
 	 * @param string $source
 	 * @param array $Prepend
 	 * @return string
-	 * @throws \Exception
+	 *
+	 * @throws Exception
 	 */
 	public final static function prepend(string $source, array $Prepend): string {
 		return self::encode(Arr::prepend(self::decode($source), $Prepend));
@@ -69,12 +78,12 @@ class Jsn extends AHelper {
 	/**
 	 * Removes an element from the given JSON string representation.
 	 *
-	 * @see Arr::clear()
+	 * @see Arr::erase()
 	 *
 	 * @param string $source
 	 * @param mixed $keys, ...
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final static function clear(string $source, $keys): string {
 		return self::encode(Arr::erase(self::decode($source),
@@ -90,7 +99,7 @@ class Jsn extends AHelper {
 	 * @param $keys
 	 * @param $value
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final static function improve(string $source, $keys, $value): string {
 		return self::encode(Arr::improve(self::decode($source),
@@ -103,7 +112,7 @@ class Jsn extends AHelper {
 	 * @param string $source
 	 * @param array $Values
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final static function merge(string $source, array $Values){
 		return self::encode(array_merge(self::decode($source), $Values));
@@ -116,7 +125,7 @@ class Jsn extends AHelper {
 	 * @param $key
 	 * @param $default
 	 * @return mixed
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final static function get(string $source, $key, $default = null){
 		return Arr::get(self::decode($source), $key, $default);
