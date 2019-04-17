@@ -106,15 +106,16 @@ class Jsn extends AHelper {
 	}
 
 	/**
-	 * Merge an array with the given JSON string representation.
+	 * Merges the JSON collection and the given data into a new JSON collection.
 	 *
 	 * @param string $source
-	 * @param array $Values
+	 * @param array $Data
 	 * @return string
+	 *
 	 * @throws Exception
 	 */
-	public final static function merge(string $source, array $Values){
-		return self::encode(array_merge(self::decode($source), $Values));
+	public final static function merge(string $source, array $Data) {
+		return self::encode(Arr::merge(self::decode($source), $Data));
 	}
 
 	/**
