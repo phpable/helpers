@@ -2,13 +2,14 @@
 namespace Able\Helpers;
 
 use \Able\Helpers\Abstractions\AHelper;
+use \Generator;
 
 class Str extends AHelper {
 
 	/**
-	 * Converts any value into a string.
+	 * Converts the given value into a string.
 	 *
-	 * @attention This method throws an exception if the given value
+	 * @attention Throws an exception if the given value
 	 * cannot be represented as a string.
 	 *
 	 * @param mixed $value
@@ -27,20 +28,16 @@ class Str extends AHelper {
 			return $value->__toString();
 		}
 
-		if ($value instanceof \Generator){
-			return self::join('', iterator_to_array($value, false));
-		}
-
 		return (string)$value;
 	}
 
 	/**
 	 * Converts the iterator into a string.
 	 *
-	 * @param \Generator $Input
+	 * @param Generator $Input
 	 * @return string
 	 */
-	public static final function collect(\Generator $Input){
+	public static final function collect(Generator $Input){
 		return self::join(PHP_EOL, array_map(function(){
 			return self::unbreak(self::cast(func_get_arg(0)), 1);
 		}, iterator_to_array($Input, false)));
@@ -228,10 +225,11 @@ class Str extends AHelper {
 
 	/**
 	 * @param string $source
+	 * @param int $count
 	 * @return string
 	 */
-	public final static function br2nl(string $source): string {
-		return preg_replace('/<br\s*\\/?>/', "\n", $source);
+	public final static function br2nl(string $source, int $count = 1): string {
+		return preg_replace('/<br\s*\\/?>/', str_pad("\n", $count), $source);
 	}
 
 	/**
