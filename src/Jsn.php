@@ -43,7 +43,7 @@ class Jsn extends AHelper {
 		if (($source = json_encode($source)) == false
 			|| json_last_error() !== JSON_ERROR_NONE){
 
-			throw new Exception('Invalid raw data!');
+				throw new Exception('Invalid raw data!');
 		}
 
 		return $source;
@@ -76,34 +76,33 @@ class Jsn extends AHelper {
 	}
 
 	/**
-	 * Removes an element from the given JSON string representation.
+	 * Erases elements from the given JSON string
+	 * representation following the given path.
 	 *
 	 * @see Arr::erase()
 	 *
 	 * @param string $source
-	 * @param mixed $keys, ...
+	 * @param mixed ...$args
 	 * @return string
 	 * @throws Exception
 	 */
-	public final static function clear(string $source, $keys): string {
-		return self::encode(Arr::erase(self::decode($source),
-			...array_slice(func_get_args(), 1)));
+	public final static function erase(string $source, ...$args): string {
+		return self::encode(Arr::erase(self::decode($source), ...$args));
 	}
 
 	/**
-	 * Adds an element into the given JSON string representation.
+	 * Adds an element into the JSON collection following the given path.
 	 *
 	 * @see Arr::improve()
 	 *
 	 * @param string $source
-	 * @param $keys
-	 * @param $value
+	 * @param mixed ...$args
 	 * @return string
+	 *
 	 * @throws Exception
 	 */
-	public final static function improve(string $source, $keys, $value): string {
-		return self::encode(Arr::improve(self::decode($source),
-			...array_slice(func_get_args(), 1)));
+	public final static function improve(string $source, ...$args): string {
+		return self::encode(Arr::improve(self::decode($source), ...$args));
 	}
 
 	/**
