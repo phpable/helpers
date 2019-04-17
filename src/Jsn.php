@@ -108,6 +108,8 @@ class Jsn extends AHelper {
 	/**
 	 * Merges the JSON collection and the given data into a new JSON collection.
 	 *
+	 * @see Arr::merge()
+	 *
 	 * @param string $source
 	 * @param array $Data
 	 * @return string
@@ -119,15 +121,34 @@ class Jsn extends AHelper {
 	}
 
 	/**
+	 * Tries to retrieve a single value or a subset
+	 * from a JSON collection using the given path.
+	 *
+	 * @see Arr::follow()
+	 *
+	 * @param string $source
+	 * @param mixed ...$args
+	 * @return mixed
+	 *
+	 * @throws Exception
+	 */
+	public final static function follow(string $source, ...$args) {
+		return Arr::follow(self::decode($source), ...$args);
+	}
+
+	/**
 	 * Returns a single element from a JSON array by its key.
+	 *
+	 * @see Arr::get()
 	 *
 	 * @param string $source
 	 * @param $key
 	 * @param $default
 	 * @return mixed
+	 *
 	 * @throws Exception
 	 */
-	public final static function get(string $source, $key, $default = null){
+	public final static function get(string $source, $key, $default = null) {
 		return Arr::get(self::decode($source), $key, $default);
 	}
 

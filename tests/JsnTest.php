@@ -86,4 +86,30 @@ class JsnTest extends TestCase {
 		$json = Jsn::encode($arr1);
 		$this->assertSame(Jsn::merge($json, $arr2), json_encode(Arr::merge($arr1, $arr2)));
 	}
+
+	/**
+	 * @throws Exception
+	 */
+	public final function testFollow() {
+		$arr1 = ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b']], 'b' => 12];
+
+
+		$json = Jsn::encode($arr1);
+		$this->assertSame(Jsn::follow($json, 'a', 'e'), 100);
+		$this->assertSame(Jsn::follow($json, 'a', 'g', 'n2'), '1b');
+		$this->assertSame(Jsn::follow($json, 'a', 'g', 'n4'), null);
+		$this->assertSame(Jsn::follow($json), null);
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public final function testGet() {
+		$arr1 = ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b']], 'b' => 12];
+
+
+		$json = Jsn::encode($arr1);
+		$this->assertSame(Jsn::get($json, 'b'), 12);
+		$this->assertSame(Jsn::get($json, 'z'), null);
+	}
 }
