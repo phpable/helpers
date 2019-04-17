@@ -258,6 +258,14 @@ class ArrTest extends TestCase {
 			'g' => ['n1' => '1a', 'n2' => '1b'], 'r' => ['test1', 'test2']], 'b' => 12]);
 	}
 
+	public final function testMerge() {
+		$arr1 = ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b']], 'b' => 12];
+		$arr2 = ['a' => ['f' => 22, 'g' => ['n2' => '2b']], 'b' => 44];
+
+		$this->assertSame(Arr::merge($arr1, $arr2),  ['a' => ['e' => 100,
+			'g' => ['n1' => '1a', 'n2' => ['1b', '2b']], 'f' => 22], 'b' => [12, 44]]);
+	}
+
 	public final function testErase(){
 		$arr = ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b']], 'b' => 12];
 

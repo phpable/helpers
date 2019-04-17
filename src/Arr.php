@@ -267,6 +267,35 @@ class Arr extends AHelper {
 	}
 
 	/**
+	 * Merges two given arrays recursively.
+	 *
+	 * @attention Numerical keys not preserved.
+	 *
+	 * @param array $Source
+	 * @param array $Attached
+	 * @return array
+	 */
+	public static final function merge(array $Source, array $Attached): array {
+		return array_walk($Attached,
+			function($value, $key) use (&$Source) {
+
+				if (is_array($value)) {
+					$Source[$key] = self::merge(self::cast(self::get($Source, $key)), $value);
+
+				} elseif (is_numeric($key)) {
+					array_push($Source, $value);
+
+				} else {
+					$Source = self::improve($Source, $key, $value);
+
+				}
+
+			}) ? $Source
+
+		: [];
+	}
+
+	/**
 	 * Removes an element from the array given as a first argument following the path
 	 * defined by the sequence starting the second argument to last one.
 	 *
