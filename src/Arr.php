@@ -453,6 +453,25 @@ class Arr extends AHelper {
 
 	/**
 	 * @param array $Source
+	 * @param callable $Handler
+	 * @param string ...$args
+	 * @return mixed
+	 */
+	public static final function apply(array $Source, callable $Handler, string ...$args) {
+		if (count($args) > 1
+			&& is_array($Source[$args[0]])) {
+
+				return self::apply($Source[$args[0]], $Handler, ...array_slice($args, 1));
+		}
+
+		return count($args) > 0
+			&& array_key_exists($args[0], $Source)
+
+				? call_user_func($Handler, $Source[$args[0]]) : $Source;
+	}
+
+	/**
+	 * @param array $Source
 	 * @param int $length
 	 * @param null $default
 	 * @return array
