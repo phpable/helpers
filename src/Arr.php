@@ -452,22 +452,29 @@ class Arr extends AHelper {
 	}
 
 	/**
+	 * Tries to apply the given function to a single value or a subset
+	 * extracted from an array by the given sequence of keys.
+	 *
+	 * @attention The only string keys are acceptable!
+	 *
 	 * @param array $Source
 	 * @param callable $Handler
 	 * @param string ...$args
 	 * @return mixed
 	 */
-	public static final function apply(array $Source, callable $Handler, string ...$args) {
+	public static final function apply(array $Source, callable $Handler, string ...$args): array {
 		if (count($args) > 1
 			&& is_array($Source[$args[0]])) {
 
-				return self::apply($Source[$args[0]], $Handler, ...array_slice($args, 1));
+				$Source[$args[0]] = self::apply($Source[$args[0]], $Handler, ...array_slice($args, 1));
+
+		} elseif (count($args) > 0
+			&& array_key_exists($args[0], $Source)) {
+
+				$Source[$args[0]] = call_user_func($Handler, $Source[$args[0]]);
 		}
 
-		return count($args) > 0
-			&& array_key_exists($args[0], $Source)
-
-				? call_user_func($Handler, $Source[$args[0]]) : $Source;
+		return $Source;
 	}
 
 	/**
