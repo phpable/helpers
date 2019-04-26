@@ -443,8 +443,6 @@ class Arr extends AHelper {
 	 * @return mixed
 	 */
 	public static final function follow(array $Source, string ...$args) {
-//		_dump($args);
-
 		return count($args) > 1 ?
 
 			self::follow(self::cast(Arr::get($Source, $args[0])),

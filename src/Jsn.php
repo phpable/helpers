@@ -107,9 +107,9 @@ class Jsn extends AHelper {
 	}
 
 	/**
-	 * Merges the JSON collection and the given data into a new JSON collection.
+	 * Unite the JSON collection and the given data into a new JSON collection.
 	 *
-	 * @see Arr::merge()
+	 * @see Arr::unite()
 	 *
 	 * @param string $source
 	 * @param array $Data
@@ -117,7 +117,7 @@ class Jsn extends AHelper {
 	 *
 	 * @throws Exception
 	 */
-	public final static function merge(string $source, array $Data) {
+	public final static function unite(string $source, array $Data): string {
 		return self::encode(Arr::unite(self::decode($source), $Data));
 	}
 
@@ -133,7 +133,7 @@ class Jsn extends AHelper {
 	 *
 	 * @throws Exception
 	 */
-	public final static function follow(string $source, ...$args) {
+	public final static function follow(string $source, string ...$args) {
 		return Arr::follow(self::decode($source), ...$args);
 	}
 

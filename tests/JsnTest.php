@@ -78,13 +78,12 @@ class JsnTest extends TestCase {
 	/**
 	 * @throws Exception
 	 */
-	public final function testMerge() {
+	public final function testUnite() {
 		$arr1 = ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b']], 'b' => 12];
 		$arr2 = ['a' => ['f' => 22, 'g' => ['n2' => '2b']], 'b' => 44];
 
-
 		$json = Jsn::encode($arr1);
-		$this->assertSame(Jsn::merge($json, $arr2), json_encode(Arr::merge($arr1, $arr2)));
+		$this->assertSame(Jsn::unite($json, $arr2), json_encode(Arr::unite($arr1, $arr2)));
 	}
 
 	/**
@@ -92,9 +91,8 @@ class JsnTest extends TestCase {
 	 */
 	public final function testFollow() {
 		$arr1 = ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b']], 'b' => 12];
-
-
 		$json = Jsn::encode($arr1);
+
 		$this->assertSame(Jsn::follow($json, 'a', 'e'), 100);
 		$this->assertSame(Jsn::follow($json, 'a', 'g', 'n2'), '1b');
 		$this->assertSame(Jsn::follow($json, 'a', 'g', 'n4'), null);
