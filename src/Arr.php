@@ -436,20 +436,21 @@ class Arr extends AHelper {
 	 * Tries to retrieve a single value or a subset
 	 * from an array by the given sequence of keys.
 	 *
+	 * @attention The only string keys are acceptable!
+	 *
 	 * @param array $Source
 	 * @param mixed ...$args
 	 * @return mixed
 	 */
-	public static final function follow(array $Source, ...$args) {
-		return count($keys = array_filter($args,
+	public static final function follow(array $Source, string ...$args) {
+//		_dump($args);
 
-			function ($_) {
-				return is_integer($_) || is_string($_); })) > 1
+		return count($args) > 1 ?
 
-					&& array_key_exists($keys[0], $Source)
+			self::follow(self::cast(Arr::get($Source, $args[0])),
+				...array_slice($args, 1))
 
-				? self::follow(self::cast($Source[$keys[0]]), ...array_slice($args, 1))
-		: Arr::get($Source, Arr::value($keys, 0, -1));
+		: Arr::get($Source, Arr::first($args));
 	}
 
 	/**
