@@ -370,6 +370,15 @@ class ArrTest extends TestCase {
 		$this->assertSame(Arr::follow($arr, 'a', 'z'), null);
 	}
 
+	public final function testApply() {
+		$arr = ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b']], 'b' => 12];
+
+		$this->assertSame(Arr::follow(Arr::apply($arr, function($_){ return $_ . '!'; }, 'a', 'g', 'n2'), 'a', 'g', 'n2'), '1b!');
+		$this->assertSame(Arr::follow(Arr::apply($arr, function($_){ return ++$_; }, 'a', 'e'), 'a', 'e'), 101);
+		$this->assertSame(Arr::follow(Arr::apply($arr, function($_){ return array_merge($_, ['n3' => '1d']); }, 'a', 'g'), 'a', 'g'), ['n1' => '1a', 'n2' => '1b', 'n3' => '1d']);
+		$this->assertSame(Arr::follow(Arr::apply($arr, function ($_){ return $_; }, 'a', 'z'), 'a', 'z'), null);
+	}
+
 	public final function testTake(){
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
