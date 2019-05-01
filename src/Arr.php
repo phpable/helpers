@@ -479,6 +479,25 @@ class Arr extends AHelper {
 
 	/**
 	 * @param array $Source
+	 * @param $value
+	 * @param string ...$args
+	 * @return array
+	 */
+	public static final function place(array $Source, $value, string ...$args): array {
+		if (count($args) > 1) {
+			$Source[$args[0]] = self::place(Arr::cast(Arr::get($Source, $args[0])),
+				$value, ...array_slice($args, 1));
+
+		}  elseif (count($args) > 0) {
+			$Source[$args[0]] = $value;
+		}
+
+		return $Source;
+	}
+
+
+	/**
+	 * @param array $Source
 	 * @param int $length
 	 * @param null $default
 	 * @return array
