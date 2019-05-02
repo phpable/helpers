@@ -379,6 +379,13 @@ class ArrTest extends TestCase {
 		$this->assertSame(Arr::follow(Arr::apply($arr, function ($_){ return $_; }, 'a', 'z'), 'a', 'z'), null);
 	}
 
+	public final function testPlace() {
+		$arr = ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b']], 'b' => 12];
+		$this->assertSame(Arr::place($arr, 1000, 'a', 'g'), ['a' => ['e' => 100, 'g' => 1000], 'b' => 12]);
+		$this->assertSame(Arr::place($arr, 1000, 'a', 'g', 'n3'), ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b', 'n3' => 1000]], 'b' => 12]);
+		$this->assertSame(Arr::place($arr, 1000, 'a', 'f'), ['a' => ['e' => 100, 'g' => ['n1' => '1a', 'n2' => '1b'], 'f' => 1000], 'b' => 12]);
+	}
+
 	public final function testTake(){
 		$arr = ['a' => 'lt_a', 'b' => 'lt_b', 'c' => 'lt_c', 'd' => 'lt_d', 'e' => 'lt_e',
 			'f' => 'lt_f', 'g' => 'lt_g', 'h' => 'lt_h', 'i' => 'lt_i'];
