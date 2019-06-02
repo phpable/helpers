@@ -7,6 +7,20 @@ use \Generator;
 class Str extends AHelper {
 
 	/**
+	 * Determines whether the given value
+	 * is presentable as a string.
+	 *
+	 * @param $value
+	 * @return bool
+	 */
+	public static final function castable($value): bool {
+		return is_scalar($value)
+			|| (is_object($value)
+
+				&& (method_exists($value, '__toString') || method_exists($value, 'toString')));
+	}
+
+	/**
 	 * Converts the given value into a string.
 	 *
 	 * @attention Throws an exception if the given value
@@ -16,15 +30,15 @@ class Str extends AHelper {
 	 * @return string
 	 */
 	public static final function cast($value): string {
-		if (is_string($value)){
+		if (is_string($value)) {
 			return $value;
 		}
 
-		if (is_object($value) && method_exists($value, 'toString')){
+		if (is_object($value) && method_exists($value, 'toString')) {
 			return $value->toString();
 		}
 
-		if (is_object($value) && method_exists($value, '__toString')){
+		if (is_object($value) && method_exists($value, '__toString')) {
 			return $value->__toString();
 		}
 
