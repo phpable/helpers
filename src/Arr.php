@@ -10,7 +10,8 @@ use \ArrayAccess;
 class Arr extends AHelper {
 
 	/**
-	 * Determines whether the given value is presentable as an array.
+	 * Determines whether the given value
+	 * is presentable as an array.
 	 *
 	 * @param mixed $value
 	 * @return bool
