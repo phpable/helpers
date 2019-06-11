@@ -156,6 +156,18 @@ class Arr extends AHelper {
 	}
 
 	/**
+	 * Converts a given array into a generator and erases all its elements.
+	 *
+	 * @param array $Source
+	 * @return Generator
+	 */
+	public static final function degrade(array &$Source): Generator {
+		while(count($Source) > 0) {
+			yield array_shift($Source);
+		}
+	}
+
+	/**
 	 * Appends the array given as a first argument
 	 * to the end of another array given as a second argument.
 	 *
