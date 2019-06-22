@@ -6,9 +6,14 @@ use \Able\Helpers\Abstractions\AHelper;
 class Curl extends AHelper{
 
 	/**
-	 * @const binary
+	 * @const int
 	 */
 	const F_RETURN_HEADERS = 0b0001;
+
+	/**
+	 * @const int
+	 */
+	const F_BASE_AUTH = 0b0010;
 
 	/**
 	 * Send post request and return result.
@@ -16,10 +21,13 @@ class Curl extends AHelper{
 	 * @param array $Params
 	 * @param array $Headers
 	 * @param int $flags
+	 * @param mixed ...$args
+	 *
 	 * @return string
+	 *
 	 * @throws \Exception
 	 */
-	public static final function post($url, array $Params = [], array $Headers = [], $flags = 0b0000) {
+	public static final function post($url, array $Params = [], array $Headers = [], $flags = 0b0000, ...$args) {
 		$Curl = curl_init();
 		if (preg_match('/^(.*):([0-9]+)$/', $url, $Macth) > 0){
 			curl_setopt($Curl, CURLOPT_PORT, $Macth[2]);
@@ -59,10 +67,11 @@ class Curl extends AHelper{
 	 * @param array $Params
 	 * @param array $Headers
 	 * @param int $flags
+	 *
 	 * @return string
 	 * @throws /Exception
 	 */
-	public static final function get($url, array $Params = [], array $Headers = [], $flags = 0b0000) {
+	public static final function get($url, array $Params = [], array $Headers = [], int $flags = 0b0000, array $Options = []): string {
 		$Curl = curl_init();
 		if (preg_match('/^(.*):([0-9]+)$/', $url, $Macth) > 0){
 			curl_setopt($Curl, CURLOPT_PORT, $Macth[2]);
@@ -84,6 +93,14 @@ class Curl extends AHelper{
 
 		if (self::F_RETURN_HEADERS & $flags) {
 			curl_setopt($Curl, CURLOPT_HEADER, true);
+		}
+
+		if (self::F_BASE_AUTH & $flags) {
+			if (empty($Options['user'] || empty($Options['password']))) {
+				throw new \Exception('Invalid credentials!');
+			}
+
+			curl_setopt($Curl, CURLOPT_USERPWD, sprintf('%s:%s', $Options['user'], $Options['password']));
 		}
 
 		if (($Response = curl_exec($Curl)) === false) {
