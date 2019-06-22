@@ -51,8 +51,8 @@ class Str extends AHelper {
 	 * @param Generator $Input
 	 * @return string
 	 */
-	public static final function collect(Generator $Input){
-		return self::join(PHP_EOL, array_map(function(){
+	public static final function collect(Generator $Input): string {
+		return self::join(PHP_EOL, array_map(function () {
 			return self::unbreak(self::cast(func_get_arg(0)), 1);
 		}, iterator_to_array($Input, false)));
 	}
@@ -61,12 +61,13 @@ class Str extends AHelper {
 	 * Joins the given arguments into a single string using the given separator.
 	 *
 	 * @param string $separator
-	 * @param mixed $source, ...
+	 * @param mixed $source , ...
 	 * @return string
 	 */
-	public final static function join(string $separator, ...$source){
-		return implode($separator, array_map(function($value){
-			return self::cast($value); }, Arr::simplify($source)));
+	public final static function join(string $separator, ...$source): string {
+		return implode($separator, array_map(function ($value) {
+			return self::cast($value);
+		}, Arr::simplify($source)));
 	}
 
 	/**
