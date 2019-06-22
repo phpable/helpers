@@ -2,6 +2,7 @@
 namespace Able\Helpers;
 
 use \Able\Helpers\Abstractions\AHelper;
+use \Exception;
 
 class Curl extends AHelper{
 
@@ -21,13 +22,12 @@ class Curl extends AHelper{
 	 * @param array $Params
 	 * @param array $Headers
 	 * @param int $flags
-	 * @param mixed ...$args
-	 *
+	 * @param array $Options
 	 * @return string
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
-	public static final function post($url, array $Params = [], array $Headers = [], $flags = 0b0000, ...$args) {
+	public static final function post($url, array $Params = [], array $Headers = [], $flags = 0b0000, array $Options = []): string {
 		$Curl = curl_init();
 		if (preg_match('/^(.*):([0-9]+)$/', $url, $Macth) > 0){
 			curl_setopt($Curl, CURLOPT_PORT, $Macth[2]);
@@ -52,8 +52,16 @@ class Curl extends AHelper{
 			curl_setopt($Curl, CURLOPT_HEADER, true);
 		}
 
+		if (self::F_BASE_AUTH & $flags) {
+			if (empty($Options['user'] || empty($Options['password']))) {
+				throw new Exception('Invalid credentials!');
+			}
+
+			curl_setopt($Curl, CURLOPT_USERPWD, sprintf('%s:%s', $Options['user'], $Options['password']));
+		}
+
 		if (($Response = curl_exec($Curl)) === false) {
-			$Exception = new \Exception(curl_error($Curl), curl_errno($Curl));
+			$Exception = new Exception(curl_error($Curl), curl_errno($Curl));
 			curl_close($Curl);
 			throw $Exception;
 		}
@@ -66,10 +74,11 @@ class Curl extends AHelper{
 	 * @param string $url
 	 * @param array $Params
 	 * @param array $Headers
+	 * @param array $Options
 	 * @param int $flags
 	 *
 	 * @return string
-	 * @throws /Exception
+	 * @throws Exception
 	 */
 	public static final function get($url, array $Params = [], array $Headers = [], int $flags = 0b0000, array $Options = []): string {
 		$Curl = curl_init();
@@ -97,14 +106,14 @@ class Curl extends AHelper{
 
 		if (self::F_BASE_AUTH & $flags) {
 			if (empty($Options['user'] || empty($Options['password']))) {
-				throw new \Exception('Invalid credentials!');
+				throw new Exception('Invalid credentials!');
 			}
 
 			curl_setopt($Curl, CURLOPT_USERPWD, sprintf('%s:%s', $Options['user'], $Options['password']));
 		}
 
 		if (($Response = curl_exec($Curl)) === false) {
-			$Exception = new \Exception(curl_error($Curl), curl_errno($Curl));
+			$Exception = new Exception(curl_error($Curl), curl_errno($Curl));
 			curl_close($Curl);
 			throw $Exception;
 		}
