@@ -244,7 +244,7 @@ class Str extends AHelper {
 	 * @param string $source
 	 * @return string
 	 */
-	public final static function clnl(string $source): string{
+	public final static function clnl(string $source): string {
 		return preg_replace('/[\n\r]+/', PHP_EOL, $source);
 	}
 
@@ -252,15 +252,7 @@ class Str extends AHelper {
 	 * @param string $source
 	 * @return string
 	 */
-	public final static function clnl(string $source): string{
-		return preg_replace('/[\r?\n]+/', PHP_EOL, $source);
-	}
-
-	/**
-	 * @param string $source
-	 * @return string
-	 */
-	public final static function rmnl(string $source): string{
+	public final static function rmnl(string $source): string {
 		return preg_replace('/\s*[\n\r]+\s*/', ' ', $source);
 	}
 
