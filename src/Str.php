@@ -239,6 +239,16 @@ class Str extends AHelper {
 	}
 
 	/**
+	 * Replaces all line breaks with a value of PHP_EOL constant.
+	 *
+	 * @param string $source
+	 * @return string
+	 */
+	public final static function clnl(string $source): string{
+		return preg_replace('/[\n\r]+/', PHP_EOL, $source);
+	}
+
+	/**
 	 * @param string $source
 	 * @return string
 	 */
