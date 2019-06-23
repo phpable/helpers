@@ -22,12 +22,13 @@ class Curl extends AHelper{
 	 * @param array $Params
 	 * @param array $Headers
 	 * @param int $flags
-	 * @param array $Options
+	 * @param string ...$Options
+	 *
 	 * @return string
 	 *
 	 * @throws Exception
 	 */
-	public static final function post($url, array $Params = [], array $Headers = [], $flags = 0b0000, array $Options = []): string {
+	public static final function post(string $url, array $Params = [], array $Headers = [], int $flags = 0b0000, string ...$Options): string {
 		$Curl = curl_init();
 		if (preg_match('/^(.*):([0-9]+)$/', $url, $Macth) > 0){
 			curl_setopt($Curl, CURLOPT_PORT, $Macth[2]);
@@ -53,11 +54,11 @@ class Curl extends AHelper{
 		}
 
 		if (self::F_BASE_AUTH & $flags) {
-			if (empty($Options['user'] || empty($Options['password']))) {
+			if (count($Options) < 2) {
 				throw new Exception('Invalid credentials!');
 			}
 
-			curl_setopt($Curl, CURLOPT_USERPWD, sprintf('%s:%s', $Options['user'], $Options['password']));
+			curl_setopt($Curl, CURLOPT_USERPWD, sprintf('%s:%s', array_shift($Options), array_shift($Options)));
 		}
 
 		if (($Response = curl_exec($Curl)) === false) {
@@ -74,13 +75,13 @@ class Curl extends AHelper{
 	 * @param string $url
 	 * @param array $Params
 	 * @param array $Headers
-	 * @param array $Options
+	 * @param string ...$Options
 	 * @param int $flags
 	 *
 	 * @return string
 	 * @throws Exception
 	 */
-	public static final function get($url, array $Params = [], array $Headers = [], int $flags = 0b0000, array $Options = []): string {
+	public static final function get(string $url, array $Params = [], array $Headers = [], int $flags = 0b0000, string ...$Options): string {
 		$Curl = curl_init();
 		if (preg_match('/^(.*):([0-9]+)$/', $url, $Macth) > 0){
 			curl_setopt($Curl, CURLOPT_PORT, $Macth[2]);
@@ -105,11 +106,11 @@ class Curl extends AHelper{
 		}
 
 		if (self::F_BASE_AUTH & $flags) {
-			if (empty($Options['user'] || empty($Options['password']))) {
+			if (count($Options) < 2) {
 				throw new Exception('Invalid credentials!');
 			}
 
-			curl_setopt($Curl, CURLOPT_USERPWD, sprintf('%s:%s', $Options['user'], $Options['password']));
+			curl_setopt($Curl, CURLOPT_USERPWD, sprintf('%s:%s', array_shift($Options), array_shift($Options)));
 		}
 
 		if (($Response = curl_exec($Curl)) === false) {
