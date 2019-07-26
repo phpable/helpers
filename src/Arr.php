@@ -10,9 +10,6 @@ class Arr extends AHelper{
 	/**
 	 * Converts the given value into an array.
 	 *
-	 * @attention This method throws an exception if the given value
-	 * cannot be represented as an array.
-	 *
 	 * @param mixed $value
 	 * @return array
 	 */
