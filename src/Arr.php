@@ -4,8 +4,9 @@ namespace Able\Helpers;
 use \Able\Helpers\Abstractions\AHelper;
 
 use \Iterator;
+use \Generator;
 
-class Arr extends AHelper{
+class Arr extends AHelper {
 
 	/**
 	 * Converts the given value into an array.
@@ -14,15 +15,15 @@ class Arr extends AHelper{
 	 * @return array
 	 */
 	public static final function cast($value): array {
-		if (is_array($value)){
+		if (is_array($value)) {
 			return $value;
 		}
 
-		if (is_object($value) && method_exists($value, 'toArray')){
+		if (is_object($value) && method_exists($value, 'toArray')) {
 			return $value->toArray();
 		}
 
-		if ($value instanceof Iterator){
+		if ($value instanceof Iterator) {
 			return iterator_to_array($value);
 		}
 
@@ -43,26 +44,23 @@ class Arr extends AHelper{
 	}
 
 	/**
-	 * Convert given arguments into a generator.
+	 * Converts given arguments into an iterator.
 	 *
-	 * @attention Existing keys are not preserved.
+	 * @attention Existing keys are not preserved!
 	 *
-	 * @param mixed, ...
-	 * @return \Generator
+	 * @param mixed ...$arguments
+	 * @return Generator
 	 */
-	public static final function iterate(): \Generator {
-		foreach (self::simplify(func_get_args()) as $item){
+	public static final function iterate(...$arguments): Generator {
+		foreach (self::simplify($arguments) as $item){
 			yield $item;
 		}
 	}
 
 	/**
-	 * Convert given arguments into a single-level numbered array.
+	 * Converts given arguments into a single-level array.
 	 *
-	 * @attention This method throws an exception if the given value
-	 * cannot be represented as an array.
-	 *
-	 * @attention Existing keys are not preserved.
+	 * @attention Existing keys are not preserved!
 	 *
 	 * @param mixed, ...
 	 * @return array
