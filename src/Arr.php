@@ -62,11 +62,11 @@ class Arr extends AHelper {
 	 *
 	 * @attention Existing keys are not preserved!
 	 *
-	 * @param mixed, ...
+	 * @param mixed ...$arguments
 	 * @return array
 	 */
-	public static final function simplify(): array {
-		return !empty($Args = array_filter(func_get_args())) && array_walk_recursive($Args,
+	public static final function simplify(...$arguments): array {
+		return !empty($Args = array_filter($arguments)) && array_walk_recursive($Args,
 			function($value) use (&$Simple){ $Simple[] = $value; }) ? self::cast($Simple) : [];
 	}
 
