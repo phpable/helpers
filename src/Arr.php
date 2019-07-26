@@ -2,12 +2,13 @@
 namespace Able\Helpers;
 
 use \Able\Helpers\Abstractions\AHelper;
-use phpDocumentor\Reflection\Types\Boolean;
+
+use \Iterator;
 
 class Arr extends AHelper{
 
 	/**
-	 * Converts any value into an array.
+	 * Converts the given value into an array.
 	 *
 	 * @attention This method throws an exception if the given value
 	 * cannot be represented as an array.
@@ -24,11 +25,24 @@ class Arr extends AHelper{
 			return $value->toArray();
 		}
 
-		if ($value instanceof \Generator){
+		if ($value instanceof Iterator){
 			return iterator_to_array($value);
 		}
 
 		return [$value];
+	}
+
+	/**
+	 * Determines whether the given value can be presented as an array.
+	 *
+	 * @param mixed $value
+	 * @return bool
+	 */
+	public static final function castable($value): bool {
+		return is_array($value)
+
+			|| $value instanceof Iterator
+			|| (is_object($value) && method_exists($value, 'toArray'));
 	}
 
 	/**
