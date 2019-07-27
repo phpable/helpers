@@ -6,6 +6,14 @@ use \Able\Helpers\Arr;
 
 class ArrTest extends TestCase {
 
+	public final function testCastable() {
+		$arr = ['a', 'b', 'c', 'd'];
+		$this->assertTrue(Arr::castable($arr));
+
+		$arr = "test string";
+		$this->assertFalse(Arr::castable($arr));
+	}
+
 	public final function testSimplify() {
 		$arr = ['a', 'b', 'c', [1, 2, 3, ['x' => 'lt_x', 'y' => 'lt_y', 'z' => 'lt_z'],
 			4, null, 5, ['x' => '', 'y' => 0, 'z' => null]], 'd', 'e'];
