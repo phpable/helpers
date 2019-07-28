@@ -40,6 +40,7 @@ class Arr extends AHelper {
 		return is_array($value)
 
 			|| $value instanceof Iterator
+
 			|| (is_object($value) && method_exists($value, 'toArray'));
 	}
 

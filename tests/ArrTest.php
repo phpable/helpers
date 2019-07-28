@@ -1,8 +1,14 @@
 <?php
 namespace Able\Helpers\Tests;
 
+use Able\Helpers\Tests\Examples\Arrayable;
+use \Able\Helpers\Tests\Examples\TestClassA;
+use \Able\Helpers\Tests\Examples\StandardIterator;
+
 use \PHPUnit\Framework\TestCase;
 use \Able\Helpers\Arr;
+
+use \Generator;
 
 class ArrTest extends TestCase {
 
@@ -12,6 +18,12 @@ class ArrTest extends TestCase {
 
 		$arr = "test string";
 		$this->assertFalse(Arr::castable($arr));
+
+		$Obj = new Arrayable();
+		$this->assertTrue(Arr::castable($Obj));
+
+		$Iterator = new StandardIterator();
+		$this->assertTrue(Arr::castable($Iterator));
 	}
 
 	public final function testSimplify() {
