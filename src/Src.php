@@ -29,8 +29,10 @@ class Src extends AHelper{
 	 * @return string
 	 */
 	public static final function fcm(string $source, string $separator = '_'): string {
-		return ltrim(preg_replace_callback('/\\\?[A-Z][A-Za-z0-9]+?/', function($Macthes) use ($separator){
-			return $separator . ltrim(strtolower($Macthes[0]), '\\');
+		return ltrim(preg_replace_callback('/\\\?[A-Z][A-Za-z0-9]+?/',
+
+			function($Macthes) use ($separator){
+				return $separator . ltrim(strtolower($Macthes[0]), '\\');
 		}, $source), $separator);
 	}
 
@@ -94,8 +96,10 @@ class Src extends AHelper{
 	 * @return string
 	 */
 	public static final function esc(string $source, string $fragments): string {
-		return preg_replace('/(?<=\A|[^\\\\])(' . implode('|', array_map(function($value){
-			return preg_quote($value, '/'); }, str_split($fragments, 1))). ')/', '\\\$1', $source);
+		return preg_replace('/(?<=\A|[^\\\\])(' . implode('|',
+
+			array_map(function($value){
+				return preg_quote($value, '/'); }, str_split($fragments, 1))). ')/', '\\\$1', $source);
 	}
 
 	/**
