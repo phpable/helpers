@@ -275,9 +275,13 @@ class Str extends AHelper {
 	 * @return mixed
 	 */
 	public final static function p2nl(string $source): string {
-		return preg_replace('/<\/(?:p' . (func_num_args() > 1 ? ('|' . implode('|', array_map(function($value){
+		return preg_replace('/<\/(?:p' . (func_num_args() > 1 ? ('|' . implode('|',
+
+		array_map(function($value){
 			return preg_quote(self::cast(trim(trim($value), '<>')), '/');
-		}, array_slice(func_get_args(), 1)))) : null) . ')>/', "\$0\n", $source);
+		},
+
+		array_slice(func_get_args(), 1)))) : '') . ')>/', "\$0\n", $source);
 	}
 
 	/**
