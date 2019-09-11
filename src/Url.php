@@ -19,8 +19,7 @@ class Url extends AHelper{
 	 * @return string
 	 */
 	public static final function clean(string $url): string {
-		return preg_replace('/\?.*$/', null, preg_replace('/#.*$/',
-			null, $url));
+		return preg_replace('/\?.*$/', '', preg_replace('/#.*$/', '', $url));
 	}
 
 	/**
@@ -29,8 +28,8 @@ class Url extends AHelper{
 	 * @return string
 	 */
 	public static final function tr(string $url, int $limit): string{
-		return $limit > 0 && mb_strlen($source = self::clean($url)) > $limit
-			? preg_replace('/\/+[^\/]{0,10}$/u', null, mb_substr($url, 0,
+		return $limit > 0 && mb_strlen(self::clean($url)) > $limit
+			? preg_replace('/\/+[^\/]{0,10}$/u', '', mb_substr($url, 0,
 				$limit), 1) : $url;
 	}
 
