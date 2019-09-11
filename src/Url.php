@@ -41,7 +41,7 @@ class Url extends AHelper{
 	 * @return string
 	 */
 	public final static function trf(string $url, int $limit, string $finalizer = '...'): string {
-		return $limit > 0 && mb_strlen($source = self::clean($url)) > $limit
+		return $limit > 0 && mb_strlen(self::clean($url)) > $limit
 			? self::tr($url, $limit) . $finalizer : $url;
 	}
 
@@ -49,7 +49,7 @@ class Url extends AHelper{
 	 * @param string $url
 	 * @return bool
 	 */
-	public final static function isabs($url){
+	public final static function isabs(string $url): bool{
 		return preg_match('/^(?:[a-z]+:\/\/)?[a-z0-9-]+\.[a-z]+/i', $url) > 0;
 	}
 
