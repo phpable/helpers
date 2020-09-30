@@ -13,7 +13,7 @@
 	"require": {
 		"php": ">=7.4.0",
 		"ext-json": "*",
-		"able/statics": "1.0.*"
+		"able/statics": "dev-master"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^7"
