@@ -18,7 +18,7 @@ class Src extends AHelper{
 	public static final function tcm(string $string, string $separator = '_'): string {
 		return implode(null, array_map('ucfirst', preg_split('/' . implode('|', array_map(function($separator){
 			return preg_quote($separator, '/');
-		}, array_pad(array_slice(func_get_args(), 1), 1, '_')))  . '/', trim(strtolower($string)), -1, PREG_SPLIT_NO_EMPTY)));
+		}, array_pad(array_slice(func_get_args(), 1), 1, '_')))  . '/', trim($string), -1, PREG_SPLIT_NO_EMPTY)));
 	}
 
 	/**
