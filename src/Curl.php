@@ -28,7 +28,7 @@ class Curl extends AHelper{
 	 *
 	 * @throws Exception
 	 */
-	public static final function post(string $url, array $Params = [], array $Headers = [], int $flags = 0b0000, string ...$Options): string {
+	public static final function post(string $url, array $Params = [], array $Headers = [], int $flags = 0b0000, ?string ...$Options): string {
 		$Curl = curl_init();
 		if (preg_match('/^(.*):([0-9]+)$/', $url, $Macth) > 0){
 			curl_setopt($Curl, CURLOPT_PORT, $Macth[2]);
@@ -54,7 +54,7 @@ class Curl extends AHelper{
 		}
 
 		if (self::F_BASE_AUTH & $flags) {
-			if (count($Options) < 2) {
+			if (is_null($Options) || count($Options) < 2) {
 				throw new Exception('Invalid credentials!');
 			}
 
@@ -81,7 +81,7 @@ class Curl extends AHelper{
 	 * @return string
 	 * @throws Exception
 	 */
-	public static final function get(string $url, array $Params = [], array $Headers = [], int $flags = 0b0000, string ...$Options): string {
+	public static final function get(string $url, array $Params = [], array $Headers = [], int $flags = 0b0000, ?string ...$Options): string {
 		$Curl = curl_init();
 		if (preg_match('/^(.*):([0-9]+)$/', $url, $Macth) > 0){
 			curl_setopt($Curl, CURLOPT_PORT, $Macth[2]);
@@ -106,7 +106,7 @@ class Curl extends AHelper{
 		}
 
 		if (self::F_BASE_AUTH & $flags) {
-			if (count($Options) < 2) {
+			if (is_null($Options) || count($Options) < 2) {
 				throw new Exception('Invalid credentials!');
 			}
 
