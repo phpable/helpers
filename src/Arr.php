@@ -10,7 +10,8 @@ use \ArrayAccess;
 class Arr extends AHelper {
 
 	/**
-	 * Determines whether the given value is presentable as an array.
+	 * Determines whether the given value
+	 * is presentable as an array.
 	 *
 	 * @param mixed $value
 	 * @return bool
@@ -151,6 +152,18 @@ class Arr extends AHelper {
 	public static final function iterate(...$arguments): Generator {
 		foreach (self::simplify($arguments) as $item){
 			yield $item;
+		}
+	}
+
+	/**
+	 * Converts a given array into a generator and erases all its elements.
+	 *
+	 * @param array $Source
+	 * @return Generator
+	 */
+	public static final function degrade(array &$Source): Generator {
+		while(count($Source) > 0) {
+			yield array_shift($Source);
 		}
 	}
 
