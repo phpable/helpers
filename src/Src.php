@@ -11,51 +11,51 @@ class Src extends AHelper{
 	/**
 	 * Convert any separated string to camel case.
 	 *
-	 * @param $string
+	 * @param string $source
 	 * @param string $separator, ...
 	 * @return string
 	 */
-	public static final function tcm(string $string, string $separator = '_'): string {
+	public static final function tcm(string $source, string $separator = '_'): string {
 		return implode(null, array_map('ucfirst', preg_split('/' . implode('|', array_map(function($separator){
 			return preg_quote($separator, '/');
-		}, array_pad(array_slice(func_get_args(), 1), 1, '_')))  . '/', trim($string), -1, PREG_SPLIT_NO_EMPTY)));
+		}, array_pad(array_slice(func_get_args(), 1), 1, '_')))  . '/', trim($source), -1, PREG_SPLIT_NO_EMPTY)));
 	}
 
 	/**
 	 * Convert any string from camel case to a string with a given delimiter.
 	 *
-	 * @param string $string
+	 * @param string $source
 	 * @param string $separator
 	 * @return string
 	 */
-	public static final function fcm(string $string, string $separator = '_'): string {
+	public static final function fcm(string $source, string $separator = '_'): string {
 		return ltrim(preg_replace_callback('/\\\?[A-Z][A-Za-z0-9]+?/', function($Macthes) use ($separator){
 			return $separator . ltrim(strtolower($Macthes[0]), '\\');
-		}, $string), $separator);
+		}, $source), $separator);
 	}
 
 	/**
 	 * Convert any separated string to qualifier name.
 	 *
-	 * @param $string
+	 * @param string $source
 	 * @param string $separator, ...
 	 * @return string
 	 */
-	public static final function tons(string $string, string $separator = '.'): string {
+	public static final function tons(string $source, string $separator = '.'): string {
 		return implode('\\', array_map('ucfirst', preg_split('/' . implode('|', array_map(function($separator){
 			return preg_quote($separator, '/');
-		}, array_pad(array_slice(func_get_args(), 1), 1, '.')))  . '/', trim(strtolower($string)), -1, PREG_SPLIT_NO_EMPTY)));
+		}, array_pad(array_slice(func_get_args(), 1), 1, '.')))  . '/', trim(strtolower($source)), -1, PREG_SPLIT_NO_EMPTY)));
 	}
 
 	/**
 	 * Convert any qualifier name to a string with a given delimiter.
 	 *
-	 * @param string $string
+	 * @param string $source
 	 * @param string $separator
 	 * @return string
 	 */
-	public static final function frns(string $string, string $separator = '.'): string {
-		return implode($separator, preg_split('/\\\\/', trim(strtolower($string)), -
+	public static final function frns(string $source, string $separator = '.'): string {
+		return implode($separator, preg_split('/\\\\/', trim(strtolower($source)), -
 			1, PREG_SPLIT_NO_EMPTY));
 	}
 
@@ -101,11 +101,12 @@ class Src extends AHelper{
 	/**
 	 * @param mixed $Target
 	 * @param array $Params
-	 * @param null $default
-	 * @return mixed|null
+	 * @param mixed $default
+	 * @return mixed
+	 *
 	 * @throws Exception
 	 */
-	public static final function call($Target, array $Params = [], $default = null){
+	public static final function call(mixed $Target, array $Params = [], mixed $default = null): mixed {
 		if (is_callable($Target)) {
 			return call_user_func_array($Target, Arr::cast($Params));
 		}
@@ -122,7 +123,7 @@ class Src extends AHelper{
 	 * @return object
 	 * @throws Exception
 	 */
-	public static final function make(string $target){
+	public static final function make(string $target): object {
 		if (!class_exists($target)){
 			throw new Exception('Undefined target class!');
 		}
