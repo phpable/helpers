@@ -16,7 +16,7 @@ class Arr extends AHelper {
 	 * @param mixed $value
 	 * @return bool
 	 */
-	public static final function castable($value): bool {
+	public static final function castable(mixed $value): bool {
 		return is_array($value)
 			|| $value instanceof Iterator
 			|| $value instanceof ArrayAccess
@@ -36,7 +36,7 @@ class Arr extends AHelper {
 	 * @param mixed $value
 	 * @return array
 	 */
-	public static final function cast($value): array {
+	public static final function cast(mixed $value): array {
 		if (is_array($value)) {
 			return $value;
 		}
@@ -68,7 +68,7 @@ class Arr extends AHelper {
 	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function collect(...$args): array {
+	public static final function collect(mixed ...$args): array {
 		return array_merge(...array_map(function ($_) {
 			return self::cast($_); }, $args));
 	}
@@ -88,7 +88,7 @@ class Arr extends AHelper {
 	 * @param mixed $default
 	 * @return array
 	 */
-	public static final function combine(array $Keys , array $Values = [], $default = null): array {
+	public static final function combine(array $Keys , array $Values = [], mixed $default = null): array {
 		return array_combine($Keys,
 
 			array_pad(array_slice($Values, 0,
@@ -102,7 +102,7 @@ class Arr extends AHelper {
 	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function compile(...$args): array {
+	public static final function compile(mixed ...$args): array {
 		$args = self::simplify($args);
 
 		return self::combine(
@@ -132,7 +132,7 @@ class Arr extends AHelper {
 	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function simplify(...$args): array {
+	public static final function simplify(mixed ...$args): array {
 		return !empty($args)
 
 			&& array_walk_recursive($args, function($v) use (&$_) {
@@ -149,7 +149,7 @@ class Arr extends AHelper {
 	 * @param mixed ...$arguments
 	 * @return Generator
 	 */
-	public static final function iterate(...$arguments): Generator {
+	public static final function iterate(mixed ...$arguments): Generator {
 		foreach (self::simplify($arguments) as $item){
 			yield $item;
 		}
@@ -213,7 +213,7 @@ class Arr extends AHelper {
 	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function push(array $Source, ...$args): array {
+	public static final function push(array $Source, mixed ...$args): array {
 		return self::append($Source, self::cast($args));
 	}
 
@@ -240,7 +240,7 @@ class Arr extends AHelper {
 	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function unshift(array $Source, ...$args): array {
+	public static final function unshift(array $Source, mixed ...$args): array {
 		return self::prepend($Source, self::cast(array_reverse($args)));
 	}
 
@@ -253,7 +253,7 @@ class Arr extends AHelper {
 	 * @param array $Source
 	 * @return mixed
 	 */
-	public static final function shift(array &$Source) {
+	public static final function shift(array &$Source): mixed {
 		return array_shift($Source);
 	}
 
@@ -265,7 +265,7 @@ class Arr extends AHelper {
 	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function insert(array $Source, int $position, ...$args): array {
+	public static final function insert(array $Source, int $position, mixed ...$args): array {
 		return $position > 0
 
 			? array_merge(
@@ -290,7 +290,7 @@ class Arr extends AHelper {
 	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function improve(array $Source, ...$args): array {
+	public static final function improve(array $Source, mixed ...$args): array {
 		return count($keys = array_map(function ($_) {
 			return Str::cast($_); }, array_slice($args, 0, -1))) > 0
 
@@ -368,7 +368,7 @@ class Arr extends AHelper {
 	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function erase(array $Source, ...$args): array {
+	public static final function erase(array $Source, mixed ...$args): array {
 		return count($keys = array_filter($args,
 
 			function ($_) {
@@ -393,11 +393,11 @@ class Arr extends AHelper {
 	 * @attention The default value will be returned instead of null.
 	 *
 	 * @param array $Source
-	 * @param mixed $key
+	 * @param string|int|null $key
 	 * @param mixed $default
 	 * @return mixed
 	 */
-	public static final function get(array $Source, $key, $default = null) {
+	public static final function get(array $Source, string|int|null $key, mixed $default = null): mixed {
 		return array_key_exists($key, $Source)
 			&& !is_null($Source[$key]) ? $Source[$key] : $default;
 	}
@@ -413,7 +413,7 @@ class Arr extends AHelper {
 	 * @param mixed $default
 	 * @return mixed
 	 */
-	public static final function value(array $Source, int $position = 0, $default = null) {
+	public static final function value(array $Source, int $position = 0, mixed $default = null): mixed {
 		return self::get(array_values($Source), $position, $default);
 	}
 
@@ -428,7 +428,7 @@ class Arr extends AHelper {
 	 * @param mixed $default
 	 * @return mixed
 	 */
-	public static final function key(array $Source, int $position = 0, $default = null) {
+	public static final function key(array $Source, int $position = 0, mixed $default = null) {
 		return self::get(array_keys($Source), $position, $default);
 	}
 
@@ -441,7 +441,7 @@ class Arr extends AHelper {
 	 * @param mixed $default
 	 * @return mixed
 	 */
-	public static final function find(array $Source, $value, $default = null) {
+	public static final function find(array $Source, mixed $value, mixed $default = null): mixed {
 		return ($key = array_search($value, $Source, true)) !== false ? $key : $default;
 	}
 
@@ -492,11 +492,11 @@ class Arr extends AHelper {
 
 	/**
 	 * @param array $Source
-	 * @param $value
+	 * @param mixed $value
 	 * @param string ...$args
 	 * @return array
 	 */
-	public static final function place(array $Source, $value, string ...$args): array {
+	public static final function place(array $Source, mixed $value, string ...$args): array {
 		if (count($args) > 1) {
 			$Source[$args[0]] = self::place(Arr::cast(Arr::get($Source, $args[0])),
 				$value, ...array_slice($args, 1));
@@ -534,7 +534,7 @@ class Arr extends AHelper {
 	 * @param array $Source
 	 * @return mixed
 	 */
-	public static final function rand(array $Source) {
+	public static final function rand(array $Source): mixed {
 		return $Source[array_rand($Source)];
 	}
 
@@ -545,7 +545,7 @@ class Arr extends AHelper {
 	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function only(array $Source, ...$args): array {
+	public static final function only(array $Source, mixed ...$args): array {
 		return array_intersect_key($Source,
 			array_fill_keys(self::simplify($args), -1));
 	}
@@ -557,7 +557,7 @@ class Arr extends AHelper {
 	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function except(array $Source, ...$args): array {
+	public static final function except(array $Source, mixed ...$args): array {
 		return array_diff_key($Source,
 			array_fill_keys(self::simplify(...$args), -1));
 	}
@@ -569,7 +569,7 @@ class Arr extends AHelper {
 	 * @param mixed $default
 	 * @return mixed
 	 */
-	public static final function first(array $Source, $default = null) {
+	public static final function first(array $Source, mixed $default = null): mixed {
 		return self::value($Source, 0, $default);
 	}
 
@@ -580,7 +580,7 @@ class Arr extends AHelper {
 	 * @param mixed $default
 	 * @return mixed
 	 */
-	public static final function last(array $Source, $default = null) {
+	public static final function last(array $Source, mixed $default = null): mixed {
 		return self::value($Source, count($Source) - 1, $default);
 	}
 
@@ -614,10 +614,10 @@ class Arr extends AHelper {
 	 * Returns the left part of the array ending by the given value
 	 *
 	 * @param array $Source
-	 * @param mixed $to
+	 * @param string|int $to
 	 * @return array
 	 */
-	public static final function left(array $Source, $to): array {
+	public static final function left(array $Source, string|int $to): array {
 		return array_slice($Source, 0,
 			self::find(array_keys($Source), $to, count($Source) - 1) + 1);
 	}
@@ -626,10 +626,10 @@ class Arr extends AHelper {
 	 * Returns the right part of the array starting from the given value
 	 *
 	 * @param array $Source
-	 * @param mixed $from
+	 * @param string|int $from
 	 * @return array
 	 */
-	public static final function right(array $Source, $from): array {
+	public static final function right(array $Source, string|int $from): array {
 		return array_slice($Source,
 			self::find(array_keys($Source), $from, 0));
 	}
@@ -641,7 +641,7 @@ class Arr extends AHelper {
 	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function select(array $Source, ...$args): array {
+	public static final function select(array $Source, mixed ...$args): array {
 		return array_intersect($Source, self::simplify($args));
 	}
 
@@ -649,10 +649,10 @@ class Arr extends AHelper {
 	 * Checks if the given keys present in the array.
 	 *
 	 * @param array $Source
-	 * @param mixed ...$args
+	 * @param string|int|array ...$args
 	 * @return bool
 	 */
-	public static final function has(array $Source, ...$args): bool {
+	public static final function has(array $Source, string|int|array ...$args): bool {
 		return !count(array_diff(self::simplify(...$args), array_keys($Source)));
 	}
 
@@ -663,7 +663,7 @@ class Arr extends AHelper {
 	 * @param mixed ...$args
 	 * @return bool
 	 */
-	public static final function contains(array $Source, ...$args): bool {
+	public static final function contains(array $Source, mixed ...$args): bool {
 		return count(array_intersect($Source, $args = self::simplify($args))) == count($args);
 	}
 
@@ -719,10 +719,10 @@ class Arr extends AHelper {
 	 * @attention Extra keys will be removed.
 	 *
 	 * @param array $Source
-	 * @param mixed ...$args
+	 * @param string|int|array ...$args
 	 * @return array
 	 */
-	public static final function like(array $Source, ...$args): array {
+	public static final function like(array $Source, string|int|array ...$args): array {
 		return count($keys = self::simplify($args)) > 0
 
 			? self::ksort(self::only($Source, ...$keys),
@@ -742,7 +742,7 @@ class Arr extends AHelper {
 	 * @param mixed ...$args
 	 * @return array
 	 */
-	public static final function each(array $Source, callable $Handler, ...$args): array {
+	public static final function each(array $Source, callable $Handler, mixed ...$args): array {
 		return array_walk($Source,
 			function(&$value, $key, $args) use ($Handler) {
 
