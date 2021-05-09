@@ -61,10 +61,12 @@ class Curl extends AHelper{
 			curl_setopt($Curl, CURLOPT_USERPWD, sprintf('%s:%s', array_shift($Options), array_shift($Options)));
 		}
 
-		if (($Response = curl_exec($Curl)) === false) {
-			$Exception = new Exception(curl_error($Curl), curl_errno($Curl));
+		try {
+			if (($Response = curl_exec($Curl)) === false) {
+				throw new Exception(curl_error($Curl), curl_errno($Curl));
+			}
+		} finally {
 			curl_close($Curl);
-			throw $Exception;
 		}
 
 		return $Response;
@@ -113,14 +115,14 @@ class Curl extends AHelper{
 			curl_setopt($Curl, CURLOPT_USERPWD, sprintf('%s:%s', array_shift($Options), array_shift($Options)));
 		}
 
-		if (($Response = curl_exec($Curl)) === false) {
-			$Exception = new Exception(curl_error($Curl), curl_errno($Curl));
+		try {
+			if (($Response = curl_exec($Curl)) === false) {
+				throw new Exception(curl_error($Curl), curl_errno($Curl));
+			}
+		} finally {
 			curl_close($Curl);
-			throw $Exception;
 		}
 
-		curl_close($Curl);
 		return $Response;
 	}
-
 }
