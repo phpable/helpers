@@ -87,7 +87,7 @@ class Jsn extends AHelper {
 	 * @return string
 	 * @throws Exception
 	 */
-	public final static function erase(string $source, ...$args): string {
+	public final static function erase(string $source, mixed ...$args): string {
 		return self::encode(Arr::erase(self::decode($source), ...$args));
 	}
 
@@ -102,7 +102,7 @@ class Jsn extends AHelper {
 	 *
 	 * @throws Exception
 	 */
-	public final static function improve(string $source, ...$args): string {
+	public final static function improve(string $source, mixed ...$args): string {
 		return self::encode(Arr::improve(self::decode($source), ...$args));
 	}
 
@@ -133,7 +133,7 @@ class Jsn extends AHelper {
 	 *
 	 * @throws Exception
 	 */
-	public final static function follow(string $source, string ...$args) {
+	public final static function follow(string $source, string ...$args): mixed {
 		return Arr::follow(self::decode($source), ...$args);
 	}
 
@@ -143,13 +143,13 @@ class Jsn extends AHelper {
 	 * @see Arr::get()
 	 *
 	 * @param string $source
-	 * @param $key
+	 * @param string $key
 	 * @param $default
 	 * @return mixed
 	 *
 	 * @throws Exception
 	 */
-	public final static function get(string $source, $key, $default = null) {
+	public final static function get(string $source, string $key, $default = null): mixed {
 		return Arr::get(self::decode($source), $key, $default);
 	}
 
