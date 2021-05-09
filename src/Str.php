@@ -10,10 +10,10 @@ class Str extends AHelper {
 	 * Determines whether the given value
 	 * is presentable as a string.
 	 *
-	 * @param $value
+	 * @param mixed $value
 	 * @return bool
 	 */
-	public static final function castable($value): bool {
+	public static final function castable(mixed $value): bool {
 		return is_scalar($value)
 			|| (is_object($value)
 
@@ -29,7 +29,7 @@ class Str extends AHelper {
 	 * @param mixed $value
 	 * @return string
 	 */
-	public static final function cast($value): string {
+	public static final function cast(mixed $value): string {
 		if (is_string($value)) {
 			return $value;
 		}
@@ -61,10 +61,10 @@ class Str extends AHelper {
 	 * Joins the given arguments into a single string using the given separator.
 	 *
 	 * @param string $separator
-	 * @param mixed $source , ...
+	 * @param mixed ...$source
 	 * @return string
 	 */
-	public final static function join(string $separator, ...$source): string {
+	public final static function join(string $separator, mixed ...$source): string {
 		return implode($separator, array_map(function ($value) {
 			return self::cast($value);
 		}, Arr::simplify($source)));
@@ -75,7 +75,7 @@ class Str extends AHelper {
 	 * @param mixed $append
 	 * @return string
 	 */
-	public final static function append(string $source, $append): string {
+	public final static function append(string $source, mixed $append): string {
 		return self::join('', ...Arr::simplify(func_get_args()));
 	}
 
@@ -84,25 +84,25 @@ class Str extends AHelper {
 	 * @param mixed $prepend
 	 * @return string
 	 */
-	public final static function prepend(string $source, $prepend): string {
+	public final static function prepend(string $source, mixed $prepend): string {
 		return self::join('', ...array_reverse(Arr::simplify(func_get_args())));
 	}
 
 	/**
 	 * @param string $source
-	 * @param $fragment
+	 * @param mixed $fragment
 	 * @return string
 	 */
-	public final static function mright(string $source, $fragment): string {
+	public final static function mright(string $source, mixed $fragment): string {
 		return preg_replace('/(?:' . preg_quote($fragment, '/'). ')?$/', $fragment, $source, 1);
 	}
 
 	/**
 	 * @param string $source
-	 * @param $fragment
+	 * @param mixed $fragment
 	 * @return string
 	 */
-	public final static function mleft(string $source, $fragment): string {
+	public final static function mleft(string $source, mixed $fragment): string {
 		return preg_replace('/^(?:' . preg_quote($fragment, '/'). ')?/', $fragment, $source, 1);
 	}
 
@@ -124,7 +124,8 @@ class Str extends AHelper {
 	 * @return string
 	 */
 	public final static function trf(string $source, int $limit, string $finalizer = '...'): string {
-		return mb_strlen($source) > $limit ? self::tr($source, $limit - mb_strlen($finalizer)) . $finalizer : $source;
+		return mb_strlen($source) > $limit
+			? self::tr($source, $limit - mb_strlen($finalizer)) . $finalizer : $source;
 	}
 
 	/**
@@ -176,11 +177,11 @@ class Str extends AHelper {
 
 	/**
 	 * @param string $source
-	 * @param int $leftLimit
-	 * @param int $rightLimit
+	 * @param ?int $leftLimit
+	 * @param ?int $rightLimit
 	 * @return string
 	 */
-	public final static function trim(string $source, int $leftLimit = null, int $rightLimit = null){
+	public final static function trim(string $source, int $leftLimit = null, int $rightLimit = null): string {
 		return self::rtrim(self::ltrim($source, $leftLimit), $rightLimit);
 	}
 
