@@ -1,7 +1,7 @@
 <?php
 namespace Able\Helpers;
 
-use \Able\Helpers\Abstractions\AHelper;
+use Able\Helpers\Abstractions\AHelper;
 
 class Url extends AHelper{
 
@@ -9,7 +9,7 @@ class Url extends AHelper{
 	 * @param string $url
 	 * @return array
 	 */
-	public static final function parse($url) {
+	public static final function parse(string $url): array {
 		parse_str($url, $Data);
 		return $Data;
 	}
@@ -18,7 +18,7 @@ class Url extends AHelper{
 	 * @param string $url
 	 * @return string
 	 */
-	public static final function clean($url){
+	public static final function clean(string $url): string {
 		return preg_replace('/\?.*$/', null, preg_replace('/#.*$/',
 			null, $url));
 	}
@@ -28,7 +28,7 @@ class Url extends AHelper{
 	 * @param int $limit
 	 * @return string
 	 */
-	public static final function tr($url, $limit){
+	public static final function tr(string $url, int $limit): string{
 		return $limit > 0 && mb_strlen($source = self::clean($url)) > $limit
 			? preg_replace('/\/+[^\/]{0,10}$/u', null, mb_substr($url, 0,
 				$limit), 1) : $url;
@@ -41,7 +41,7 @@ class Url extends AHelper{
 	 * @param string $finalizer
 	 * @return string
 	 */
-	public final static function trf($url, $limit, $finalizer = '...'){
+	public final static function trf(string $url, int $limit, string $finalizer = '...'): string {
 		return $limit > 0 && mb_strlen($source = self::clean($url)) > $limit
 			? self::tr($url, $limit) . $finalizer : $url;
 	}
@@ -59,7 +59,7 @@ class Url extends AHelper{
 	 * @param string $left
 	 * @return string
 	 */
-	public final static function abs($url, $left){
+	public final static function abs(string $url, string $left):string {
 		return !self::isabs($url) || !preg_match('/^' . preg_quote($left, '/') . '/', $url)
 			? preg_replace('/^(?:[a-z]+:\/\/)?(?:[a-z0-9-]+\.[a-z]+)?\/*/', rtrim($left, ' /')
 				. '/', $url) : $url;
