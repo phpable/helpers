@@ -1,7 +1,7 @@
 <?php
 namespace Able\Helpers\Abstractions;
 
-use \Able\Statics\TStatic;
+use \Able\Static\TStatic;
 
 abstract class AHelper {
 	use TStatic;
