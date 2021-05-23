@@ -52,18 +52,6 @@ class JsnTest extends TestCase {
 	/**
 	 * @throws Exception
 	 */
-	public final function testImprove() {
-		$arr = [1 => 'string', 2 => 2.50, 3 => ['a' => [1, 2, 3, 4],
-			'b' => ['green', 'yellow'], 'c' => ['one', 'two', 'three']]];
-
-
-		$json = Jsn::encode($arr);
-		$this->assertSame(Jsn::improve($json, '3', 'b', 'pink'), json_encode(Arr::improve($arr, '3', 'b', 'pink')));
-	}
-
-	/**
-	 * @throws Exception
-	 */
 	public final function testErase() {
 		$arr = [1 => 'string', 2 => 2.5, 3 =>['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
 			'testlongstring' => 'very-very-very "long" string!', 4 => null, 5 => false, 6 => true, 7 => ''];

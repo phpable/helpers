@@ -92,21 +92,6 @@ class Jsn extends AHelper {
 	}
 
 	/**
-	 * Adds an element into the JSON collection following the given path.
-	 *
-	 * @see Arr::improve()
-	 *
-	 * @param string $source
-	 * @param mixed ...$args
-	 * @return string
-	 *
-	 * @throws Exception
-	 */
-	public final static function improve(string $source, mixed ...$args): string {
-		return self::encode(Arr::improve(self::decode($source), ...$args));
-	}
-
-	/**
 	 * Unite the JSON collection and the given data into a new JSON collection.
 	 *
 	 * @see Arr::unite()

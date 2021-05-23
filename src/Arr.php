@@ -288,19 +288,20 @@ class Arr extends AHelper {
 	 *
 	 * @param array $Source
 	 * @param mixed ...$args
-	 * @return array
+	 * @return void
 	 */
-	public static final function improve(array $Source, mixed ...$args): array {
-		return count($keys = array_map(function ($_) {
-			return Str::cast($_); }, array_slice($args, 0, -1))) > 0
+	public static final function improve(array &$Source, mixed ...$args): void {
+		$_ = array_shift($args);
 
-			? (array_merge($Source, [
-				$keys[0] =>
+		if (count($args) > 0) {
+			$Source[$_] = self::cast($Source[$_] ?? []);
 
-					self::improve((array)(self::get($Source, $keys[0])),
-						...array_slice($args, 1))]))
-
-		: self::push($Source, $args[0]);
+			if (!is_null($_)) {
+				self::improve($Source[$_], ...$args);
+			}
+		} else {
+			$Source = array_merge($Source, self::cast($_));
+		}
 	}
 
 	/**
@@ -323,7 +324,7 @@ class Arr extends AHelper {
 					array_push($Source, $value);
 
 				} elseif (array_key_exists($key, $Source)) {
-					$Source = self::improve($Source, $key, $value);
+					self::improve($Source, $key, $value);
 
 				} else {
 					$Source[$key] = $value;
