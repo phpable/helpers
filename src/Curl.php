@@ -38,7 +38,7 @@ class Curl extends AHelper{
 		curl_setopt($Curl, CURLOPT_URL, $url);
 		curl_setopt($Curl, CURLOPT_POST, 1);
 		if (count($Params) > 0){
-			curl_setopt($Curl, CURLOPT_POSTFIELDS, http_build_query($Params));
+			curl_setopt($Curl, CURLOPT_POSTFIELDS, $Params);
 		}
 
 		if (count($Headers) > 0){
