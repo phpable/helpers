@@ -2,7 +2,9 @@
 namespace Able\Helpers;
 
 use \Able\Helpers\Abstractions\AHelper;
+
 use \Exception;
+use \CURLFile;
 
 class Curl extends AHelper{
 
@@ -20,6 +22,7 @@ class Curl extends AHelper{
 	 * Send post request and return result.
 	 * @param string $url
 	 * @param array $Params
+	 * @param array $Files
 	 * @param array $Headers
 	 * @param int $flags
 	 * @param string ...$Options
@@ -28,7 +31,7 @@ class Curl extends AHelper{
 	 *
 	 * @throws Exception
 	 */
-	public static final function post(string $url, array $Params = [], array $Headers = [], int $flags = 0b0000, ?string ...$Options): string {
+	public static final function post(string $url, array $Params = [], array $Files = [], array $Headers = [], int $flags = 0b0000, ?string ...$Options): string {
 		$Curl = curl_init();
 		if (preg_match('/^(.*):([0-9]+)$/', $url, $Macth) > 0){
 			curl_setopt($Curl, CURLOPT_PORT, $Macth[2]);
@@ -37,8 +40,13 @@ class Curl extends AHelper{
 
 		curl_setopt($Curl, CURLOPT_URL, $url);
 		curl_setopt($Curl, CURLOPT_POST, 1);
+
 		if (count($Params) > 0){
-			curl_setopt($Curl, CURLOPT_POSTFIELDS, $Params);
+			curl_setopt($Curl, CURLOPT_POSTFIELDS, http_build_query($Params));
+		}
+
+		if (count($Files) > 0) {
+			curl_setopt($Curl, CURLOPT_POSTFIELDS, $Files);
 		}
 
 		if (count($Headers) > 0){
