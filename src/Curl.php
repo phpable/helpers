@@ -3,8 +3,8 @@ namespace Able\Helpers;
 
 use \Able\Helpers\Abstractions\AHelper;
 
-use \Exception;
 use \CURLFile;
+use \Exception;
 
 class Curl extends AHelper{
 
@@ -17,6 +17,32 @@ class Curl extends AHelper{
 	 * @const int
 	 */
 	const F_BASE_AUTH = 0b0010;
+
+	/**
+	 * @param array $data
+	 * @param string|null $prefix
+	 *
+	 * @return array
+	 */
+	private static function build_post_fields(array $data, ?string $prefix = null): array {
+		$fields = [];
+
+		foreach ($data as $key => $value) {
+			if (is_array($value)) {
+				$fields = array_merge($fields, self::build_post_fields($value, $key));
+				continue;
+			}
+
+			if (!$value instanceof CURLFile) {
+				$value = Str::cast($value);
+			}
+
+			$fields[!empty($prefix) ? sprintf("%s[%s]", $prefix, $key) : $key] = $value;
+		}
+
+		return $fields;
+	}
+
 
 	/**
 	 * Send post request and return result.
@@ -39,19 +65,26 @@ class Curl extends AHelper{
 		}
 
 		curl_setopt($Curl, CURLOPT_URL, $url);
-		curl_setopt($Curl, CURLOPT_POST, 1);
+		curl_setopt($Curl, CURLOPT_POST, true);
 
-		if (count($Params) > 0){
-			curl_setopt($Curl, CURLOPT_POSTFIELDS, http_build_query($Params));
-		}
-
-		if (count($Files) > 0) {
-			curl_setopt($Curl, CURLOPT_POSTFIELDS, $Files);
-		}
+		array_push($Headers, "Content-type: multipart/form-data");
 
 		if (count($Headers) > 0){
 			curl_setopt($Curl, CURLOPT_HTTPHEADER, Arr::pack($Headers, ': '));
 		}
+
+		$Params = self::build_post_fields(array_filter(array_merge($Params, [
+			'files' => array_map(function($file) {
+
+				if (!file_exists($file)) {
+					throw new Exception(sprintf("Given file is not exists or not readable: %s!", $file));
+				}
+
+				return curl_file_create($file, mime_content_type($file), basename($file));
+			}, $Files)
+		])));
+
+		curl_setopt($Curl, CURLOPT_POSTFIELDS, $Params);
 
 		curl_setopt($Curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($Curl, CURLOPT_SSL_VERIFYPEER, true);
