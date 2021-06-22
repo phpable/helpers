@@ -66,7 +66,7 @@ class Src extends AHelper{
 	 */
 	public static final function lns(string $string, int $count = 1): string {
 		while ($count-- > 0) {
-			$string = preg_replace('/(\\\\|^)[^\\\\]+$/', null, rtrim($string, '\\'));
+			$string = preg_replace('/(\\\\|^)[^\\\\]+$/', '', rtrim($string, '\\'));
 		}
 
 		return $string;
@@ -77,7 +77,7 @@ class Src extends AHelper{
 	 * @return string
 	 */
 	public static final function rns(string $string): string {
-		return preg_replace('/^.*\\\\/', null, rtrim($string, '\\'));
+		return preg_replace('/^.*\\\\/', '', rtrim($string, '\\'));
 	}
 
 	/**
