@@ -799,7 +799,7 @@ class Arr extends AHelper {
 			function(&$value, $key) use ($_) {
 
 			$value = array_map('trim',
-				array_pad(preg_split($_, Str::cast($value), 2), 2, null)); })
+				array_pad(preg_split($_, Str::cast($value), 2), 2, '')); })
 
 		? self::compile($Source) : [];
 	}

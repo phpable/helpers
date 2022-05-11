@@ -24,7 +24,7 @@ class Fs extends AHelper {
 	 */
 	public static final function ppath (string $path): string|bool {
 		while (!is_dir($path) && strlen($path) > 0){
-			$path = preg_replace('/[^\/]+\/?$/', null, $path);
+			$path = preg_replace('/[^\/]+\/?$/', '', $path);
 		}
 
 		return !empty($path) ? $path : false;

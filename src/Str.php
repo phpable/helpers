@@ -152,7 +152,7 @@ class Str extends AHelper {
 		return preg_replace_callback('/<((?:\/|!doctype\s*)?[a-z0-9_-]+)\s*(?:[^>\s]+(?:\s*=\s*(?:'
 			. '(?:\'(?:\\\\\'|[^\'])*\'|"(?:\\\\"|[^"])*")|[^>\s]+))?\s*)*\/?>/i', function($value) use ($allow){
 				return count($allow) < 1 || !in_array(trim($value[1], ' /'), $allow) ? '' : $value[0];
-			}, preg_replace('/<!--.*?-->/s', null, $source));
+			}, preg_replace('/<!--.*?-->/s', '', $source));
 	}
 
 	/**
