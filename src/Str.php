@@ -150,19 +150,23 @@ class Str extends AHelper {
 			return preg_match('/^[A-Za-z0-9_-]+$/', $value); });
 
 		return preg_replace_callback('/<((?:\/|!doctype\s*)?[a-z0-9_-]+)\s*(?:[^>\s]+(?:\s*=\s*(?:'
-			. '(?:\'(?:\\\\\'|[^\'])*\'|"(?:\\\\"|[^"])*")|[^>\s]+))?\s*)*\/?>/i', function($value) use ($allow){
+			. '(?:\'(?:\\\\\'|[^\'])*\'|"(?:\\\\"|[^"])*")|[^>\s]+))?\s*)*\/?>/i',
+
+			function($value) use ($allow){
 				return count($allow) < 1 || !in_array(trim($value[1], ' /'), $allow) ? '' : $value[0];
-			}, preg_replace('/<!--.*?-->/s', '', $source));
+			},
+
+		preg_replace('/<!--.*?-->/s', '', $source));
 	}
 
 	/**
 	 * @param string $source
-	 * @param int $limit
+	 * @param ?int $limit
 	 * @return string
 	 */
-	public final static function rtrim(string $source, int $limit = null): string {
+	public final static function rtrim(string $source, ?int $limit = null): string {
 		return preg_replace('/\s' . (!is_null($limit) && $limit >= 0
-			? '{0,' . $limit . '}' : '*'). '$/s', null, $source, 1);
+			? '{0,' . $limit . '}' : '*'). '$/s', '', $source, 1);
 	}
 
 	/**
@@ -271,9 +275,13 @@ class Str extends AHelper {
 	 * @return mixed
 	 */
 	public final static function p2nl(string $source): string {
-		return preg_replace('/<\/(?:p' . (func_num_args() > 1 ? ('|' . implode('|', array_map(function($value){
+		return preg_replace('/<\/(?:p' . (func_num_args() > 1 ? ('|' . implode('|',
+
+		array_map(function($value){
 			return preg_quote(self::cast(trim(trim($value), '<>')), '/');
-		}, array_slice(func_get_args(), 1)))) : null) . ')>/', "\$0\n", $source);
+		},
+
+		array_slice(func_get_args(), 1)))) : '') . ')>/', "\$0\n", $source);
 	}
 
 	/**
