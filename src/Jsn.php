@@ -2,8 +2,6 @@
 namespace Able\Helpers;
 
 use \Able\Helpers\Abstractions\AHelper;
-use \Able\Helpers\Arr;
-
 use \Exception;
 
 class Jsn extends AHelper {
@@ -41,10 +39,8 @@ class Jsn extends AHelper {
 	 * @throws Exception
 	 */
 	public final static function encode(array $source): string {
-		if (($source = json_encode($source)) == false
-			|| json_last_error() !== JSON_ERROR_NONE){
-
-				throw new Exception('Invalid raw data!');
+		if (!($source = json_encode($source)) || json_last_error() !== JSON_ERROR_NONE){
+			throw new Exception('Invalid raw data!');
 		}
 
 		return $source;
@@ -137,5 +133,4 @@ class Jsn extends AHelper {
 	public final static function get(string $source, string $key, $default = null): mixed {
 		return Arr::get(self::decode($source), $key, $default);
 	}
-
 }

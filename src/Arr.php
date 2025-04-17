@@ -226,7 +226,7 @@ class Arr extends AHelper {
 	 * @param array $Source
 	 * @return mixed
 	 */
-	public static final function pop(array &$Source) {
+	public static final function pop(array &$Source): mixed {
 		return array_pop($Source);
 	}
 
@@ -321,7 +321,7 @@ class Arr extends AHelper {
 					$Source[$key] = self::merge(self::cast(self::get($Source, $key)), $value);
 
 				} elseif (is_numeric($key)) {
-					array_push($Source, $value);
+					$Source[] = $value;
 
 				} elseif (array_key_exists($key, $Source)) {
 					self::improve($Source, $key, $value);
@@ -427,9 +427,9 @@ class Arr extends AHelper {
 	 * @param array $Source
 	 * @param int $position
 	 * @param mixed $default
-	 * @return mixed
+	 * @return string|int|null
 	 */
-	public static final function key(array $Source, int $position = 0, mixed $default = null) {
+	public static final function key(array $Source, int $position = 0, mixed $default = null): string|int|null {
 		return self::get(array_keys($Source), $position, $default);
 	}
 
@@ -456,7 +456,7 @@ class Arr extends AHelper {
 	 * @param mixed ...$args
 	 * @return mixed
 	 */
-	public static final function follow(array $Source, string ...$args) {
+	public static final function follow(array $Source, string ...$args): mixed {
 		return count($args) > 1 ?
 
 			self::follow(self::cast(Arr::get($Source, $args[0])),
@@ -694,7 +694,7 @@ class Arr extends AHelper {
 		return call_user_func(function() use (&$Source, $Handler) {
 
 			return !is_null($Handler)
-				? usort($Source, $Handler) : sort($Source, SORT_REGULAR);
+				? usort($Source, $Handler) : sort($Source);
 
 		}) ? $Source : [];
 	}
@@ -709,7 +709,7 @@ class Arr extends AHelper {
 	public static final function ksort(array $Source, ?callable $Handler = null): array {
 		return call_user_func(function() use (&$Source, $Handler) {
 			return !is_null($Handler)
-				? uksort($Source, $Handler) : ksort($Source, SORT_REGULAR);
+				? uksort($Source, $Handler) : ksort($Source);
 
 		}) ? $Source : [];
 	}
@@ -796,7 +796,7 @@ class Arr extends AHelper {
 		$_ = '/(?:' . preg_quote($delimiter, '/') . ')/';
 
 		return array_walk($Source,
-			function(&$value, $key) use ($_) {
+			function(&$value) use ($_) {
 
 			$value = array_map('trim',
 				array_pad(preg_split($_, Str::cast($value), 2), 2, '')); })

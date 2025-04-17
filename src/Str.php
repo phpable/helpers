@@ -134,7 +134,7 @@ class Str extends AHelper {
 	 * @param string|null $separator
 	 * @return string
 	 */
-	public final static function clip(string $source, int $limit, string $separator = null): string {
+	public final static function clip(string $source, int $limit, ?string $separator = null): string {
 		$prc = floor(mb_strlen($source) / 100 * 20);
 		return $limit > 0 && mb_strlen($source) > $limit ? (self::tr($source, $limit - $prc) . $separator
 			. trim(mb_substr($source, mb_strlen($source) - $prc))) : $source;
@@ -171,10 +171,10 @@ class Str extends AHelper {
 
 	/**
 	 * @param string $source
-	 * @param int $limit
+	 * @param int|null $limit
 	 * @return string
 	 */
-	public final static function ltrim(string $source, int $limit = null): string {
+	public final static function ltrim(string $source, ?int $limit = null): string {
 		return preg_replace('/^\s' . (!is_null($limit) && $limit >= 0
 			? '{0,' . $limit . '}' : '*'). '/s', '', $source, 1);
 	}
@@ -185,7 +185,7 @@ class Str extends AHelper {
 	 * @param ?int $rightLimit
 	 * @return string
 	 */
-	public final static function trim(string $source, int $leftLimit = null, int $rightLimit = null): string {
+	public final static function trim(string $source, ?int $leftLimit = null, ?int $rightLimit = null): string {
 		return self::rtrim(self::ltrim($source, $leftLimit), $rightLimit);
 	}
 
@@ -196,7 +196,7 @@ class Str extends AHelper {
 	 * @return string
 	 */
 	public final static function rpad(string $source, string $character, int $count): string {
-		return  str_pad($source, $count, $character, STR_PAD_RIGHT);
+		return  str_pad($source, $count, $character);
 	}
 
 	/**
@@ -275,7 +275,7 @@ class Str extends AHelper {
 	 * @return mixed
 	 */
 	public final static function p2nl(string $source): string {
-		return preg_replace('/<\/(?:p' . (func_num_args() > 1 ? ('|' . implode('|',
+		return preg_replace('/<\/(p' . (func_num_args() > 1 ? ('|' . implode('|',
 
 		array_map(function($value){
 			return preg_quote(self::cast(trim(trim($value), '<>')), '/');

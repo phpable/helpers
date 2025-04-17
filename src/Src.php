@@ -1,9 +1,7 @@
 <?php
 namespace Able\Helpers;
 
-use \Able\Helpers\Arr;
 use \Able\Helpers\Abstractions\AHelper;
-
 use \Exception;
 
 class Src extends AHelper{
@@ -16,7 +14,7 @@ class Src extends AHelper{
 	 * @return string
 	 */
 	public static final function tcm(string $source, string $separator = '_'): string {
-		return implode(null, array_map('ucfirst', preg_split('/' . implode('|', array_map(function($separator){
+		return implode("", array_map('ucfirst', preg_split('/' . implode('|', array_map(function($separator){
 			return preg_quote($separator, '/');
 		}, array_pad(array_slice(func_get_args(), 1), 1, '_')))  . '/', trim($source), -1, PREG_SPLIT_NO_EMPTY)));
 	}
@@ -31,8 +29,8 @@ class Src extends AHelper{
 	public static final function fcm(string $source, string $separator = '_'): string {
 		return ltrim(preg_replace_callback('/\\\?[A-Z][A-Za-z0-9]+?/',
 
-			function($Macthes) use ($separator){
-				return $separator . ltrim(strtolower($Macthes[0]), '\\');
+			function($Matches) use ($separator){
+				return $separator . ltrim(strtolower($Matches[0]), '\\');
 		}, $source), $separator);
 	}
 
@@ -63,7 +61,7 @@ class Src extends AHelper{
 
 	/**
 	 * @param string $string
-	 * @param int count
+	 * @param int $count
 	 * @return string
 	 */
 	public static final function lns(string $string, int $count = 1): string {

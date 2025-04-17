@@ -27,11 +27,15 @@ class Env extends AHelper {
 	 * @return string
 	 */
 	public final static function name() : string {
-		switch (PHP_SHLIB_SUFFIX){
-			case 'so': return self::EP_UNIX;
-			case 'dll': return self::EP_WINDOWS;
-			default: return self::EP_UNDEFINED;
-		}
+		return match (PHP_SHLIB_SUFFIX) {
+			'so' => self::EP_UNIX,
+			'dll' => self::EP_WINDOWS,
+
+			/**
+			 * Something weird detected.
+			 */
+			default => self::EP_UNDEFINED,
+		};
 	}
 
 }

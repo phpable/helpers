@@ -24,38 +24,40 @@ class Hash extends AHelper {
 	/**
 	 * @const int
 	 */
-	const HASH_TYPE_MD5 = 1;
+	const HASH_ALGORITHM_MD5 = 1;
 
 	/**
-	 * @param int $type
+	 * @param int $algorithm
 	 * @param string $value
 	 * @return string
 	 *
 	 * @throws Exception
 	 */
-	public final static function make(int $type, string $value): string {
-		switch($type){
-			case self::HASH_TYPE_MD5:
-				return md5(implode(Arr::simplify(array_slice(func_get_args(), 1))));
-		}
+	public final static function make(int $algorithm, string $value): string {
+		return match ($algorithm) {
 
-		throw new Exception('Unknown hash type: ' .  $type . '!');
+			self::HASH_ALGORITHM_MD5
+				=> md5(implode(Arr::simplify(array_slice(func_get_args(), 1)))),
+
+			default => throw new Exception(sprintf('Undefined algorithm: %s!', $algorithm)),
+		};
 	}
 
 
 	/**
 	 * @param string $value
-	 * @param int $type
+	 * @param int $algorithm
 	 * @return bool
 	 *
 	 * @throws Exception
 	 */
-	public final static function validate(string $value, int $type): bool {
-		switch($type){
-			case self::HASH_TYPE_MD5:
-				return strlen(($value = strtolower(trim($value)))) == 32 && ctype_xdigit($value);
-		}
+	public final static function validate(string $value, int $algorithm): bool {
+		return match ($algorithm) {
 
-		throw new Exception('Unknown hash type: ' .  $type . '!');
+			self::HASH_ALGORITHM_MD5
+				=> strlen(($value = strtolower(trim($value)))) == 32 && ctype_xdigit($value),
+
+			default => throw new Exception(sprintf('Undefined algorithm: %s!', $algorithm)),
+		};
 	}
 }
